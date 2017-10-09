@@ -7,6 +7,7 @@ class Form extends React.Component {
         this.state = {
             regions: [],
             provinces: [],
+            employees: [],
             student: {
                 id: 0,
                 name: '',
@@ -38,6 +39,14 @@ class Form extends React.Component {
             success(res) {
                 _this.setState({
                     regions: res
+                });
+            }
+        });
+        $.ajax({
+            url: '/admin/controllers/employee.php?action=getEmployees',
+            success(res) {
+                _this.setState({
+                    employees: res
                 });
             }
         });
@@ -90,25 +99,48 @@ class Form extends React.Component {
         const provinces = this.state.provinces.map((p) =>
             <option key={p.id} value={p.id}>{p.name}</option>
         );
+        const employees = this.state.employees.map((e) =>
+            <option key={e.id} value={e.id}>{e.name}</option>
+        );
         return(
             <form onSubmit={this.handleSubmit}>
                 <input type="hidden" value={student.id} name="id" onChange={this.handleChange} />
-                <div className="field">
-                    <label className="label">姓名</label>
-                    <div className="control">
-                        <input className="input" type="text" name="name" value={student.name} onChange={this.handleChange} />
+                <div className="columns">
+                    <div className="field column is-2">
+                        <label className="label">姓名</label>
+                        <div className="control">
+                            <input className="input" type="text" name="name" value={student.name} onChange={this.handleChange} />
+                        </div>
                     </div>
-                </div>
-                <div className="field">
-                    <label className="label">性别</label>
-                    <div className="control">
-                        <input className="input" type="text" name="gender" value={student.gender} onChange={this.handleChange} />
+                    <div className="field column is-2">
+                        <label className="label">性别</label>
+                        <div className="control">
+                            <input className="input" type="text" name="gender" value={student.gender} onChange={this.handleChange} />
+                        </div>
                     </div>
-                </div>
-                <div className="field">
-                    <label className="label">生日</label>
-                    <div className="control">
-                        <input className="input" type="text" name="dob" value={student.dob} onChange={this.handleChange} />
+                    <div className="field column is-2">
+                        <label className="label">生日</label>
+                        <div className="control">
+                            <input className="input" type="text" name="dob" value={student.dob} onChange={this.handleChange} />
+                        </div>
+                    </div>
+                    <div className="field column is-2">
+                        <label className="label">电话</label>
+                        <div className="control">
+                            <input className="input" type="text" name="phone" value={student.phone} onChange={this.handleChange} />
+                        </div>
+                    </div>
+                    <div className="field column is-2">
+                        <label className="label">Email</label>
+                        <div className="control">
+                            <input className="input" type="text" name="email" value={student.email} onChange={this.handleChange} />
+                        </div>
+                    </div>
+                    <div className="field column is-2">
+                        <label className="label">客人归属</label>
+                        <div className="control">
+                            <input className="input" type="text" name="location_id" value={student.location_id} onChange={this.handleChange} />
+                        </div>
                     </div>
                 </div>
                 <div className="columns">
@@ -148,61 +180,51 @@ class Form extends React.Component {
                 <div className="field">
                     <label className="label">责任客服</label>
                     <div className="control">
-                        <input className="input" type="text" name="employee_id" value={student.employee_id} onChange={this.handleChange} />
+                        <div className="select">
+                            <select name="employee_id" value={student.employee_id} onChange={this.handleChange}>
+                                <option>Please Select</option>
+                                {employees}
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div className="field">
-                    <label className="label">中国高中信息</label>
-                    <div className="control">
-                        <input className="input" type="text" name="high_info" value={student.high_info} onChange={this.handleChange} />
+                <div className="columns">
+                    <div className="field column is-2">
+                        <label className="label">中国高中信息</label>
+                        <div className="control">
+                            <input className="input" type="text" name="high_info" value={student.high_info} onChange={this.handleChange} />
+                        </div>
                     </div>
-                </div>
-                <div className="field">
-                    <label className="label">中国大学信息</label>
-                    <div className="control">
-                        <input className="input" type="text" name="uni_info" value={student.uni_info} onChange={this.handleChange} />
+                    <div className="field column is-2">
+                        <label className="label">中国大学信息</label>
+                        <div className="control">
+                            <input className="input" type="text" name="uni_info" value={student.uni_info} onChange={this.handleChange} />
+                        </div>
                     </div>
-                </div>
-                <div className="field">
-                    <label className="label">签证信息</label>
-                    <div className="control">
-                        <input className="input" type="text" name="visa_info" value={student.visa_info} onChange={this.handleChange} />
+                    <div className="field column is-2">
+                        <label className="label">签证信息</label>
+                        <div className="control">
+                            <input className="input" type="text" name="visa_info" value={student.visa_info} onChange={this.handleChange} />
+                        </div>
                     </div>
-                </div>
-                <div className="field">
-                    <label className="label">签证日期</label>
-                    <div className="control">
-                        <input className="input" type="text" name="visa_date" value={student.visa_date} onChange={this.handleChange} />
+                    <div className="field column is-2">
+                        <label className="label">签证日期</label>
+                        <div className="control">
+                            <input className="input" type="text" name="visa_date" value={student.visa_date} onChange={this.handleChange} />
+                        </div>
                     </div>
-                </div>
-                <div className="field">
-                    <label className="label">护照日期</label>
-                    <div className="control">
-                        <input className="input" type="text" name="passport_date" value={student.passport_date} onChange={this.handleChange} />
+                    <div className="field column is-2">
+                        <label className="label">护照日期</label>
+                        <div className="control">
+                            <input className="input" type="text" name="passport_date" value={student.passport_date} onChange={this.handleChange} />
+                        </div>
                     </div>
-                </div>
-                <div className="field">
-                    <label className="label">电话</label>
-                    <div className="control">
-                        <input className="input" type="text" name="phone" value={student.phone} onChange={this.handleChange} />
-                    </div>
-                </div>
-                <div className="field">
-                    <label className="label">Email</label>
-                    <div className="control">
-                        <input className="input" type="text" name="email" value={student.email} onChange={this.handleChange} />
-                    </div>
-                </div>
-                <div className="field">
-                    <label className="label">客人归属</label>
-                    <div className="control">
-                        <input className="input" type="text" name="location_id" value={student.location_id} onChange={this.handleChange} />
-                    </div>
-                </div>
-                <div className="field">
-                    <label className="label">代理公司</label>
-                    <div className="control">
-                        <input className="input" type="text" name="agency_id" value={student.agency_id} onChange={this.handleChange} />
+                    
+                    <div className="field column is-2">
+                        <label className="label">代理公司</label>
+                        <div className="control">
+                            <input className="input" type="text" name="agency_id" value={student.agency_id} onChange={this.handleChange} />
+                        </div>
                     </div>
                 </div>
                 <div className="field">

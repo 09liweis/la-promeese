@@ -1,22 +1,23 @@
 <?php
 
-class Student {
+class Performance {
     private $db;
     public function __construct($db) {
         $this->db = $db;
     }
-    public function students() {
-        $sql = 'SELECT * FROM students';
+    public function performances($student_id) {
+        $sql = 'SELECT * FROM performances WHERE student_id = :student_id';
         $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':student_id', $student_id);
         $pdostmt->execute();
-        $students = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
-        return $students;
+        $performances = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
+        return $performances;
     }
-    public function upsert($student) {
+    public function upsert($performance) {
         $columns = '';
         $values = '';
         $updates = '';
-        foreach ($student as $column => $value) {
+        foreach ($performance as $column => $value) {
             $columns .= $column . ',';
             $values .= ':' . $column . ',';
             if ($column != 'id') {
@@ -28,7 +29,7 @@ class Student {
         $updates = rtrim($updates, ',');
         $sql = 'INSERT INTO students (' . $columns . ') VALUES (' . $values . ') ON DUPLICATE KEY UPDATE ' . $updates . ';';
         $pdostmt = $this->db->prepare($sql);
-        foreach ($student as $c => $v) {
+        foreach ($performance as $c => $v) {
             $pdostmt->bindValue(':' . $c, $v, PDO::PARAM_INT);
         }
         $pdostmt->execute();
