@@ -7,7 +7,12 @@ header('Content-Type: application/json');
 
 $pRepo = new Performance(Database::dbConnect());
 
+if ($_GET['action'] == 'getPerformances') {
+    $performances = $pRepo->performances($_GET['id']);
+    echo json_encode($performances);
+}
+
 if ($_GET['action'] == 'upsertPerformance') {
-    $sRepo->upsert($_POST);
+    $pRepo->upsert($_POST);
     echo json_encode('ok');
 }

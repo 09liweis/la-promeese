@@ -14,9 +14,11 @@ class Performances extends React.Component {
                 progress_id: '',
                 commission_declare: ''
             },
+            performances: [],
             services: [],
             subServices: [],
             progresses: [],
+            commissionProgresses: []
         };
         this.getNewPerformance = this.getNewPerformance.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -38,8 +40,12 @@ class Performances extends React.Component {
             }
         });
     }
-    addPerformanceForm() {
-        
+    addPerformanceForm(performance) {
+        this.getSubServices(performance.service_id);
+        this.getProgresses(performance.service_id);
+        this.setState({
+            performance: performance
+        });
     }
     handleChange(e) {
         const p = e.target.name;
@@ -62,6 +68,24 @@ class Performances extends React.Component {
             success(res) {
                 _this.setState({
                     services: res
+                });
+            }
+        });
+        $.ajax({
+            url: '/admin/controllers/commissionProgress.php?action=getCommissionProgress',
+            data: {type: 'free'},
+            success(res) {
+                _this.setState({
+                    commissionProgresses: res
+                });
+            }
+        });
+        $.ajax({
+            url: '/admin/controllers/performance.php?action=getPerformances',
+            data: {id: _this.props.id},
+            success(res) {
+                _this.setState({
+                    performances: res
                 });
             }
         });
@@ -103,7 +127,18 @@ class Performances extends React.Component {
         });
     }
     render() {
+        const _this = this;
         const performance = this.state.performance;
+        const performances = this.state.performances.map((p) =>
+            <tr key={p.id}>
+                <td>{p.service_name}</td>
+                <td>{p.sub_service_name}</td>
+                <td>{p.fee}</td>
+                <td>{p.progress_name}</td>
+                <td>{p.commission_progress_name}</td>
+                <td><a className="button is-danger" onClick={_this.addPerformanceForm.bind(_this, p)}>Edit</a></td>
+            </tr>
+        );
         const services = this.state.services.map((s) =>
             <option key={s.id} value={s.id}>{s.name}</option>
         );
@@ -113,11 +148,30 @@ class Performances extends React.Component {
         const progresses = this.state.progresses.map((p) =>
             <option key={p.id} value={p.id}>{p.name}</option>
         );
+        const commissionProgresses = this.state.commissionProgresses.map((c) =>
+            <option key={c.id} value={c.id}>{c.name}</option>
+        );
         return(
             <div>
                 <h2>业绩</h2>
                 <button className="button is-primary" onClick={this.addPerformanceForm}>添加</button>
-                <form className="columns is-multiline">
+                <table className="table is-fullwidth is-striped is-narrow">
+                    <thead>
+                    <tr>
+                        <th>服务</th>
+                        <th>学校</th>
+                        <th>学费</th>
+                        <th>进度</th>
+                        <th>佣金申报</th>
+                        <th>客人归属</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {performances}
+                    </tbody>
+                </table>
+                <form className="columns is-multiline" onSubmit={this.handleSubmit}>
                     <div className="field column is-2">
                         <label className="label">服务</label>
                         <div className="control">
@@ -150,7 +204,7 @@ class Performances extends React.Component {
                         <label className="label">进度</label>
                         <div className="control">
                             <div className="select">
-                                <select name="process_id" value={performance.progress_id} onChange={this.handleChange}>
+                                <select name="progress_id" value={performance.progress_id} onChange={this.handleChange}>
                                     <option>Please Select</option>
                                     {progresses}
                                 </select>
@@ -161,8 +215,9 @@ class Performances extends React.Component {
                         <label className="label">佣金申报</label>
                         <div className="control">
                             <div className="select">
-                                <select name="commission_declare" value={performance.commission_declare} onChange={this.handleChange}>
+                                <select name="commission_progress_id" value={performance.commission_progress_id} onChange={this.handleChange}>
                                     <option>Please Select</option>
+                                    {commissionProgresses}
                                 </select>
                             </div>
                         </div>
