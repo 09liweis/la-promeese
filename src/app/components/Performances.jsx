@@ -6,13 +6,6 @@ class Performances extends React.Component {
         super(props);
         this.state = {
             performance: {
-                id: 0,
-                student_id: props.id,
-                service_id: '',
-                sub_service_id: '',
-                fee: '',
-                progress_id: '',
-                commission_declare: ''
             },
             performances: [],
             services: [],
@@ -26,25 +19,38 @@ class Performances extends React.Component {
         this.getSubServices = this.getSubServices.bind(this);
         this.getProgresses = this.getProgresses.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.addNew = this.addNew.bind(this);
+        this.getPerformances = this.getPerformances.bind(this);
+        this.getEmptyPerformance = this.getEmptyPerformance.bind(this);
     }
-    getNewPerformance() {
-        this.setState({
-            performance: {
+    getEmptyPerformance() {
+        return {
                 id: 0,
                 student_id: this.props.id,
                 service_id: '',
                 sub_service_id: '',
                 fee: '',
                 progress_id: '',
-                commission_declare: ''
-            }
+                commission_progress_id: ''
+            };
+    }
+    getNewPerformance() {
+        this.setState({
+            performance: this.getEmptyPerformance()
         });
+    }
+    addNew() {
+        this.getNewPerformance();
     }
     addPerformanceForm(performance) {
         this.getSubServices(performance.service_id);
         this.getProgresses(performance.service_id);
+        var p = this.getEmptyPerformance();
+        Object.keys(p).map((key) =>
+            p[key] = performance[key]
+        );
         this.setState({
-            performance: performance
+            performance: p
         });
     }
     handleChange(e) {
@@ -80,6 +86,10 @@ class Performances extends React.Component {
                 });
             }
         });
+        this.getPerformances();
+    }
+    getPerformances() {
+        const _this = this;
         $.ajax({
             url: '/admin/controllers/performance.php?action=getPerformances',
             data: {id: _this.props.id},
@@ -123,6 +133,7 @@ class Performances extends React.Component {
             data: _this.state.performance,
             success(res) {
                 _this.getNewPerformance();
+                _this.getPerformances();
             }
         });
     }
@@ -154,7 +165,7 @@ class Performances extends React.Component {
         return(
             <div>
                 <h2>业绩</h2>
-                <button className="button is-primary" onClick={this.addPerformanceForm}>添加</button>
+                <button className="button is-primary" onClick={this.addNew}>添加</button>
                 <table className="table is-fullwidth is-striped is-narrow">
                     <thead>
                     <tr>
