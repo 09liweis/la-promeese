@@ -1,13 +1,14 @@
 import React from 'react';
 import $ from 'jquery';
 
-class Form extends React.Component {
+class StudentForm extends React.Component {
     constructor() {
         super();
         this.state = {
             regions: [],
             provinces: [],
             employees: [],
+            offices: [],
             student: {
                 id: 0,
                 name: '',
@@ -24,7 +25,7 @@ class Form extends React.Component {
                 passport_date: '',
                 phone: '',
                 email: '',
-                location_id: '',
+                office_id: '',
                 agency_id: ''
             }
         };
@@ -47,6 +48,14 @@ class Form extends React.Component {
             success(res) {
                 _this.setState({
                     employees: res
+                });
+            }
+        });
+        $.ajax({
+            url: '/admin/controllers/office.php?action=getOffices',
+            success(res) {
+                _this.setState({
+                    offices: res
                 });
             }
         });
@@ -87,7 +96,7 @@ class Form extends React.Component {
             data: _this.state.student,
             method: 'POST',
             success(res) {
-                
+                _this.props.refreshPage();
             }
         });
     }
@@ -101,6 +110,9 @@ class Form extends React.Component {
         );
         const employees = this.state.employees.map((e) =>
             <option key={e.id} value={e.id}>{e.name}</option>
+        );
+        const offices = this.state.offices.map((o) =>
+            <option key={o.id} value={o.id}>{o.name}</option>
         );
         return(
             <form onSubmit={this.handleSubmit}>
@@ -139,7 +151,12 @@ class Form extends React.Component {
                     <div className="field column is-2">
                         <label className="label">客人归属</label>
                         <div className="control">
-                            <input className="input" type="text" name="location_id" value={student.location_id} onChange={this.handleChange} />
+                            <div className="select">
+                                <select name="office_id" value={student.office_id} onChange={this.handleChange}>
+                                    <option>Please Select</option>
+                                    {offices}
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -237,4 +254,4 @@ class Form extends React.Component {
     }
 }
 
-export default Form;
+export default StudentForm;

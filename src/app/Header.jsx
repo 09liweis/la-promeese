@@ -12,7 +12,7 @@ class Header extends React.Component {
             <nav className="navbar is-light" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     <Link to="/admin" className="navbar-item">
-                        <img src="http://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28" />
+                        <h2>La Promeese</h2>
                     </Link>
                 </div>
                 <div className="navbar-start">

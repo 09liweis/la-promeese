@@ -12,6 +12,11 @@ if ($_GET['action'] == 'getStudents') {
     echo json_encode($students);
 }
 
+if ($_GET['action'] == 'getStudent') {
+    $student = $sRepo->student($_GET['id']);
+    echo json_encode($student);
+}
+
 if ($_GET['action'] == 'upsertStudent') {
     $sRepo->upsert($_POST);
     echo json_encode('ok');

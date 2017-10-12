@@ -12,6 +12,14 @@ class Student {
         $students = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         return $students;
     }
+    public function student($student_id) {
+        $sql = 'SELECT * FROM students WHERE id = :student_id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':student_id', $student_id, PDO::PARAM_INT);
+        $pdostmt->execute();
+        $student = $pdostmt->fetch(PDO::FETCH_ASSOC);
+        return $student;
+    }
     public function upsert($student) {
         $columns = '';
         $values = '';
