@@ -90,7 +90,7 @@ class SchoolApplicatoins extends React.Component {
             </div>
         );
         return(
-            <div>
+            <div className="card">
                 <a className="button is-primary" onClick={this.openForm}>添加学校申请</a>
                 {applications}
                 <Modal form={<SchoolApplicationForm application={this.state.application} refreshPage={this.refreshPage} />} modal={this.state.modal} closeModal={this.closeModal} />

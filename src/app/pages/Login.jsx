@@ -41,7 +41,8 @@ class Login extends React.Component {
     }
     render() {
         return (
-            <form autoComplete="false" className="container" onSubmit={this.handleLogin}>
+            <form id="login" autoComplete="false" className="container card" onSubmit={this.handleLogin}>
+                <h1 className="is-size-1 has-text-centered">后台管理登陆</h1>
                 <div className="field">
                     <label className="label">Email</label>
                     <div className="control">
@@ -54,7 +55,7 @@ class Login extends React.Component {
                         <input className="input" type="password" name="password" onChange={this.handleChange} />
                     </div>
                 </div>
-                <button className="button is-primay">Login</button>
+                <button className="button is-primary">Login</button>
             </form>
         );
     }

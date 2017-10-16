@@ -19,6 +19,7 @@ class StudentDetail extends React.Component {
         this.closeModal = this.closeModal.bind(this);
         this.refreshPage = this.refreshPage.bind(this);
         this.edit = this.edit.bind(this);
+        this.getStudent = this.getStudent.bind(this);
     }
     edit() {
         this.setState({
@@ -31,6 +32,9 @@ class StudentDetail extends React.Component {
         });
     }
     componentDidMount() {
+        this.getStudent();
+    }
+    getStudent() {
         const _this = this;
         $.ajax({
             url: '/admin/controllers/student.php?action=getStudent',
@@ -44,13 +48,64 @@ class StudentDetail extends React.Component {
     }
     refreshPage() {
         this.closeModal();
+        this.getStudent();
     }
     render() {
         const s = this.state.student;
+        let student = '';
+        if (typeof s.name != 'undefined') {
+            student = 
+                <div className="card">
+                    <div className="columns">
+                    <div className="column">
+                        <h1>{s.name}</h1>
+                        <p>
+                            <span className="icon has-text-success">
+                                <i className="fa fa-genderless"></i>
+                            </span>
+                            {s.gender}
+                        </p>
+                        <p>
+                            <span className="icon has-text-success">
+                                <i className="fa fa-birthday-cake"></i>
+                            </span>
+                            {s.dob}
+                        </p>
+                        <p>
+                            <span className="icon has-text-success">
+                                <i className="fa fa-phone"></i>
+                            </span>
+                            {s.phone}
+                        </p>
+                        <p>
+                            <span className="icon has-text-success">
+                                <i className="fa fa-envelope"></i>
+                            </span>
+                            {s.email}
+                        </p>
+                    </div>
+                    <div className="column">
+                        <p>Passport: {s.passport_date}</p>
+                        <p>Visa: {s.visa_info}</p>
+                        <p>Visa Expired: {s.visa_date}</p>
+                    </div>
+                    <div className="column">
+                        <p>Region: {s.region_name}</p>
+                        <p>Province: {s.province_name}</p>
+                        <p>City: {s.city_name}</p>
+                    </div>
+                    <div className="column">
+                        <p>Office: {s.office_name}</p>
+                        <p>Employee: {s.employee_name}</p>
+                        <p>Agency: {s.agency_name}</p>
+                    </div>
+                    </div>
+                    <a className="button is-danger" onClick={this.edit}>编辑学生</a>
+                </div>;
+        }
         return(
-            <div>
-                <h1>Student Detail</h1>
-                <a className="button is-danger" onClick={this.edit}>编辑学生</a>
+            <div className="">
+                {student}
                 <Modal modal={this.state.modal} closeModal={this.closeModal} form={<StudentForm student={this.state.student} refreshPage={this.refreshPage} />} />
                 <Performances id={this.state.student.id} />
                 <Businesses id={this.state.student.id} />

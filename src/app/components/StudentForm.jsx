@@ -38,6 +38,7 @@ class StudentForm extends React.Component {
         this.getCities = this.getCities.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.getEditStudent = this.getEditStudent.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         if (typeof nextProps.student != 'undefined') {
@@ -45,9 +46,16 @@ class StudentForm extends React.Component {
             this.getProvinces(student.region_id);
             this.getCities(student.province_id);
             this.setState({
-                student: student
+                student: this.getEditStudent(student)
             });   
         }
+    }
+    getEditStudent(student) {
+        var newS = {};
+        Object.keys(this.state.student).map((p) => {
+            newS[p] = student[p];
+        });
+        return newS;
     }
     componentDidMount() {
         const _this = this;
@@ -166,7 +174,7 @@ class StudentForm extends React.Component {
                     <div className="field column is-2">
                         <label className="label">生日</label>
                         <div className="control">
-                            <input className="input" type="text" name="dob" value={student.dob} onChange={this.handleChange} />
+                            <input className="input" type="date" name="dob" value={student.dob} onChange={this.handleChange} />
                         </div>
                     </div>
                     <div className="field column is-2">

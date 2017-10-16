@@ -95,7 +95,7 @@ class Performances extends React.Component {
             </tr>
         );
         return(
-            <div>
+            <div className="card">
                 <h2>业绩</h2>
                 <button className="button is-primary" onClick={this.openForm}>添加</button>
                 <table className="table is-fullwidth is-striped is-narrow">

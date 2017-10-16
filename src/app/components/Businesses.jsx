@@ -132,7 +132,7 @@ class Businesses extends React.Component {
             </div>
         );
         return (
-            <div>
+            <div className="card">
                 <h2>业务</h2>
                 <button className="button is-primary" onClick={this.addNew}>添加</button>
                 {businesses}

@@ -21,4 +21,7 @@ class Employee {
         $employee = $pdostmt->fetch(PDO::FETCH_ASSOC);
         return $employee;
     }
+    public function upsert($employee) {
+        
+    }
 }

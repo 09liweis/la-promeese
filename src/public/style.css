@@ -1,0 +1,21 @@
+html, 
+body {
+    height: 100%;
+}
+.wrapper {
+    background: #eef2f3;
+    padding-bottom: 40px;
+}
+
+#login {
+    max-width: 768px;
+}
+
+.card {
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.container {
+    margin-top: 40px;
+}

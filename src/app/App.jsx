@@ -43,7 +43,7 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="wrapper">
         <Header user={this.state.user} handleLogout={this.handleLogout} />
         {this.state.login ?
         <Main />

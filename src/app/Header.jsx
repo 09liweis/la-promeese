@@ -27,7 +27,7 @@ class Header extends React.Component {
     }
     render() {
         return (
-            <nav className="navbar is-light" role="navigation" aria-label="main navigation">
+            <nav className="navbar is-light is-primary" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     <Link to="/admin" className="navbar-item">
                         <h2>La Promeese</h2>

@@ -61,7 +61,7 @@ class Home extends React.Component {
             </tr>
         );
         return(
-            <div>
+            <div className="card">
                 <a className="button is-primary" onClick={this.addStudent}>添加学生</a>
                 <table className="table is-fullwidth is-striped is-narrow">
                     <thead>
