@@ -16,3 +16,8 @@ if ($_GET['action'] == 'getProvinces') {
     $provinces = $locationRepo->provinces($_GET['id']);
     echo json_encode($provinces);
 }
+
+if ($_GET['action'] == 'getCities') {
+    $cities = $locationRepo->cities($_GET['id']);
+    echo json_encode($cities);
+}

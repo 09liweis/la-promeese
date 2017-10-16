@@ -2,6 +2,7 @@
 
 require '../models/Database.php';
 require '../models/Performance.php';
+require '../models/Student.php';
 
 header('Content-Type: application/json');
 
@@ -14,5 +15,7 @@ if ($_GET['action'] == 'getPerformances') {
 
 if ($_GET['action'] == 'upsertPerformance') {
     $pRepo->upsert($_POST);
+    $sRepo = new Student(Database::dbConnect());
+    $sRepo->updateStudent($_POST);
     echo json_encode('ok');
 }

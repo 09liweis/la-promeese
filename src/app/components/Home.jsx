@@ -49,14 +49,15 @@ class Home extends React.Component {
                 <th>{s.visa_date}</th>
                 <th>{s.passport_date}</th>
                 <th>{s.phone}</th>
-                <th>{s.agency_id}</th>
-                <th>{s.employee_id}</th>
+                <th>{s.agency_name}</th>
+                <th>{s.employee_name}</th>
+                <th></th>
                 <th></th>
                 <th>$$$</th>
                 <th>school</th>
                 <th>{s.location_id}</th>
                 <th></th>
-                <th>Time</th>
+                <th>{s.updated_at}</th>
             </tr>
         );
         return(
@@ -71,7 +72,6 @@ class Home extends React.Component {
                             <th>联系方式</th>
                             <th>代理公司</th>
                             <th>责任客服</th>
-                            <th>服务项目</th>
                             <th>责任文案</th>
                             <th>服务内容</th>
                             <th>服务金额</th>

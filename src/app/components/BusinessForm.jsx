@@ -1,37 +1,34 @@
 import React from 'react';
 import $ from 'jquery';
 
-class PerformanceForm extends React.Component {
+class BusinessForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            performance: this.props.performance,
             services: [],
+            business: {},
             subServices: [],
             progresses: [],
-            commissionProgresses: []
+            commissionProgresses: [],
         };
-        
         this.handleChange = this.handleChange.bind(this);
-        
-        this.getSubServices = this.getSubServices.bind(this);
-        this.getProgresses = this.getProgresses.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.getProgresses = this.getProgresses.bind(this);
+        this.getSubServices = this.getSubServices.bind(this);
         
     }
     componentWillReceiveProps(nextProps) {
-        const performance = nextProps.performance;
-        this.getSubServices(performance.service_id);
-        this.getProgresses(performance.service_id);
+        const business = nextProps.business;
+        this.getSubServices(business.service_id);
+        this.getProgresses(business.service_id);
         this.setState({
-            performance: performance
+            business: business
         });
     }
     componentDidMount() {
-        
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/service.php?action=getFreeServices',
+            url: '/admin/controllers/service.php?action=getPaidServices',
             success(res) {
                 _this.setState({
                     services: res
@@ -48,15 +45,13 @@ class PerformanceForm extends React.Component {
             }
         });
     }
-    
-    
     handleChange(e) {
         const p = e.target.name;
         const v = e.target.value;
-        var performance = this.state.performance;
-        performance[p] = v;
+        var b = this.state.business;
+        b[p] = v;
         this.setState({
-            performance: performance
+            business: b
         });
         if (p == 'service_id') {
             this.getSubServices(v);
@@ -90,25 +85,17 @@ class PerformanceForm extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         const _this = this;
-        const performance = {
-            id: this.state.performance.id,
-            student_id: this.state.performance.student_id,
-            service_id: this.state.performance.service_id,
-            sub_service_id: this.state.performance.sub_service_id,
-            fee: this.state.performance.fee,
-            progress_id: this.state.performance.progress_id,
-            commission_progress_id: this.state.performance.commission_progress_id
-        };
         $.ajax({
-            url: '/admin/controllers/performance.php?action=upsertPerformance',
+            url: '/admin/controllers/business.php?action=upsertBusiness',
             method: 'POST',
-            data: performance,
+            data: _this.state.business,
             success(res) {
                 _this.props.refreshPage();
             }
         });
     }
     render() {
+        const business = this.state.business;
         const services = this.state.services.map((s) =>
             <option key={s.id} value={s.id}>{s.name}</option>
         );
@@ -121,14 +108,29 @@ class PerformanceForm extends React.Component {
         const commissionProgresses = this.state.commissionProgresses.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
         );
-        const performance = this.state.performance;
+        
+        var newDateDes = '新时间';
+        switch (business.service_id) {
+            case '7':
+                newDateDes = '获批时间至';
+                break;
+            case '8':
+                newDateDes = '登陆时间';
+                break;
+            case '9':
+                newDateDes = '入职时间';
+                break;
+            default:
+                newDateDes = '新时间';
+        }
+        
         return (
-            <form className="columns is-multiline" onSubmit={this.handleSubmit}>
+            <form className="columns is-multiline" autoComplete="off" onSubmit={this.handleSubmit}>
                 <div className="field column is-2">
                     <label className="label">服务</label>
                     <div className="control">
                         <div className="select">
-                            <select name="service_id" value={performance.service_id} onChange={this.handleChange}>
+                            <select name="service_id" value={business.service_id} onChange={this.handleChange}>
                                 <option>Please Select</option>
                                 {services}
                             </select>
@@ -136,27 +138,57 @@ class PerformanceForm extends React.Component {
                     </div>
                 </div>
                 <div className="field column is-2">
-                    <label className="label">学校</label>
+                    <label className="label">副服务</label>
                     <div className="control">
                         <div className="select">
-                            <select name="sub_service_id" value={performance.sub_service_id} onChange={this.handleChange}>
+                            <select name="sub_service_id" value={business.sub_service_id} onChange={this.handleChange}>
                                 <option>Please Select</option>
                                 {subServices}
                             </select>
                         </div>
                     </div>
                 </div>
+                {(business.service_id == '7') ?
                 <div className="field column is-2">
-                    <label className="label">学费</label>
+                    <label className="label">政府费</label>
                     <div className="control">
-                        <input className="input" type="text" name="fee" value={performance.fee} onChange={this.handleChange} />
+                        <input className="input" type="text" name="government_fee" value={business.government_fee} onChange={this.handleChange} />
+                    </div>
+                </div>
+                :
+                <div className="field column is-2">
+                    <label className="label">申请费</label>
+                    <div className="control">
+                        <input className="input" type="text" name="application_fee" value={business.application_fee} onChange={this.handleChange} />
+                    </div>
+                </div>
+                }
+                <div className="field column is-2">
+                    <label className="label">服务费</label>
+                    <div className="control">
+                        <input className="input" type="text" name="service_fee" value={business.service_fee} onChange={this.handleChange} />
                     </div>
                 </div>
                 <div className="field column is-2">
+                    <label className="label">邮寄费</label>
+                    <div className="control">
+                        <input className="input" type="text" name="post_fee" value={business.post_fee} onChange={this.handleChange} />
+                    </div>
+                </div>
+                <div className="field column is-2">
+                    收据
+                </div>
+                <div className="field column is-2">
+                    <label className="label">递交时间</label>
+                    <div className="control">
+                        <input className="input" type="date" name="submit_date" value={business.submit_date} onChange={this.handleChange} />
+                    </div>
+                </div>
+                <div className="field column is-4">
                     <label className="label">进度</label>
                     <div className="control">
                         <div className="select">
-                            <select name="progress_id" value={performance.progress_id} onChange={this.handleChange}>
+                            <select name="progress_id" value={business.progress_id} onChange={this.handleChange}>
                                 <option>Please Select</option>
                                 {progresses}
                             </select>
@@ -164,27 +196,17 @@ class PerformanceForm extends React.Component {
                     </div>
                 </div>
                 <div className="field column is-2">
-                    <label className="label">佣金申报</label>
+                    <label className="label">{newDateDes}</label>
                     <div className="control">
-                        <div className="select">
-                            <select name="commission_progress_id" value={performance.commission_progress_id} onChange={this.handleChange}>
-                                <option>Please Select</option>
-                                {commissionProgresses}
-                            </select>
-                        </div>
+                        <input className="input" type="date" name="new_date" value={business.new_date} onChange={this.handleChange} />
                     </div>
                 </div>
-                <div className="field column is-2">
-                    <label className="label">客人归属</label>
-                    <div className="control">
-                    </div>
-                </div>
-                <div className="column is-2">
-                    <button className="button is-primary">提交</button>
+                <div className="field column">
+                    <button className="button is-primary">Submit</button>
                 </div>
             </form>
         );
     }
 }
 
-export default PerformanceForm;
+export default BusinessForm;

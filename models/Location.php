@@ -21,4 +21,14 @@ class Location {
         $provinces = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         return $provinces;
     }
+    
+    public function cities($province_id) {
+        $sql = 'SELECT * FROM cities WHERE province_id = :province_id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':province_id', $province_id, PDO::PARAM_INT);
+        $pdostmt->execute();
+        $cities = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
+        return $cities;
+    }
+    
 }

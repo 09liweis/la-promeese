@@ -1,9 +1,11 @@
 import React from 'react';
 import $ from 'jquery';
-import { Link } from 'react-router-dom';
 
+import Modal from './Modal.jsx';
+import StudentForm from './StudentForm.jsx';
 import Performances from './Performances.jsx';
 import Businesses from './Businesses.jsx';
+import SchoolApplicatoins from './SchoolApplicatoins.jsx';
 
 class StudentDetail extends React.Component {
     constructor(props) {
@@ -14,9 +16,21 @@ class StudentDetail extends React.Component {
             },
             modal: false
         };
+        this.closeModal = this.closeModal.bind(this);
+        this.refreshPage = this.refreshPage.bind(this);
+        this.edit = this.edit.bind(this);
+    }
+    edit() {
+        this.setState({
+            modal: true
+        });
+    }
+    closeModal() {
+        this.setState({
+            modal: false
+        });
     }
     componentDidMount() {
-        
         const _this = this;
         $.ajax({
             url: '/admin/controllers/student.php?action=getStudent',
@@ -28,14 +42,19 @@ class StudentDetail extends React.Component {
             }
         });
     }
+    refreshPage() {
+        this.closeModal();
+    }
     render() {
         const s = this.state.student;
         return(
             <div>
                 <h1>Student Detail</h1>
-                <Link to={`/admin/student/${s.id}/edit`}>Edit Student</Link>
+                <a className="button is-danger" onClick={this.edit}>编辑学生</a>
+                <Modal modal={this.state.modal} closeModal={this.closeModal} form={<StudentForm student={this.state.student} refreshPage={this.refreshPage} />} />
                 <Performances id={this.state.student.id} />
                 <Businesses id={this.state.student.id} />
+                <SchoolApplicatoins id={this.state.student.id} />
             </div>
         );
     }

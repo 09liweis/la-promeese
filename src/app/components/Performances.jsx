@@ -8,12 +8,23 @@ class Performances extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            student_id: this.props.id,
             performances: [],
+            performance: {},
             modal: false
         };
         this.getPerformances = this.getPerformances.bind(this);
         this.openForm = this.openForm.bind(this);
         this.closeModal = this.closeModal.bind(this);
+        this.getEmptyPerformance = this.getEmptyPerformance.bind(this);
+        this.getNewPerformance = this.getNewPerformance.bind(this);
+        this.refreshPage = this.refreshPage.bind(this);
+    }
+    componentWillReceiveProps(nextProps) {
+        const student_id = nextProps.id;
+        this.setState({
+            student_id: student_id
+        });
     }
     closeModal() {
         this.setState({
@@ -26,7 +37,34 @@ class Performances extends React.Component {
         });
     }
     componentDidMount() {
+        this.getNewPerformance();
         this.getPerformances();
+    }
+    getEmptyPerformance() {
+        return {
+            id: 0,
+            student_id: this.state.student_id,
+            service_id: '',
+            sub_service_id: '',
+            fee: '',
+            progress_id: '',
+            commission_progress_id: ''
+        };
+    }
+    getNewPerformance() {
+        this.setState({
+            performance: this.getEmptyPerformance()
+        });
+    }
+    addPerformanceForm(performance) {
+        var p = this.getEmptyPerformance();
+        Object.keys(p).map((key) =>
+            p[key] = performance[key]
+        );
+        this.setState({
+            performance: p,
+            modal: true
+        });
     }
     getPerformances() {
         const _this = this;
@@ -40,6 +78,10 @@ class Performances extends React.Component {
             }
         });
     }
+    refreshPage() {
+        this.getPerformances();
+        this.closeModal();
+    }
     render() {
         const _this = this;
         const performances = this.state.performances.map((p) =>
@@ -49,7 +91,7 @@ class Performances extends React.Component {
                 <td>{p.fee}</td>
                 <td>{p.progress_name}</td>
                 <td>{p.commission_progress_name}</td>
-                <td><a className="button is-danger" onClick={_this.openForm.bind(_this, p)}>Edit</a></td>
+                <td><a className="button is-danger" onClick={_this.addPerformanceForm.bind(_this, p)}>Edit</a></td>
             </tr>
         );
         return(
@@ -72,7 +114,7 @@ class Performances extends React.Component {
                     {performances}
                     </tbody>
                 </table>
-                <Modal modal={this.state.modal} form={<PerformanceForm performance={this.state.performance} refreshPage={this.getPerformances} />} closeModal={this.closeModal} />
+                <Modal modal={this.state.modal} form={<PerformanceForm performance={this.state.performance} refreshPage={this.refreshPage} />} closeModal={this.closeModal} />
             </div>
         );
     }

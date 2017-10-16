@@ -21,3 +21,8 @@ if ($_GET['action'] == 'getSubServices') {
     $subServices = $sRepo->subServices($_GET['id']);
     echo json_encode($subServices);
 }
+
+if ($_GET['action'] == 'schoolServices') {
+    $schoolServices = $sRepo->schoolServices();
+    echo json_encode($schoolServices);
+}

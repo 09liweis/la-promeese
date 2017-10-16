@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2017 at 02:34 AM
+-- Generation Time: Oct 12, 2017 at 03:54 PM
 -- Server version: 5.5.57-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.22
 
@@ -13,6 +13,38 @@ SET time_zone = "+00:00";
 --
 -- Database: `c9`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `businesses`
+--
+
+CREATE TABLE IF NOT EXISTS `businesses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `service_id` int(11) NOT NULL,
+  `sub_service_id` int(11) NOT NULL,
+  `government_fee` float NOT NULL,
+  `service_fee` float NOT NULL,
+  `post_fee` float NOT NULL,
+  `application_fee` int(11) NOT NULL,
+  `progress_id` int(11) NOT NULL,
+  `commission_progress_id` int(11) NOT NULL,
+  `submit_date` date NOT NULL,
+  `new_date` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT=' 业绩' AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `businesses`
+--
+
+INSERT INTO `businesses` (`id`, `student_id`, `service_id`, `sub_service_id`, `government_fee`, `service_fee`, `post_fee`, `application_fee`, `progress_id`, `commission_progress_id`, `submit_date`, `new_date`) VALUES
+(1, 1, 7, 47, 100, 300, 50, 0, 12, 0, '2017-10-05', '2018-12-19'),
+(2, 1, 4, 19, 0, 1000, 0, 200, 2, 0, '2017-10-05', '2017-12-18'),
+(3, 1, 8, 61, 0, 1000, 10, 1500, 17, 0, '2017-10-21', '2018-10-21'),
+(4, 1, 4, 19, 0, 7000, 23, 4000, 2, 0, '2017-10-20', '2017-12-19');
 
 -- --------------------------------------------------------
 
@@ -53,6 +85,9 @@ INSERT INTO `commission_progresses` (`id`, `name`, `type`) VALUES
 CREATE TABLE IF NOT EXISTS `employees` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(225) NOT NULL,
+  `email` varchar(225) NOT NULL,
+  `password` varchar(225) NOT NULL,
+  `admin_level` int(11) NOT NULL COMMENT '1: super, 2: normal, 3: read only',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
@@ -60,13 +95,39 @@ CREATE TABLE IF NOT EXISTS `employees` (
 -- Dumping data for table `employees`
 --
 
-INSERT INTO `employees` (`id`, `name`) VALUES
-(1, '许诺'),
-(2, '韩露阳'),
-(3, '乔粤'),
-(4, '孙浩棠'),
-(5, '张翊人'),
-(6, '宋海培');
+INSERT INTO `employees` (`id`, `name`, `email`, `password`, `admin_level`) VALUES
+(1, '许诺', 'xunuo@gmail.com', '1234', 1),
+(2, '韩露阳', '', '', 0),
+(3, '乔粤', '', '', 0),
+(4, '孙浩棠', '', '', 0),
+(5, '张翊人', '', '', 0),
+(6, '宋海培', '', '', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `offices`
+--
+
+CREATE TABLE IF NOT EXISTS `offices` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(225) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='客人归属' AUTO_INCREMENT=9 ;
+
+--
+-- Dumping data for table `offices`
+--
+
+INSERT INTO `offices` (`id`, `name`) VALUES
+(1, '多伦多'),
+(2, '哈密尔顿'),
+(3, '伦敦'),
+(4, '密西沙加'),
+(5, '渥太华'),
+(6, '四川'),
+(7, '新疆'),
+(8, '青岛');
 
 -- --------------------------------------------------------
 
@@ -83,14 +144,18 @@ CREATE TABLE IF NOT EXISTS `performances` (
   `progress_id` int(11) NOT NULL,
   `commission_progress_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `performances`
 --
 
 INSERT INTO `performances` (`id`, `student_id`, `service_id`, `sub_service_id`, `fee`, `progress_id`, `commission_progress_id`) VALUES
-(1, 1, 1, 1, 3000, 2, 1);
+(1, 1, 1, 1, 3000, 2, 7),
+(2, 1, 2, 8, 4000, 5, 5),
+(3, 1, 2, 14, 5000, 5, 3),
+(4, 1, 2, 7, 10000, 2, 7),
+(5, 1, 2, 10, 6000, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -252,6 +317,8 @@ INSERT INTO `services` (`id`, `name`, `is_free`) VALUES
 CREATE TABLE IF NOT EXISTS `students` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(225) NOT NULL,
+  `username` varchar(225) DEFAULT NULL,
+  `password` varchar(225) DEFAULT NULL,
   `gender` varchar(225) NOT NULL,
   `dob` date NOT NULL,
   `region_id` int(11) NOT NULL,
@@ -265,18 +332,20 @@ CREATE TABLE IF NOT EXISTS `students` (
   `passport_date` date NOT NULL,
   `phone` varchar(225) NOT NULL,
   `email` varchar(225) NOT NULL,
-  `location_id` int(11) NOT NULL,
+  `office_id` int(11) NOT NULL,
   `agency_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `name`, `gender`, `dob`, `region_id`, `province_id`, `city_id`, `employee_id`, `high_info`, `uni_info`, `visa_info`, `visa_date`, `passport_date`, `phone`, `email`, `location_id`, `agency_id`, `created_at`) VALUES
-(1, 'WEISEN LI', 'WEISEN LI', '1989-12-16', 4, 17, 0, 0, '', 'Canada', '', '0000-00-00', '0000-00-00', '6477601452', 'weisen.li@hotmail.com', 0, 0, '0000-00-00 00:00:00');
+INSERT INTO `students` (`id`, `name`, `username`, `password`, `gender`, `dob`, `region_id`, `province_id`, `city_id`, `employee_id`, `high_info`, `uni_info`, `visa_info`, `visa_date`, `passport_date`, `phone`, `email`, `office_id`, `agency_id`, `updated_at`) VALUES
+(1, 'WEISEN LI', '', '', 'male', '1989-12-16', 4, 17, 0, 1, '', 'Canada', '', '2017-10-20', '2018-01-17', '6477601452', 'weisen.li@hotmail.com', 0, 0, '0000-00-00 00:00:00'),
+(2, 'Sam', NULL, NULL, 'male', '1990-01-02', 2, 8, 0, 2, '二中', '韶关', '学签', '2017-12-12', '2019-02-12', '22222222', 'sam.li@hotmail.com', 1, 0, '2017-10-12 03:09:05'),
+(3, 'Mandy', NULL, NULL, 'femal', '1993-01-23', 8, 32, 0, 4, '社会高中', '社会大学', '工作签证', '2017-12-23', '2019-09-23', '324234234', 'mandy@gmail.com', 1, 0, '2017-10-12 03:14:57');
 
 -- --------------------------------------------------------
 
@@ -287,6 +356,9 @@ INSERT INTO `students` (`id`, `name`, `gender`, `dob`, `region_id`, `province_id
 CREATE TABLE IF NOT EXISTS `sub_services` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(225) NOT NULL,
+  `government_fee` int(11) NOT NULL,
+  `service_fee` int(11) NOT NULL,
+  `post_fee` int(11) NOT NULL,
   `service_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=71 ;
@@ -295,74 +367,74 @@ CREATE TABLE IF NOT EXISTS `sub_services` (
 -- Dumping data for table `sub_services`
 --
 
-INSERT INTO `sub_services` (`id`, `name`, `service_id`) VALUES
-(1, 'Golden Link', 1),
-(2, 'Richmond Hill', 1),
-(3, 'Yorklan High School', 1),
-(4, 'Acumen Academy', 1),
-(5, 'Centennial', 2),
-(6, 'Seneca', 2),
-(7, 'Humber', 2),
-(8, 'George Brown', 2),
-(9, 'Sheridan', 2),
-(10, 'St. Clair', 2),
-(11, 'St. Lawrence', 2),
-(12, 'Cambrian', 2),
-(13, 'Canadore', 2),
-(14, 'Lambton', 2),
-(15, 'Northern', 2),
-(16, 'Fanshawe', 2),
-(17, 'Georgian', 2),
-(18, 'Niagara', 2),
-(19, 'GTDSB', 4),
-(20, 'GTCDSB', 4),
-(21, 'GUGDSB', 4),
-(22, 'Centennial', 5),
-(23, 'Seneca', 5),
-(24, 'Humber', 5),
-(25, 'George Brown', 5),
-(26, 'York University', 5),
-(27, 'Toronto Of University', 5),
-(28, 'Ryerson University', 5),
-(29, 'OCAD University', 5),
-(30, 'University Of Western', 5),
-(31, 'University Of Waterloo', 5),
-(32, 'McMaster University', 5),
-(33, 'Queen’s University', 5),
-(34, 'University Of Guelph', 5),
-(35, 'Carleton University', 5),
-(36, 'University Of Ottawa', 5),
-(37, 'Brock University', 5),
-(38, 'University Of Windsor', 5),
-(39, 'University Of Ontario', 5),
-(40, 'Lakehead University', 5),
-(41, 'Wilfrid Laurier University', 5),
-(42, 'Trent University', 5),
-(43, 'Laurentian University', 5),
-(44, 'Nipissing University', 5),
-(45, 'Algoma University', 5),
-(46, 'Saint Paul University', 5),
-(47, '小签', 7),
-(48, '学签续签', 7),
-(49, '境外学签', 7),
-(50, '身份恢复', 7),
-(51, '毕业工签', 7),
-(52, '配偶工签', 7),
-(53, '学签+小签', 7),
-(54, '过期学签+小签', 7),
-(55, '工签+小签', 7),
-(56, '美签', 7),
-(57, '日签', 7),
-(58, '申根签', 7),
-(59, '护照补办', 7),
-(60, '学签补办', 7),
-(61, '快速通道', 8),
-(62, '联邦自雇', 8),
-(63, '配偶担保', 8),
-(64, '父母担保', 8),
-(65, '难民', 8),
-(66, '省提名学生类别', 8),
-(67, '省提名雇主担保类别', 8),
-(68, '省提名投资类别', 8),
-(69, '真实工作', 9),
-(70, '挂靠', 9);
+INSERT INTO `sub_services` (`id`, `name`, `government_fee`, `service_fee`, `post_fee`, `service_id`) VALUES
+(1, 'Golden Link', 0, 0, 0, 1),
+(2, 'Richmond Hill', 0, 0, 0, 1),
+(3, 'Yorklan High School', 0, 0, 0, 1),
+(4, 'Acumen Academy', 0, 0, 0, 1),
+(5, 'Centennial', 0, 0, 0, 2),
+(6, 'Seneca', 0, 0, 0, 2),
+(7, 'Humber', 0, 0, 0, 2),
+(8, 'George Brown', 0, 0, 0, 2),
+(9, 'Sheridan', 0, 0, 0, 2),
+(10, 'St. Clair', 0, 0, 0, 2),
+(11, 'St. Lawrence', 0, 0, 0, 2),
+(12, 'Cambrian', 0, 0, 0, 2),
+(13, 'Canadore', 0, 0, 0, 2),
+(14, 'Lambton', 0, 0, 0, 2),
+(15, 'Northern', 0, 0, 0, 2),
+(16, 'Fanshawe', 0, 0, 0, 2),
+(17, 'Georgian', 0, 0, 0, 2),
+(18, 'Niagara', 0, 0, 0, 2),
+(19, 'TDSB', 0, 0, 0, 4),
+(20, 'TCDSB', 0, 0, 0, 4),
+(21, 'UGDSB', 0, 0, 0, 4),
+(22, 'Centennial', 0, 0, 0, 5),
+(23, 'Seneca', 0, 0, 0, 5),
+(24, 'Humber', 0, 0, 0, 5),
+(25, 'George Brown', 0, 0, 0, 5),
+(26, 'York University', 0, 0, 0, 5),
+(27, 'Toronto Of University', 0, 0, 0, 5),
+(28, 'Ryerson University', 0, 0, 0, 5),
+(29, 'OCAD University', 0, 0, 0, 5),
+(30, 'University Of Western', 0, 0, 0, 5),
+(31, 'University Of Waterloo', 0, 0, 0, 5),
+(32, 'McMaster University', 0, 0, 0, 5),
+(33, 'Queen’s University', 0, 0, 0, 5),
+(34, 'University Of Guelph', 0, 0, 0, 5),
+(35, 'Carleton University', 0, 0, 0, 5),
+(36, 'University Of Ottawa', 0, 0, 0, 5),
+(37, 'Brock University', 0, 0, 0, 5),
+(38, 'University Of Windsor', 0, 0, 0, 5),
+(39, 'University Of Ontario', 0, 0, 0, 5),
+(40, 'Lakehead University', 0, 0, 0, 5),
+(41, 'Wilfrid Laurier University', 0, 0, 0, 5),
+(42, 'Trent University', 0, 0, 0, 5),
+(43, 'Laurentian University', 0, 0, 0, 5),
+(44, 'Nipissing University', 0, 0, 0, 5),
+(45, 'Algoma University', 0, 0, 0, 5),
+(46, 'Saint Paul University', 0, 0, 0, 5),
+(47, '小签', 0, 0, 0, 7),
+(48, '学签续签', 0, 0, 0, 7),
+(49, '境外学签', 0, 0, 0, 7),
+(50, '身份恢复', 0, 0, 0, 7),
+(51, '毕业工签', 0, 0, 0, 7),
+(52, '配偶工签', 0, 0, 0, 7),
+(53, '学签+小签', 0, 0, 0, 7),
+(54, '过期学签+小签', 0, 0, 0, 7),
+(55, '工签+小签', 0, 0, 0, 7),
+(56, '美签', 0, 0, 0, 7),
+(57, '日签', 0, 0, 0, 7),
+(58, '申根签', 0, 0, 0, 7),
+(59, '护照补办', 0, 0, 0, 7),
+(60, '学签补办', 0, 0, 0, 7),
+(61, '快速通道', 0, 0, 0, 8),
+(62, '联邦自雇', 0, 0, 0, 8),
+(63, '配偶担保', 0, 0, 0, 8),
+(64, '父母担保', 0, 0, 0, 8),
+(65, '难民', 0, 0, 0, 8),
+(66, '省提名学生类别', 0, 0, 0, 8),
+(67, '省提名雇主担保类别', 0, 0, 0, 8),
+(68, '省提名投资类别', 0, 0, 0, 8),
+(69, '真实工作', 0, 0, 0, 9),
+(70, '挂靠', 0, 0, 0, 9);

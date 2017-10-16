@@ -10,7 +10,7 @@ class Modal extends React.Component {
         return (
             <div className={modalClass}>
                 <div className="modal-background" onClick={this.props.closeModal}></div>
-                <div className="modal-card">
+                <div className="modal-card" style={{'width': '100%'}}>
                     <header className="modal-card-head">
                         <p className="modal-card-title">{this.props.title}</p>
                         <button className="delete" aria-label="close" onClick={this.props.closeModal}></button>

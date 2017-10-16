@@ -7,6 +7,7 @@ class StudentForm extends React.Component {
         this.state = {
             regions: [],
             provinces: [],
+            cities: [],
             employees: [],
             offices: [],
             student: {
@@ -25,13 +26,28 @@ class StudentForm extends React.Component {
                 passport_date: '',
                 phone: '',
                 email: '',
+                service: '',
+                service_fee: '',
+                school: '',
+                progress: '',
                 office_id: '',
                 agency_id: ''
             }
         };
         this.getProvinces = this.getProvinces.bind(this);
+        this.getCities = this.getCities.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    componentWillReceiveProps(nextProps) {
+        if (typeof nextProps.student != 'undefined') {
+            const student = nextProps.student;
+            this.getProvinces(student.region_id);
+            this.getCities(student.province_id);
+            this.setState({
+                student: student
+            });   
+        }
     }
     componentDidMount() {
         const _this = this;
@@ -74,7 +90,18 @@ class StudentForm extends React.Component {
             }
         });
     }
-    
+    getCities(id) {
+        const _this = this;
+        $.ajax({
+            url: '/admin/controllers/location.php?action=getCities',
+            data: {id: id},
+            success(res) {
+                _this.setState({
+                    cities: res
+                });
+            }
+        });
+    }
     handleChange(e) {
         const p = e.target.name;
         const v = e.target.value;
@@ -87,6 +114,10 @@ class StudentForm extends React.Component {
         if (p == 'region_id') {
             this.getProvinces(v);
         }
+        if (p == 'province_id') {
+            this.getCities(v);
+        }
+        
     }
     handleSubmit(e) {
         e.preventDefault();
@@ -108,6 +139,9 @@ class StudentForm extends React.Component {
         const provinces = this.state.provinces.map((p) =>
             <option key={p.id} value={p.id}>{p.name}</option>
         );
+        const cities = this.state.cities.map((c) =>
+            <option key={c.id} value={c.id}>{c.name}</option>
+        );
         const employees = this.state.employees.map((e) =>
             <option key={e.id} value={e.id}>{e.name}</option>
         );
@@ -116,7 +150,6 @@ class StudentForm extends React.Component {
         );
         return(
             <form onSubmit={this.handleSubmit}>
-                <input type="hidden" value={student.id} name="id" onChange={this.handleChange} />
                 <div className="columns">
                     <div className="field column is-2">
                         <label className="label">姓名</label>
@@ -189,6 +222,7 @@ class StudentForm extends React.Component {
                             <div className="select">
                                 <select name="city_id" value={student.city_id} onChange={this.handleChange}>
                                     <option>Please Select</option>
+                                    {cities}
                                 </select>
                             </div>
                         </div>
@@ -227,13 +261,13 @@ class StudentForm extends React.Component {
                     <div className="field column is-2">
                         <label className="label">签证日期</label>
                         <div className="control">
-                            <input className="input" type="text" name="visa_date" value={student.visa_date} onChange={this.handleChange} />
+                            <input className="input" type="date" name="visa_date" value={student.visa_date} onChange={this.handleChange} />
                         </div>
                     </div>
                     <div className="field column is-2">
                         <label className="label">护照日期</label>
                         <div className="control">
-                            <input className="input" type="text" name="passport_date" value={student.passport_date} onChange={this.handleChange} />
+                            <input className="input" type="date" name="passport_date" value={student.passport_date} onChange={this.handleChange} />
                         </div>
                     </div>
                     
