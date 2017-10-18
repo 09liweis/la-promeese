@@ -2,6 +2,7 @@
 
 require '../models/Database.php';
 require '../models/Business.php';
+require '../models/Student.php';
 
 header('Content-Type: application/json');
 
@@ -14,5 +15,7 @@ if ($_GET['action'] == 'getBusinesses') {
 
 if ($_GET['action'] == 'upsertBusiness') {
     $bRepo->upsert($_POST);
+    $sRepo = new Student(Database::dbConnect());
+    $sRepo->updateStudent($_POST);
     echo json_encode('ok');
 }

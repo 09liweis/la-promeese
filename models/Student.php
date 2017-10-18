@@ -1,5 +1,6 @@
 <?php
 require 'Service.php';
+require 'Progress.php';
 
 class Student {
     private $db;
@@ -17,7 +18,10 @@ class Student {
                 e.name AS employee_name,
                 s.updated_at AS updated_at,
                 s.agency_id AS agency_id,
-                a.name AS agency_name
+                a.name AS agency_name,
+                s.service AS service,
+                s.service_fee AS service_fee,
+                s.progress AS progress
                 FROM 
                 students s
                 JOIN employees e ON s.employee_id = e.id
@@ -96,13 +100,18 @@ class Student {
         $service_fee = $student['fee'];
         $progress_id = $student['progress_id'];
         $sRepo = new Service(Database::dbConnect());
+        $pRepo = new Progress(Database::dbConnect());
         $service = $sRepo->getService($service_id);
         $subService = $sRepo->getSubService($sub_service_id);
+        $progress = $pRepo->getProgress($progress_id);
+        $progress_name = $progress['name'];
         $sql = 'UPDATE students SET
                 service = :service,
-                service_fee = :service_fee
+                service_fee = :service_fee,
+                progress = :progress
                 WHERE id = :id';
         $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':progress', $progress_name, PDO::PARAM_STR);
         $pdostmt->bindValue(':service', $service['name'], PDO::PARAM_STR);
         $pdostmt->bindValue(':service_fee', $service_fee, PDO::PARAM_INT);
         $pdostmt->bindValue(':id', $student_id, PDO::PARAM_INT);

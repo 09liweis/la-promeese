@@ -24,6 +24,7 @@ if ($_GET['action'] == 'login') {
         $_SESSION['name'] = $employee['name'];
         $_SESSION['email'] = $employee['email'];
         $_SESSION['admin_level'] = $employee['admin_level'];
+        $empRepo->updateLastLogin($employee['id']);
         echo json_encode(array('code' => 200, 'data' => $_SESSION));
     } else {
         echo json_encode(array('code' => 404));
@@ -32,6 +33,7 @@ if ($_GET['action'] == 'login') {
 
 if ($_GET['action'] == 'checkSession') {
     if (isset($_SESSION['id'])) {
+        $empRepo->updateLastLogin($_SESSION['id']);
         echo json_encode(array('code' => 200, 'data' => $_SESSION));
     } else {
         echo json_encode(array('code' => 404, 'msg' => 'Not Login'));
@@ -40,5 +42,10 @@ if ($_GET['action'] == 'checkSession') {
 
 if ($_GET['action'] == 'logout') {
     session_destroy();
+    echo json_encode(array('code' => 200));
+}
+
+if ($_GET['action'] == 'upsertEmployee') {
+    $empRepo->upsert($_POST);
     echo json_encode(array('code' => 200));
 }

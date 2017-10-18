@@ -19,4 +19,13 @@ class Progress {
         $progresses = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         return $progresses;
     }
+    
+    public function getProgress($progress_id) {
+        $sql = 'SELECT * FROM progresses WHERE id = :progress_id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':progress_id', $progress_id, PDO::PARAM_INT);
+        $pdostmt->execute();
+        $progress = $pdostmt->fetch(PDO::FETCH_ASSOC);
+        return $progress;
+    }
 }

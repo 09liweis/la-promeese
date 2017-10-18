@@ -52,11 +52,11 @@ class Home extends React.Component {
                 <th>{s.agency_name}</th>
                 <th>{s.employee_name}</th>
                 <th></th>
-                <th></th>
-                <th>$$$</th>
+                <th>{s.service}</th>
+                <th>{s.service_fee}</th>
                 <th>school</th>
-                <th>{s.location_id}</th>
-                <th></th>
+                <th>{s.office_name}</th>
+                <th>{s.progress}</th>
                 <th>{s.updated_at}</th>
             </tr>
         );
