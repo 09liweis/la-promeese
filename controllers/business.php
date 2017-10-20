@@ -19,3 +19,8 @@ if ($_GET['action'] == 'upsertBusiness') {
     $sRepo->updateStudent($_POST);
     echo json_encode('ok');
 }
+
+if ($_GET['action'] == 'removeBusiness') {
+    $bRepo->remove($_POST['id']);
+    echo json_encode('ok');
+}

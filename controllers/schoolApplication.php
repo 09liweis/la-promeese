@@ -19,3 +19,8 @@ if ($_GET['action'] == 'upsertApplication') {
     $sRepo->updateStudent($_POST);
     echo json_encode('ok');
 }
+
+if ($_GET['action'] == 'removeSchoolApplication') {
+    $sRepo->remove($_POST['id']);
+    echo json_encode('ok');
+}

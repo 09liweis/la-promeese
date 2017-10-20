@@ -100,16 +100,18 @@ class StudentDetail extends React.Component {
                         <p>Agency: {s.agency_name}</p>
                     </div>
                     </div>
+                    {(this.props.user.admin_level != 3) ?
                     <a className="button is-danger" onClick={this.edit}>编辑学生</a>
+                    :null}
                 </div>;
         }
         return(
             <div className="">
                 {student}
                 <Modal modal={this.state.modal} closeModal={this.closeModal} form={<StudentForm student={this.state.student} refreshPage={this.refreshPage} />} />
-                <Performances id={this.state.student.id} />
-                <Businesses id={this.state.student.id} />
-                <SchoolApplicatoins id={this.state.student.id} />
+                <Performances id={this.state.student.id} user={this.props.user} />
+                <Businesses id={this.state.student.id} user={this.props.user} />
+                <SchoolApplicatoins id={this.state.student.id} user={this.props.user} />
             </div>
         );
     }

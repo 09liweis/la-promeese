@@ -159,136 +159,149 @@ class StudentForm extends React.Component {
         return(
             <form onSubmit={this.handleSubmit}>
                 <div className="columns">
-                    <div className="field column is-2">
-                        <label className="label">姓名</label>
-                        <div className="control">
-                            <input className="input" type="text" name="name" value={student.name} onChange={this.handleChange} />
+                    <div className="column is-2">
+                        <div className="field">
+                            <label className="label">姓名</label>
+                            <div className="control">
+                                <input className="input" type="text" name="name" value={student.name} onChange={this.handleChange} />
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">性别</label>
+                            <div className="control">
+                                <div className="select">
+                                    <select name="gender" value={student.gender} onChange={this.handleChange}>
+                                        <option>Please Select</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">生日</label>
+                            <div className="control">
+                                <input className="input" type="date" name="dob" value={student.dob} onChange={this.handleChange} />
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">电话</label>
+                            <div className="control">
+                                <input className="input" type="text" name="phone" value={student.phone} onChange={this.handleChange} />
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">Email</label>
+                            <div className="control">
+                                <input className="input" type="text" name="email" value={student.email} onChange={this.handleChange} />
+                            </div>
                         </div>
                     </div>
-                    <div className="field column is-2">
-                        <label className="label">性别</label>
-                        <div className="control">
-                            <input className="input" type="text" name="gender" value={student.gender} onChange={this.handleChange} />
+                    <div className="column is-2">
+                        <div className="field">
+                            <label className="label">客人归属</label>
+                            <div className="control">
+                                <div className="select">
+                                    <select name="office_id" value={student.office_id} onChange={this.handleChange}>
+                                        <option>Please Select</option>
+                                        {offices}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">地区</label>
+                            <div className="control">
+                                <div className="select">
+                                    <select name="region_id" value={student.region_id} onChange={this.handleChange}>
+                                        <option>Please Select</option>
+                                        {regions}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">省份</label>
+                            <div className="control">
+                                <div className="select">
+                                    <select name="province_id" value={student.province_id} onChange={this.handleChange}>
+                                        <option>Please Select</option>
+                                        {provinces}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">城市</label>
+                            <div className="control">
+                                <div className="select">
+                                    <select name="city_id" value={student.city_id} onChange={this.handleChange}>
+                                        <option>Please Select</option>
+                                        {cities}
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className="field column is-2">
-                        <label className="label">生日</label>
-                        <div className="control">
-                            <input className="input" type="date" name="dob" value={student.dob} onChange={this.handleChange} />
+                    <div className="column is-2">
+                        <div className="field">
+                            <label className="label">签证信息</label>
+                            <div className="control">
+                                <input className="input" type="text" name="visa_info" value={student.visa_info} onChange={this.handleChange} />
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">签证日期</label>
+                            <div className="control">
+                                <input className="input" type="date" name="visa_date" value={student.visa_date} onChange={this.handleChange} />
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">护照日期</label>
+                            <div className="control">
+                                <input className="input" type="date" name="passport_date" value={student.passport_date} onChange={this.handleChange} />
+                            </div>
                         </div>
                     </div>
-                    <div className="field column is-2">
-                        <label className="label">电话</label>
-                        <div className="control">
-                            <input className="input" type="text" name="phone" value={student.phone} onChange={this.handleChange} />
+                    <div className="column is-2">
+                        <div className="field">
+                            <label className="label">中国高中信息</label>
+                            <div className="control">
+                                <input className="input" type="text" name="high_info" value={student.high_info} onChange={this.handleChange} />
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">中国大学信息</label>
+                            <div className="control">
+                                <input className="input" type="text" name="uni_info" value={student.uni_info} onChange={this.handleChange} />
+                            </div>
                         </div>
                     </div>
-                    <div className="field column is-2">
-                        <label className="label">Email</label>
-                        <div className="control">
-                            <input className="input" type="text" name="email" value={student.email} onChange={this.handleChange} />
+                    <div className="column is-2">
+                        <div className="field">
+                            <label className="label">责任客服</label>
+                            <div className="control">
+                                <div className="select">
+                                    <select name="employee_id" value={student.employee_id} onChange={this.handleChange}>
+                                        <option>Please Select</option>
+                                        {employees}
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className="field column is-2">
-                        <label className="label">客人归属</label>
-                        <div className="control">
-                            <div className="select">
-                                <select name="office_id" value={student.office_id} onChange={this.handleChange}>
-                                    <option>Please Select</option>
-                                    {offices}
-                                </select>
+                        <div className="field">
+                            <label className="label">代理公司</label>
+                            <div className="control">
+                                <input className="input" type="text" name="agency_id" value={student.agency_id} onChange={this.handleChange} />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="columns">
-                    <div className="field column is-4-mobile">
-                        <label className="label">地区</label>
-                        <div className="control">
-                            <div className="select">
-                                <select name="region_id" value={student.region_id} onChange={this.handleChange}>
-                                    <option>Please Select</option>
-                                    {regions}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="field column is-4-mobile">
-                        <label className="label">省份</label>
-                        <div className="control">
-                            <div className="select">
-                                <select name="province_id" value={student.province_id} onChange={this.handleChange}>
-                                    <option>Please Select</option>
-                                    {provinces}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="field column is-4-mobile">
-                        <label className="label">城市</label>
-                        <div className="control">
-                            <div className="select">
-                                <select name="city_id" value={student.city_id} onChange={this.handleChange}>
-                                    <option>Please Select</option>
-                                    {cities}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="field">
-                    <label className="label">责任客服</label>
-                    <div className="control">
-                        <div className="select">
-                            <select name="employee_id" value={student.employee_id} onChange={this.handleChange}>
-                                <option>Please Select</option>
-                                {employees}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div className="columns">
-                    <div className="field column is-2">
-                        <label className="label">中国高中信息</label>
-                        <div className="control">
-                            <input className="input" type="text" name="high_info" value={student.high_info} onChange={this.handleChange} />
-                        </div>
-                    </div>
-                    <div className="field column is-2">
-                        <label className="label">中国大学信息</label>
-                        <div className="control">
-                            <input className="input" type="text" name="uni_info" value={student.uni_info} onChange={this.handleChange} />
-                        </div>
-                    </div>
-                    <div className="field column is-2">
-                        <label className="label">签证信息</label>
-                        <div className="control">
-                            <input className="input" type="text" name="visa_info" value={student.visa_info} onChange={this.handleChange} />
-                        </div>
-                    </div>
-                    <div className="field column is-2">
-                        <label className="label">签证日期</label>
-                        <div className="control">
-                            <input className="input" type="date" name="visa_date" value={student.visa_date} onChange={this.handleChange} />
-                        </div>
-                    </div>
-                    <div className="field column is-2">
-                        <label className="label">护照日期</label>
-                        <div className="control">
-                            <input className="input" type="date" name="passport_date" value={student.passport_date} onChange={this.handleChange} />
-                        </div>
-                    </div>
                     
-                    <div className="field column is-2">
-                        <label className="label">代理公司</label>
-                        <div className="control">
-                            <input className="input" type="text" name="agency_id" value={student.agency_id} onChange={this.handleChange} />
-                        </div>
-                    </div>
-                </div>
+                    
                 <div className="field">
                     <div className="control">
-                        <input className="button" type="submit" value="Submit" />
+                        <input className="button is-primary" type="submit" value="Submit" />
                     </div>
                 </div>
             </form>

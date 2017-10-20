@@ -9,7 +9,7 @@ class SchoolApplication {
         $sql = 'SELECT 
                 pga.id AS id,
                 pga.service_id AS service_id,
-                s.name AS servcie_name,
+                s.name AS service_name,
                 pga.ouac_account AS ouac_account,
                 pga.ouac_password AS ouac_password,
                 pga.email AS email,
@@ -49,6 +49,13 @@ class SchoolApplication {
         foreach ($school as $c => $v) {
             $pdostmt->bindValue(':' . $c, $v, PDO::PARAM_INT);
         }
+        $pdostmt->execute();
+    }
+    
+    public function remove($id) {
+        $sql = 'DELETE FROM post_graduate_applications WHERE id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
         $pdostmt->execute();
     }
 }

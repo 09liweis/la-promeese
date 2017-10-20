@@ -1,6 +1,7 @@
 html, 
 body {
     height: 100%;
+    background: #eef2f3;
 }
 .wrapper {
     background: #eef2f3;
@@ -18,4 +19,8 @@ body {
 
 .container {
     margin-top: 40px;
+}
+
+.is-warning {
+    margin-right: 5px;
 }

@@ -126,79 +126,82 @@ class BusinessForm extends React.Component {
         
         return (
             <form className="columns is-multiline" autoComplete="off" onSubmit={this.handleSubmit}>
-                <div className="field column is-2">
-                    <label className="label">服务</label>
-                    <div className="control">
-                        <div className="select">
-                            <select name="service_id" value={business.service_id} onChange={this.handleChange}>
-                                <option>Please Select</option>
-                                {services}
-                            </select>
+                <div className="column is-2">
+                    <div className="field">
+                        <label className="label">服务</label>
+                        <div className="control">
+                            <div className="select">
+                                <select name="service_id" value={business.service_id} onChange={this.handleChange}>
+                                    <option>Please Select</option>
+                                    {services}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">副服务</label>
+                        <div className="control">
+                            <div className="select">
+                                <select name="sub_service_id" value={business.sub_service_id} onChange={this.handleChange}>
+                                    <option>Please Select</option>
+                                    {subServices}
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className="field column is-2">
-                    <label className="label">副服务</label>
-                    <div className="control">
-                        <div className="select">
-                            <select name="sub_service_id" value={business.sub_service_id} onChange={this.handleChange}>
-                                <option>Please Select</option>
-                                {subServices}
-                            </select>
+                <div className="column is-2">
+                    {(business.service_id == '7') ?
+                    <div className="field">
+                        <label className="label">政府费</label>
+                        <div className="control">
+                            <input className="input" type="text" name="government_fee" value={business.government_fee} onChange={this.handleChange} />
+                        </div>
+                    </div>
+                    :
+                    <div className="field">
+                        <label className="label">申请费</label>
+                        <div className="control">
+                            <input className="input" type="text" name="application_fee" value={business.application_fee} onChange={this.handleChange} />
+                        </div>
+                    </div>
+                    }
+                    <div className="field">
+                        <label className="label">服务费</label>
+                        <div className="control">
+                            <input className="input" type="text" name="service_fee" value={business.service_fee} onChange={this.handleChange} />
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">邮寄费</label>
+                        <div className="control">
+                            <input className="input" type="text" name="post_fee" value={business.post_fee} onChange={this.handleChange} />
                         </div>
                     </div>
                 </div>
-                {(business.service_id == '7') ?
-                <div className="field column is-2">
-                    <label className="label">政府费</label>
-                    <div className="control">
-                        <input className="input" type="text" name="government_fee" value={business.government_fee} onChange={this.handleChange} />
-                    </div>
-                </div>
-                :
-                <div className="field column is-2">
-                    <label className="label">申请费</label>
-                    <div className="control">
-                        <input className="input" type="text" name="application_fee" value={business.application_fee} onChange={this.handleChange} />
-                    </div>
-                </div>
-                }
-                <div className="field column is-2">
-                    <label className="label">服务费</label>
-                    <div className="control">
-                        <input className="input" type="text" name="service_fee" value={business.service_fee} onChange={this.handleChange} />
-                    </div>
-                </div>
-                <div className="field column is-2">
-                    <label className="label">邮寄费</label>
-                    <div className="control">
-                        <input className="input" type="text" name="post_fee" value={business.post_fee} onChange={this.handleChange} />
-                    </div>
-                </div>
-                <div className="field column is-2">
-                    收据
-                </div>
-                <div className="field column is-2">
-                    <label className="label">递交时间</label>
-                    <div className="control">
-                        <input className="input" type="date" name="submit_date" value={business.submit_date} onChange={this.handleChange} />
-                    </div>
-                </div>
-                <div className="field column is-4">
-                    <label className="label">进度</label>
-                    <div className="control">
-                        <div className="select">
-                            <select name="progress_id" value={business.progress_id} onChange={this.handleChange}>
-                                <option>Please Select</option>
-                                {progresses}
-                            </select>
+                <div className="column is-2">
+                    <div className="field">
+                        <label className="label">递交时间</label>
+                        <div className="control">
+                            <input className="input" type="date" name="submit_date" value={business.submit_date} onChange={this.handleChange} />
                         </div>
                     </div>
-                </div>
-                <div className="field column is-2">
-                    <label className="label">{newDateDes}</label>
-                    <div className="control">
-                        <input className="input" type="date" name="new_date" value={business.new_date} onChange={this.handleChange} />
+                    <div className="field">
+                        <label className="label">进度</label>
+                        <div className="control">
+                            <div className="select">
+                                <select name="progress_id" value={business.progress_id} onChange={this.handleChange}>
+                                    <option>Please Select</option>
+                                    {progresses}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">{newDateDes}</label>
+                        <div className="control">
+                            <input className="input" type="date" name="new_date" value={business.new_date} onChange={this.handleChange} />
+                        </div>
                     </div>
                 </div>
                 <div className="field column">

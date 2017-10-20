@@ -18,6 +18,7 @@ class SchoolApplicationForm extends React.Component {
         this.getProgresses = this.getProgresses.bind(this);
         this.addSchool = this.addSchool.bind(this);
         this.handleSchoolChange = this.handleSchoolChange.bind(this);
+        this.handleSchoolRemove = this.handleSchoolRemove.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.getSubServiceName = this.getSubServiceName.bind(this);
         this.getProgressName = this.getProgressName.bind(this);
@@ -138,6 +139,13 @@ class SchoolApplicationForm extends React.Component {
             applications: applications
         });
     }
+    handleSchoolRemove(a, i, e) {
+        var applications = this.state.applications;
+        applications.splice(i, 1);
+        this.setState({
+            applications: applications
+        });
+    }
     getSubServiceName(id) {
         const length = this.state.subServices.length;
         for (var i = 0; i < length; i++) {
@@ -184,7 +192,7 @@ class SchoolApplicationForm extends React.Component {
             <option key={c.id} value={c.id}>{c.name}</option>
         );
         const applications = this.state.applications.map((a, i) =>
-            <div key={i} className="columns">
+            <div key={i} className="columns is-multiline">
                 <div className="field column is-2">
                     <label className="label">学校</label>
                     <div className="control">
@@ -242,6 +250,9 @@ class SchoolApplicationForm extends React.Component {
                             </select>
                         </div>
                     </div>
+                </div>
+                <div className="column is-2">
+                    <a className="button is-primary" onClick={_this.handleSchoolRemove.bind(_this, a, i)}>Remove</a>
                 </div>
             </div>
         );

@@ -36,17 +36,14 @@ class App extends React.Component {
     });
   }
   handleLogout() {
-    this.setState({
-      user: {id: 0},
-      login: false
-    });
+    window.location = '/admin';
   }
   render() {
     return (
       <div className="wrapper">
         <Header user={this.state.user} handleLogout={this.handleLogout} />
         {this.state.login ?
-        <Main />
+        <Main user={this.state.user} />
         : <Login handleLogin={this.handleLogin} />
         }
       </div>

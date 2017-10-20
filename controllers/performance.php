@@ -19,3 +19,8 @@ if ($_GET['action'] == 'upsertPerformance') {
     $sRepo->updateStudent($_POST);
     echo json_encode('ok');
 }
+
+if ($_GET['action'] == 'removePerformance') {
+    $pRepo->remove($_POST['id']);
+    echo json_encode('ok');
+}

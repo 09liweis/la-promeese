@@ -3,6 +3,7 @@ import $ from 'jquery';
 
 import Modal from './Modal.jsx';
 import SchoolApplicationForm from './SchoolApplicationForm.jsx';
+import SchoolApplication from './SchoolApplication.jsx';
 
 class SchoolApplicatoins extends React.Component {
     constructor(props) {
@@ -20,6 +21,7 @@ class SchoolApplicatoins extends React.Component {
         this.closeModal = this.closeModal.bind(this);
         this.refreshPage = this.refreshPage.bind(this);
         this.edit = this.edit.bind(this);
+        this.remove = this.remove.bind(this);
     }
     
     componentDidMount() {
@@ -78,6 +80,17 @@ class SchoolApplicatoins extends React.Component {
             application: this.getNewSchoolApplication()
         });
     }
+    remove(b) {
+        const _this = this;
+        $.ajax({
+            url: '/admin/controllers/schoolApplication.php?action=removeSchoolApplication',
+            method: 'POST',
+            data: {id: b.id},
+            success(res) {
+                _this.refreshPage();
+            }
+        });
+    }
     refreshPage() {
         this.getSchoolApplications();
         this.closeModal();
@@ -85,13 +98,14 @@ class SchoolApplicatoins extends React.Component {
     render() {
         const _this = this;
         const applications = this.state.applications.map((a) =>
-            <div key={a.id}>
-                <a className="button is-danger" onClick={_this.edit.bind(_this, a)}>编辑</a>
-            </div>
+            <SchoolApplication user={_this.props.user} key={a.id} application={a} edit={_this.edit.bind(_this, a)} remove={_this.remove.bind(_this, a)} />
         );
         return(
             <div className="card">
+                <h2 className="is-size-3 has-text-centered">学校申请</h2>
+                {(this.props.user.admin_level != 3) ?
                 <a className="button is-primary" onClick={this.openForm}>添加学校申请</a>
+                :null}
                 {applications}
                 <Modal form={<SchoolApplicationForm application={this.state.application} refreshPage={this.refreshPage} />} modal={this.state.modal} closeModal={this.closeModal} />
             </div>

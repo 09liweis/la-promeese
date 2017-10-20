@@ -48,35 +48,31 @@ class Home extends React.Component {
                 <th><Link to={`/admin/student/${s.id}`}>{s.name}</Link></th>
                 <th>{s.visa_date}</th>
                 <th>{s.passport_date}</th>
-                <th>{s.phone}</th>
-                <th>{s.agency_name}</th>
                 <th>{s.employee_name}</th>
                 <th></th>
                 <th>{s.service}</th>
                 <th>{s.service_fee}</th>
                 <th>school</th>
-                <th>{s.office_name}</th>
                 <th>{s.progress}</th>
                 <th>{s.updated_at}</th>
             </tr>
         );
         return(
             <div className="card">
+                {(this.props.user.admin_level != 3) ?
                 <a className="button is-primary" onClick={this.addStudent}>添加学生</a>
+                :null}
                 <table className="table is-fullwidth is-striped is-narrow">
                     <thead>
                         <tr>
                             <th>姓名</th>
                             <th>签证到期日</th>
                             <th>护照到期日</th>
-                            <th>联系方式</th>
-                            <th>代理公司</th>
                             <th>责任客服</th>
                             <th>责任文案</th>
                             <th>服务内容</th>
                             <th>服务金额</th>
                             <th>学校</th>
-                            <th>客人归属</th>
                             <th>进度</th>
                             <th>更新时间</th>
                         </tr>

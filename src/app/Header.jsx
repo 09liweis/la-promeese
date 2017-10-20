@@ -38,10 +38,14 @@ class Header extends React.Component {
                     {this.state.user.admin_level == 1 ?
                     <Link to="/admin/cms" className="navbar-item">Admin</Link>
                     : null}
-                    { this.state.user.id != 0 ?
-                    <a className="button is-danger" onClick={this.logout}>Logout</a>
-                    : null}
                 </div>
+                { this.state.user.id != 0 ?
+                <div className="navbar-end">
+                    <div className="navbar-item">
+                        <a className="button is-danger" onClick={this.logout}>Logout</a>
+                    </div>
+                </div>
+                : null}
             </nav>
         );
     }

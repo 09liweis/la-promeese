@@ -19,6 +19,7 @@ class Performances extends React.Component {
         this.getEmptyPerformance = this.getEmptyPerformance.bind(this);
         this.getNewPerformance = this.getNewPerformance.bind(this);
         this.refreshPage = this.refreshPage.bind(this);
+        this.remove = this.remove.bind(this);
     }
     componentWillReceiveProps(nextProps) {
         const student_id = nextProps.id;
@@ -35,6 +36,7 @@ class Performances extends React.Component {
         this.setState({
             modal: true
         });
+        this.getNewPerformance();
     }
     componentDidMount() {
         this.getNewPerformance();
@@ -78,6 +80,17 @@ class Performances extends React.Component {
             }
         });
     }
+    remove(p) {
+        const _this = this;
+        $.ajax({
+            url: '/admin/controllers/performance.php?action=removePerformance',
+            method: 'POST',
+            data: {id: p.id},
+            success(res) {
+                _this.refreshPage();
+            }
+        });
+    }
     refreshPage() {
         this.getPerformances();
         this.closeModal();
@@ -91,13 +104,20 @@ class Performances extends React.Component {
                 <td>{p.fee}</td>
                 <td>{p.progress_name}</td>
                 <td>{p.commission_progress_name}</td>
-                <td><a className="button is-danger" onClick={_this.addPerformanceForm.bind(_this, p)}>Edit</a></td>
+                {(this.props.user.admin_level != 3) ?
+                <td>
+                    <a className="button is-warning" onClick={_this.addPerformanceForm.bind(_this, p)}>Edit</a>
+                    <a className="button is-danger" onClick={_this.remove.bind(_this, p)}>Delete</a>
+                </td>
+                :null}
             </tr>
         );
         return(
             <div className="card">
-                <h2>业绩</h2>
+                <h2 className="is-size-3 has-text-centered">业绩</h2>
+                {(this.props.user.admin_level != 3) ?
                 <button className="button is-primary" onClick={this.openForm}>添加</button>
+                :null}
                 <table className="table is-fullwidth is-striped is-narrow">
                     <thead>
                     <tr>
@@ -106,7 +126,6 @@ class Performances extends React.Component {
                         <th>学费</th>
                         <th>进度</th>
                         <th>佣金申报</th>
-                        <th>客人归属</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
