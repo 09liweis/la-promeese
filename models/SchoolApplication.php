@@ -18,11 +18,17 @@ class SchoolApplication {
                 pga.commission_progress_id AS commission_progress_id,
                 cp.name AS commission_progress_name,
                 pga.schools AS schools,
-                pga.student_id AS student_id
+                pga.student_id AS student_id,
+                pga.employee_id AS employee_id,
+                e.name AS employee_name,
+                pga.employee_material_id AS employee_material_id,
+                em.name AS employee_material_name
                 FROM 
                 post_graduate_applications pga
                 JOIN services s ON pga.service_id = s.id
                 JOIN commission_progresses cp ON pga.commission_progress_id = cp.id
+                JOIN employees e ON pga.employee_id = e.id
+                JOIN employees_material em ON pga.employee_material_id = em.id
                 WHERE pga.student_id = :student_id';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':student_id', $student_id);

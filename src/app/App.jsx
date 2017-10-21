@@ -50,7 +50,7 @@ class App extends React.Component {
         {(this.state.loading) ?
         <div className="modal is-active">
         <div id="loading" className="modal-background"></div>
-        <div className="button is-loading"></div>
+        <div className="button is-primary is-loading">Loading</div>
         </div>
         :null
         }

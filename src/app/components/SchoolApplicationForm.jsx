@@ -10,7 +10,9 @@ class SchoolApplicationForm extends React.Component {
             services: [],
             subServices: [],
             progresses: [],
-            commissionProgresses: []
+            commissionProgresses: [],
+            employees: [],
+            employeesMaterial: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.getServices = this.getServices.bind(this);
@@ -42,6 +44,25 @@ class SchoolApplicationForm extends React.Component {
     componentDidMount() {
         this.getServices();
         this.getCommissionProgresses();
+        const _this = this;
+        $.ajax({
+            url: '/admin/controllers/employee.php?action=getEmployees',
+            data: {type: 'free'},
+            success(res) {
+                _this.setState({
+                    employees: res
+                });
+            }
+        });
+        $.ajax({
+            url: '/admin/controllers/employee.php?action=getEmployeesMaterial',
+            data: {type: 'free'},
+            success(res) {
+                _this.setState({
+                    employeesMaterial: res
+                });
+            }
+        });
     }
     handleChange(e) {
         const p = e.target.name;
@@ -191,6 +212,12 @@ class SchoolApplicationForm extends React.Component {
         const commissionProgresses = this.state.commissionProgresses.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
         );
+        const employees = this.state.employees.map((c) =>
+            <option key={c.id} value={c.id}>{c.name}</option>
+        );
+        const employeesMaterial = this.state.employeesMaterial.map((c) =>
+            <option key={c.id} value={c.id}>{c.name}</option>
+        );
         const applications = this.state.applications.map((a, i) =>
             <div key={i} className="columns is-multiline">
                 <div className="field column is-2">
@@ -271,14 +298,14 @@ class SchoolApplicationForm extends React.Component {
                         </div>
                     </div>
                     {(application.service_id == '5') ?
-                    <div>
-                    <div className="field column">
+                    <div className="column">
+                    <div className="field">
                         <label className="label">OUAC account</label>
                         <div className="control">
                             <input className="input" type="text" name="ouac_account" value={application.ouac_account} onChange={this.handleChange} />
                         </div>
                     </div>
-                    <div className="field column">
+                    <div className="field">
                         <label className="label">OUAC password</label>
                         <div className="control">
                             <input className="input" type="text" name="ouac_password" value={application.ouac_password} onChange={this.handleChange} />
@@ -286,16 +313,18 @@ class SchoolApplicationForm extends React.Component {
                     </div>
                     </div>
                     : null }
-                    <div className="field column">
-                        <label className="label">Email</label>
-                        <div className="control">
-                            <input className="input" type="text" name="email" value={application.email} onChange={this.handleChange} />
+                    <div className="column">
+                        <div className="field">
+                            <label className="label">Email</label>
+                            <div className="control">
+                                <input className="input" type="text" name="email" value={application.email} onChange={this.handleChange} />
+                            </div>
                         </div>
-                    </div>
-                    <div className="field column">
-                        <label className="label">Email password</label>
-                        <div className="control">
-                            <input className="input" type="text" name="email_password" value={application.email_password} onChange={this.handleChange} />
+                        <div className="field">
+                            <label className="label">Email password</label>
+                            <div className="control">
+                                <input className="input" type="text" name="email_password" value={application.email_password} onChange={this.handleChange} />
+                            </div>
                         </div>
                     </div>
                     <div className="field column">
@@ -312,6 +341,30 @@ class SchoolApplicationForm extends React.Component {
                                     <option>Please Select</option>
                                     {commissionProgresses}
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="column">
+                        <div className="field">
+                            <label className="label">责任服务</label>
+                            <div className="control">
+                                <div className="select">
+                                    <select name="employee_id" value={application.employee_id} onChange={this.handleChange}>
+                                        <option>Please Select</option>
+                                        {employees}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">责任文案</label>
+                            <div className="control">
+                                <div className="select">
+                                    <select name="employee_material_id" value={application.employee_material_id} onChange={this.handleChange}>
+                                        <option>Please Select</option>
+                                        {employeesMaterial}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
