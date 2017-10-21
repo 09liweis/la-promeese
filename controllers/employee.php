@@ -14,6 +14,11 @@ if ($_GET['action'] == 'getEmployees') {
     echo json_encode($employees);
 }
 
+if ($_GET['action'] == 'getEmployeesMaterial') {
+    $employees = $empRepo->employeesMaterial();
+    echo json_encode($employees);
+}
+
 if ($_GET['action'] == 'login') {
     $user = $_POST['user'];
     $email = $user['email'];

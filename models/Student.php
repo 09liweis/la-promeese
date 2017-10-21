@@ -21,10 +21,13 @@ class Student {
                 a.name AS agency_name,
                 s.service AS service,
                 s.service_fee AS service_fee,
-                s.progress AS progress
+                s.progress AS progress,
+                e.name AS employee_name,
+                em.name AS employee_material_name
                 FROM 
                 students s
                 JOIN employees e ON s.employee_id = e.id
+                JOIN employees_material em ON s.employee_material_id = em.id
                 LEFT JOIN agencies a ON s.agency_id = a.id';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->execute();
@@ -42,8 +45,6 @@ class Student {
                 s.email AS email,
                 s.gender AS gender,
                 s.dob AS dob,
-                s.employee_id AS employee_id,
-                e.name AS employee_name,
                 s.updated_at AS updated_at,
                 s.agency_id AS agency_id,
                 a.name AS agency_name,
@@ -59,7 +60,6 @@ class Student {
                 o.name AS office_name
                 FROM 
                 students s
-                JOIN employees e ON s.employee_id = e.id
                 JOIN agencies a ON s.agency_id = a.id
                 JOIN offices o ON s.office_id = o.id
                 JOIN regions r ON s.region_id = r.id
@@ -94,6 +94,8 @@ class Student {
         $pdostmt->execute();
     }
     public function updateStudent($student) {
+        $employee_id = $student['employee_id'];
+        $employee_material_id = $student['employee_material_id'];
         $student_id = $student['student_id'];
         $service_id = $student['service_id'];
         $sub_service_id = $student['sub_service_id'];
@@ -108,12 +110,16 @@ class Student {
         $sql = 'UPDATE students SET
                 service = :service,
                 service_fee = :service_fee,
-                progress = :progress
+                progress = :progress,
+                employee_id = :employee_id,
+                employee_material_id = :employee_material_id
                 WHERE id = :id';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':progress', $progress_name, PDO::PARAM_STR);
         $pdostmt->bindValue(':service', $service['name'], PDO::PARAM_STR);
         $pdostmt->bindValue(':service_fee', $service_fee, PDO::PARAM_INT);
+        $pdostmt->bindValue(':employee_id', $employee_id, PDO::PARAM_INT);
+        $pdostmt->bindValue(':employee_material_id', $employee_material_id, PDO::PARAM_INT);
         $pdostmt->bindValue(':id', $student_id, PDO::PARAM_INT);
         $pdostmt->execute();
     }

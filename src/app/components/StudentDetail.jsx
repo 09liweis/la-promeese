@@ -96,7 +96,6 @@ class StudentDetail extends React.Component {
                     </div>
                     <div className="column">
                         <p>Office: {s.office_name}</p>
-                        <p>Employee: {s.employee_name}</p>
                         <p>Agency: {s.agency_name}</p>
                     </div>
                     </div>

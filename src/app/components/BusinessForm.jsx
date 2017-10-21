@@ -10,6 +10,8 @@ class BusinessForm extends React.Component {
             subServices: [],
             progresses: [],
             commissionProgresses: [],
+            employees: [],
+            employeesMaterial: []
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -41,6 +43,24 @@ class BusinessForm extends React.Component {
             success(res) {
                 _this.setState({
                     commissionProgresses: res
+                });
+            }
+        });
+        $.ajax({
+            url: '/admin/controllers/employee.php?action=getEmployees',
+            data: {type: 'free'},
+            success(res) {
+                _this.setState({
+                    employees: res
+                });
+            }
+        });
+        $.ajax({
+            url: '/admin/controllers/employee.php?action=getEmployeesMaterial',
+            data: {type: 'free'},
+            success(res) {
+                _this.setState({
+                    employeesMaterial: res
                 });
             }
         });
@@ -108,7 +128,12 @@ class BusinessForm extends React.Component {
         const commissionProgresses = this.state.commissionProgresses.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
         );
-        
+        const employees = this.state.employees.map((c) =>
+            <option key={c.id} value={c.id}>{c.name}</option>
+        );
+        const employeesMaterial = this.state.employeesMaterial.map((c) =>
+            <option key={c.id} value={c.id}>{c.name}</option>
+        );
         var newDateDes = '新时间';
         switch (business.service_id) {
             case '7':
@@ -201,6 +226,30 @@ class BusinessForm extends React.Component {
                         <label className="label">{newDateDes}</label>
                         <div className="control">
                             <input className="input" type="date" name="new_date" value={business.new_date} onChange={this.handleChange} />
+                        </div>
+                    </div>
+                </div>
+                <div className="column is-2">
+                    <div className="field">
+                        <label className="label">责任服务</label>
+                        <div className="control">
+                            <div className="select">
+                                <select name="employee_id" value={business.employee_id} onChange={this.handleChange}>
+                                    <option>Please Select</option>
+                                    {employees}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">责任文案</label>
+                        <div className="control">
+                            <div className="select">
+                                <select name="employee_material_id" value={business.employee_material_id} onChange={this.handleChange}>
+                                    <option>Please Select</option>
+                                    {employeesMaterial}
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>

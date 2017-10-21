@@ -9,7 +9,9 @@ class PerformanceForm extends React.Component {
             services: [],
             subServices: [],
             progresses: [],
-            commissionProgresses: []
+            commissionProgresses: [],
+            employees: [],
+            employeesMaterial: []
         };
         
         this.handleChange = this.handleChange.bind(this);
@@ -44,6 +46,24 @@ class PerformanceForm extends React.Component {
             success(res) {
                 _this.setState({
                     commissionProgresses: res
+                });
+            }
+        });
+        $.ajax({
+            url: '/admin/controllers/employee.php?action=getEmployees',
+            data: {type: 'free'},
+            success(res) {
+                _this.setState({
+                    employees: res
+                });
+            }
+        });
+        $.ajax({
+            url: '/admin/controllers/employee.php?action=getEmployeesMaterial',
+            data: {type: 'free'},
+            success(res) {
+                _this.setState({
+                    employeesMaterial: res
                 });
             }
         });
@@ -90,15 +110,7 @@ class PerformanceForm extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         const _this = this;
-        const performance = {
-            id: this.state.performance.id,
-            student_id: this.state.performance.student_id,
-            service_id: this.state.performance.service_id,
-            sub_service_id: this.state.performance.sub_service_id,
-            fee: this.state.performance.fee,
-            progress_id: this.state.performance.progress_id,
-            commission_progress_id: this.state.performance.commission_progress_id
-        };
+        const performance = this.state.performance;
         $.ajax({
             url: '/admin/controllers/performance.php?action=upsertPerformance',
             method: 'POST',
@@ -119,6 +131,12 @@ class PerformanceForm extends React.Component {
             <option key={p.id} value={p.id}>{p.name}</option>
         );
         const commissionProgresses = this.state.commissionProgresses.map((c) =>
+            <option key={c.id} value={c.id}>{c.name}</option>
+        );
+        const employees = this.state.employees.map((c) =>
+            <option key={c.id} value={c.id}>{c.name}</option>
+        );
+        const employeesMaterial = this.state.employeesMaterial.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
         );
         const performance = this.state.performance;
@@ -175,8 +193,25 @@ class PerformanceForm extends React.Component {
                     </div>
                 </div>
                 <div className="field column is-2">
-                    <label className="label">客人归属</label>
+                    <label className="label">责任服务</label>
                     <div className="control">
+                        <div className="select">
+                            <select name="employee_id" value={performance.employee_id} onChange={this.handleChange}>
+                                <option>Please Select</option>
+                                {employees}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div className="field column is-2">
+                    <label className="label">责任文案</label>
+                    <div className="control">
+                        <div className="select">
+                            <select name="employee_material_id" value={performance.employee_material_id} onChange={this.handleChange}>
+                                <option>Please Select</option>
+                                {employeesMaterial}
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div className="column is-2">

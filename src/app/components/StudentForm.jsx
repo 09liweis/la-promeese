@@ -8,7 +8,6 @@ class StudentForm extends React.Component {
             regions: [],
             provinces: [],
             cities: [],
-            employees: [],
             offices: [],
             student: {
                 id: 0,
@@ -18,7 +17,6 @@ class StudentForm extends React.Component {
                 region_id: '',
                 province_id: '',
                 city_id: '',
-                employee_id: '',
                 high_info: '',
                 uni_info: '',
                 visa_info: '',
@@ -64,14 +62,6 @@ class StudentForm extends React.Component {
             success(res) {
                 _this.setState({
                     regions: res
-                });
-            }
-        });
-        $.ajax({
-            url: '/admin/controllers/employee.php?action=getEmployees',
-            success(res) {
-                _this.setState({
-                    employees: res
                 });
             }
         });
@@ -149,9 +139,6 @@ class StudentForm extends React.Component {
         );
         const cities = this.state.cities.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
-        );
-        const employees = this.state.employees.map((e) =>
-            <option key={e.id} value={e.id}>{e.name}</option>
         );
         const offices = this.state.offices.map((o) =>
             <option key={o.id} value={o.id}>{o.name}</option>
@@ -278,17 +265,6 @@ class StudentForm extends React.Component {
                         </div>
                     </div>
                     <div className="column is-2">
-                        <div className="field">
-                            <label className="label">责任客服</label>
-                            <div className="control">
-                                <div className="select">
-                                    <select name="employee_id" value={student.employee_id} onChange={this.handleChange}>
-                                        <option>Please Select</option>
-                                        {employees}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                         <div className="field">
                             <label className="label">代理公司</label>
                             <div className="control">

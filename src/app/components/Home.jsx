@@ -49,11 +49,11 @@ class Home extends React.Component {
                 <th>{s.visa_date}</th>
                 <th>{s.passport_date}</th>
                 <th>{s.employee_name}</th>
-                <th></th>
+                <th>{s.employee_material_name}</th>
                 <th>{s.service}</th>
                 <th>{s.service_fee}</th>
-                <th>school</th>
                 <th>{s.progress}</th>
+                <th>{s.last_employee_name}</th>
                 <th>{s.updated_at}</th>
             </tr>
         );
@@ -72,8 +72,8 @@ class Home extends React.Component {
                             <th>责任文案</th>
                             <th>服务内容</th>
                             <th>服务金额</th>
-                            <th>学校</th>
                             <th>进度</th>
+                            <th>最后更新员工</th>
                             <th>更新时间</th>
                         </tr>
                     </thead>

@@ -50,7 +50,9 @@ class Performances extends React.Component {
             sub_service_id: '',
             fee: '',
             progress_id: '',
-            commission_progress_id: ''
+            commission_progress_id: '',
+            employee_id: '',
+            employee_material_id: ''
         };
     }
     getNewPerformance() {
@@ -104,6 +106,8 @@ class Performances extends React.Component {
                 <td>{p.fee}</td>
                 <td>{p.progress_name}</td>
                 <td>{p.commission_progress_name}</td>
+                <td>{p.employee_name}</td>
+                <td>{p.employee_material_name}</td>
                 {(this.props.user.admin_level != 3) ?
                 <td>
                     <a className="button is-warning" onClick={_this.addPerformanceForm.bind(_this, p)}>Edit</a>
@@ -126,6 +130,8 @@ class Performances extends React.Component {
                         <th>学费</th>
                         <th>进度</th>
                         <th>佣金申报</th>
+                        <th>责任客服</th>
+                        <th>责任文案</th>
                         <th>Actions</th>
                     </tr>
                     </thead>

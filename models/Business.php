@@ -20,11 +20,17 @@ class Business {
                 b.post_fee AS post_fee,
                 b.application_fee AS application_fee,
                 b.progress_id AS progress_id,
-                ps.name AS progress_name
+                ps.name AS progress_name,
+                b.employee_id AS employee_id,
+                e.name AS employee_name,
+                b.employee_material_id AS employee_material_id,
+                em.name AS employee_material_name
                 FROM 
                 businesses b JOIN services s ON b.service_id = s.id
                 JOIN sub_services ss ON b.sub_service_id = ss.id
                 JOIN progresses ps ON b.progress_id = ps.id
+                JOIN employees e ON b.employee_id = e.id
+                JOIN employees_material em ON b.employee_material_id = em.id
                 WHERE b.student_id = :student_id';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':student_id', $student_id);

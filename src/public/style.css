@@ -24,3 +24,7 @@ body {
 .is-warning {
     margin-right: 5px;
 }
+
+#loading {
+    background: #00c4a7;
+}

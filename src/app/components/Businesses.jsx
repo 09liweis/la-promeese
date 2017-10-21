@@ -56,9 +56,8 @@ class Businesses extends React.Component {
             post_fee: '',
             application_fee: '',
             new_date: '',
-            school: {
-                
-            }
+            employee_id: '',
+            employee_material_id: ''
         };
     }
     setEmptyBusiness() {
@@ -119,6 +118,10 @@ class Businesses extends React.Component {
                     <p>递交时间: {b.submit_date}</p>
                     <p>进度: {b.progress_name}</p>
                     <p>成功时间: {b.new_date}</p>
+                </div>
+                <div className="column is-2">
+                    <p>责任客服: {b.employee_name}</p>
+                    <p>责任文案: {b.employee_material_name}</p>
                 </div>
                 {(this.props.user.admin_level != 3) ?
                 <div className="column is-2">

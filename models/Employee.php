@@ -12,6 +12,13 @@ class Employee {
         $employees = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         return $employees;
     }
+    public function employeesMaterial() {
+        $sql = 'SELECT * FROM employees_material';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->execute();
+        $employees = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
+        return $employees;
+    }
     public function login($email, $password) {
         $sql = 'SELECT id, name, email, admin_level FROM employees WHERE email = :email AND password = :password';
         $pdostmt = $this->db->prepare($sql);

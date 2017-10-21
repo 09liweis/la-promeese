@@ -10,7 +10,8 @@ class App extends React.Component {
     super();
     this.state = {
       login: false,
-      user: {id: 0}
+      user: {id: 0},
+      loading: true
     };
     this.handleLogout = this.handleLogout.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -23,9 +24,14 @@ class App extends React.Component {
         if (res.code == 200) {
           _this.setState({
             login: true,
-            user: res.data
+            user: res.data,
           });
         }
+        setTimeout(() => {
+          _this.setState({
+            loading: false
+          });
+        }, 2000);
       }
     });
   }
@@ -41,6 +47,13 @@ class App extends React.Component {
   render() {
     return (
       <div className="wrapper">
+        {(this.state.loading) ?
+        <div className="modal is-active">
+        <div id="loading" className="modal-background"></div>
+        <div className="button is-loading"></div>
+        </div>
+        :null
+        }
         <Header user={this.state.user} handleLogout={this.handleLogout} />
         {this.state.login ?
         <Main user={this.state.user} />

@@ -8,7 +8,8 @@ class Login extends React.Component {
             user: {
                 emai: '',
                 password: ''   
-            }
+            },
+            error: false
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
@@ -32,9 +33,14 @@ class Login extends React.Component {
             data: {user: user},
             success(res) {
                 if (res.code == 200) {
+                    _this.setState({
+                        error: false
+                    });
                     _this.props.handleLogin(res.data);
                 } else {
-                    console.log('fail');
+                    _this.setState({
+                        error: true
+                    });
                 }
             }
         });
@@ -56,6 +62,12 @@ class Login extends React.Component {
                     </div>
                 </div>
                 <button className="button is-primary">Login</button>
+                {(this.state.error) ?
+                <div className="notification is-danger">
+                  Email or Password is not correct.
+                </div>
+                :null
+                }
             </form>
         );
     }
