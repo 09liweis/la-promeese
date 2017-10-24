@@ -9,6 +9,7 @@ class StudentForm extends React.Component {
             provinces: [],
             cities: [],
             offices: [],
+            agencies: [],
             student: {
                 id: 0,
                 name: '',
@@ -70,6 +71,14 @@ class StudentForm extends React.Component {
             success(res) {
                 _this.setState({
                     offices: res
+                });
+            }
+        });
+        $.ajax({
+            url: '/admin/controllers/agency.php?action=getAgencies',
+            success(res) {
+                _this.setState({
+                    agencies: res
                 });
             }
         });
@@ -142,6 +151,9 @@ class StudentForm extends React.Component {
         );
         const offices = this.state.offices.map((o) =>
             <option key={o.id} value={o.id}>{o.name}</option>
+        );
+        const agencies = this.state.agencies.map((a) =>
+            <option key={a.id} value={a.id}>{a.name}</option>
         );
         return(
             <form onSubmit={this.handleSubmit}>
@@ -268,7 +280,14 @@ class StudentForm extends React.Component {
                         <div className="field">
                             <label className="label">代理公司</label>
                             <div className="control">
-                                <input className="input" type="text" name="agency_id" value={student.agency_id} onChange={this.handleChange} />
+                                <div className="control">
+                                    <div className="select">
+                                        <select name="agency_id" value={student.agency_id} onChange={this.handleChange}>
+                                            <option>Please Select</option>
+                                            {agencies}
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

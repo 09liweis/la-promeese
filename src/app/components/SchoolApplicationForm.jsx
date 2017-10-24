@@ -220,7 +220,8 @@ class SchoolApplicationForm extends React.Component {
         );
         const applications = this.state.applications.map((a, i) =>
             <div key={i} className="columns is-multiline">
-                <div className="field column is-2">
+                <div className="column">
+                <div className="field">
                     <label className="label">学校</label>
                     <div className="control">
                         <div className="select">
@@ -231,43 +232,48 @@ class SchoolApplicationForm extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="field column is-2">
+                <div className="field">
                     <label className="label">申请费</label>
                     <div className="control">
                         <input className="input" type="text" name="application_fee" value={a.application_fee} onChange={_this.handleSchoolChange.bind(_this, a, i)} />
                     </div>
                 </div>
-                <div className="field column is-2">
+                </div>
+                <div className="column">
+                <div className="field">
                     <label className="label">跟踪号码</label>
                     <div className="control">
                         <input className="input" type="text" name="trace_number" value={a.trace_number} onChange={_this.handleSchoolChange.bind(_this, a, i)} />
                     </div>
                 </div>
-                <div className="field column is-2">
+                <div className="field">
                     <label className="label">递交时间</label>
                     <div className="control">
                         <input className="input" type="date" name="submit_date" value={a.submit_date} onChange={_this.handleSchoolChange.bind(_this, a, i)} />
                     </div>
                 </div>
-                <div className="field column is-2">
+                </div>
+                <div className="column">
+                <div className="field">
                     <label className="label">学号</label>
                     <div className="control">
                         <input className="input" type="text" name="student_number" value={a.student_number} onChange={_this.handleSchoolChange.bind(_this, a, i)} />
                     </div>
                 </div>
-                <div className="field column is-2">
+                <div className="field">
                     <label className="label">账号</label>
                     <div className="control">
                         <input className="input" type="text" name="account" value={a.account} onChange={_this.handleSchoolChange.bind(_this, a, i)} />
                     </div>
                 </div>
-                <div className="field column is-2">
+                <div className="field">
                     <label className="label">密码</label>
                     <div className="control">
                         <input className="input" type="text" name="password" value={a.password} onChange={_this.handleSchoolChange.bind(_this, a, i)} />
                     </div>
                 </div>
-                <div className="field column is-2">
+                </div>
+                <div className="field column">
                     <label className="label">进度</label>
                     <div className="control">
                         <div className="select">
@@ -278,7 +284,7 @@ class SchoolApplicationForm extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="column is-2">
+                <div className="column">
                     <a className="button is-primary" onClick={_this.handleSchoolRemove.bind(_this, a, i)}>Remove</a>
                 </div>
             </div>
