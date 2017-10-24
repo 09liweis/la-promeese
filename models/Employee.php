@@ -23,7 +23,7 @@ class Employee {
         $sql = 'SELECT id, name, email, admin_level FROM employees WHERE email = :email AND password = :password';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':email', $email, PDO::PARAM_STR);
-        $pdostmt->bindValue(':password', $password, PDO::PARAM_STR);
+        $pdostmt->bindValue(':password', md5($password), PDO::PARAM_STR);
         $pdostmt->execute();
         $employee = $pdostmt->fetch(PDO::FETCH_ASSOC);
         return $employee;
@@ -36,7 +36,21 @@ class Employee {
         $pdostmt->bindValue(':ip', $ip, PDO::PARAM_STR);
         $pdostmt->execute();
     }
+    public function getPassword($employee_id) {
+        $sql = 'SELECT password from employees WHERE id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $employee_id, PDO::PARAM_STR);
+        $pdostmt->execute();
+        $password = $pdostmt->fetch(PDO::FETCH_COLUMN);
+        return $password;
+    }
     public function upsert($employee) {
+        $password = $employee['password'];
+        $oldPassword = $this->getPassword($employee['id']);
+        if ($password != $oldPassword) {
+            $hashedPassword = md5($password);
+            $employee['password'] = $hashedPassword;
+        }
         $columns = '';
         $values = '';
         $updates = '';
