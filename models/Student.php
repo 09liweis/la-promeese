@@ -30,7 +30,7 @@ class Student {
                 LEFT JOIN employees_material em ON s.employee_material_id = em.id
                 LEFT JOIN agencies a ON s.agency_id = a.id WHERE 1';
         if ($search['name'] != '') {
-            $sql .= ' AND s.name = :name';
+            $sql .= ' AND s.name LIKE :name';
         }
         if ($search['employee_id'] != '') {
             $sql .= ' AND s.employee_id = :employee_id';
@@ -46,7 +46,7 @@ class Student {
         }
         $pdostmt = $this->db->prepare($sql);
         if ($search['name'] != '') {
-            $pdostmt->bindValue(':name', $search['name'], PDO::PARAM_STR);
+            $pdostmt->bindValue(':name', '%'.$search['name'].'%', PDO::PARAM_STR);
         }
         if ($search['employee_id'] != '') {
             $pdostmt->bindValue(':employee_id', $search['employee_id'], PDO::PARAM_INT);
