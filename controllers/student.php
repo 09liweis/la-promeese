@@ -8,7 +8,7 @@ header('Content-Type: application/json');
 $sRepo = new Student(Database::dbConnect());
 
 if ($_GET['action'] == 'getStudents') {
-    $students = $sRepo->students();
+    $students = $sRepo->students($_GET);
     echo json_encode($students);
 }
 

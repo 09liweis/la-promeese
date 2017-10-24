@@ -7,7 +7,7 @@ class Student {
     public function __construct($db) {
         $this->db = $db;
     }
-    public function students() {
+    public function students($search) {
         $sql = 'SELECT 
                 s.id as id,
                 s.name AS name,
@@ -26,10 +26,40 @@ class Student {
                 em.name AS employee_material_name
                 FROM 
                 students s
-                JOIN employees e ON s.employee_id = e.id
-                JOIN employees_material em ON s.employee_material_id = em.id
-                LEFT JOIN agencies a ON s.agency_id = a.id';
+                LEFT JOIN employees e ON s.employee_id = e.id
+                LEFT JOIN employees_material em ON s.employee_material_id = em.id
+                LEFT JOIN agencies a ON s.agency_id = a.id WHERE 1';
+        if ($search['name'] != '') {
+            $sql .= ' AND s.name = :name';
+        }
+        if ($search['employee_id'] != '') {
+            $sql .= ' AND s.employee_id = :employee_id';
+        }
+        if ($search['employee_material_id'] != '') {
+            $sql .= ' AND s.employee_material_id = :employee_material_id';
+        }
+        if ($search['start_date'] != '') {
+            $sql .= ' AND s.visa_date >= :start_date';
+        }
+        if ($search['end_date'] != '') {
+            $sql .= ' AND s.visa_date <= :end_date';
+        }
         $pdostmt = $this->db->prepare($sql);
+        if ($search['name'] != '') {
+            $pdostmt->bindValue(':name', $search['name'], PDO::PARAM_STR);
+        }
+        if ($search['employee_id'] != '') {
+            $pdostmt->bindValue(':employee_id', $search['employee_id'], PDO::PARAM_INT);
+        }
+        if ($search['employee_material_id'] != '') {
+            $pdostmt->bindValue(':employee_material_id', $search['employee_material_id'], PDO::PARAM_INT);
+        }
+        if ($search['start_date'] != '') {
+            $pdostmt->bindValue(':start_date', $search['start_date'], PDO::PARAM_STR);
+        }
+        if ($search['end_date'] != '') {
+            $pdostmt->bindValue(':end_date', $search['end_date'], PDO::PARAM_STR);
+        }
         $pdostmt->execute();
         $students = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         return $students;
@@ -99,7 +129,7 @@ class Student {
         $student_id = $student['student_id'];
         $service_id = $student['service_id'];
         $sub_service_id = $student['sub_service_id'];
-        $service_fee = $student['fee'];
+        $service_fee = $student['fee'] ? $student['fee'] : $student['service_fee'];
         $progress_id = $student['progress_id'];
         $sRepo = new Service(Database::dbConnect());
         $pRepo = new Progress(Database::dbConnect());
@@ -107,6 +137,10 @@ class Student {
         $subService = $sRepo->getSubService($sub_service_id);
         $progress = $pRepo->getProgress($progress_id);
         $progress_name = $progress['name'];
+        if ($student['schools']) {
+            $schools = json_decode($student['schools'], true);
+            $progress_name = $schools[0]['progress_name'];
+        }
         $sql = 'UPDATE students SET
                 service = :service,
                 service_fee = :service_fee,

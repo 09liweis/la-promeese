@@ -100,12 +100,12 @@ class Businesses extends React.Component {
         const _this = this;
         const businesses = this.state.businesses.map((b) =>
             <div key={b.id} className="columns is-multiline card">
-                <div className="column is-2">
+                <div className="column">
                     <p>服务: {b.service_name}</p>
                     <p>副服务: {b.sub_service_name}</p>
                 </div>
                 
-                <div className="column is-2">
+                <div className="column">
                 { b.service_id == '7' ?
                     <p>政府费: {b.government_fee}</p>
                 :
@@ -114,17 +114,17 @@ class Businesses extends React.Component {
                     <p>服务费: {b.service_fee}</p>
                     <p>邮寄费: {b.post_fee}</p>
                 </div>
-                <div className="column is-2">
+                <div className="column">
                     <p>递交时间: {b.submit_date}</p>
                     <p>进度: {b.progress_name}</p>
                     <p>成功时间: {b.new_date}</p>
                 </div>
-                <div className="column is-2">
+                <div className="column">
                     <p>责任客服: {b.employee_name}</p>
                     <p>责任文案: {b.employee_material_name}</p>
                 </div>
                 {(this.props.user.admin_level != 3) ?
-                <div className="column is-2">
+                <div className="column">
                     <a className="button is-warning" onClick={_this.edit.bind(_this, b)}>Edit</a>
                     <a className="button is-danger" onClick={_this.remove.bind(_this, b)}>Delete</a>
                 </div>

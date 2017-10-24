@@ -71,14 +71,17 @@ class Employees extends React.Component {
     render() {
         const _this = this;
         const employee = this.state.employee;
-        const employees = this.state.employees.map((em) =>
-            <tr key={em.id}>
-                <th>{em.name}</th>
-                <th>{em.email}</th>
-                <th>{em.admin_level}</th>
-                <th>{em.last_login}</th>
-                <th><a className="button is-danger" onClick={_this.edit.bind(_this, em)}>Edit</a></th>
-            </tr>
+        const employees = this.state.employees.map((em, i) => {
+            return (
+                <tr key={i}>
+                    <th>{em.name}</th>
+                    <th>{em.email}</th>
+                    <th>{em.admin_level}</th>
+                    <th>{em.last_login}</th>
+                    <th><a className="button is-danger" onClick={_this.edit.bind(_this, em)}>Edit</a></th>
+                </tr>
+            );
+        }
         );
         return(
             <div className="columns">
