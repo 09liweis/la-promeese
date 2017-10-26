@@ -193,6 +193,9 @@ class SchoolApplicationForm extends React.Component {
             data: application,
             method: 'POST',
             success(res) {
+                _this.setState({
+                    applications: []
+                });
                 _this.props.refreshPage();
             }
         });
@@ -219,7 +222,7 @@ class SchoolApplicationForm extends React.Component {
             <option key={c.id} value={c.id}>{c.name}</option>
         );
         const applications = this.state.applications.map((a, i) =>
-            <div key={i} className="columns is-multiline">
+            <div key={i} className="columns card is-multiline">
                 <div className="column">
                 <div className="field">
                     <label className="label">学校</label>
@@ -239,6 +242,7 @@ class SchoolApplicationForm extends React.Component {
                     </div>
                 </div>
                 </div>
+                {(application.service_id != '5') ?
                 <div className="column">
                 <div className="field">
                     <label className="label">跟踪号码</label>
@@ -253,6 +257,7 @@ class SchoolApplicationForm extends React.Component {
                     </div>
                 </div>
                 </div>
+                :null}
                 <div className="column">
                 <div className="field">
                     <label className="label">学号</label>
@@ -377,7 +382,7 @@ class SchoolApplicationForm extends React.Component {
                 </div>
                 <a className="button is-primary" onClick={this.addSchool}>添加学校</a>
                 {applications}
-                <button className="button is-primary">Submit</button>
+                <button className="button is-primary is-pulled-right">Submit</button>
             </form>
         );
     }

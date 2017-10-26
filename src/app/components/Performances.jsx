@@ -132,7 +132,9 @@ class Performances extends React.Component {
                         <th>佣金申报</th>
                         <th>责任客服</th>
                         <th>责任文案</th>
+                        {(this.props.user.admin_level != 3) ?
                         <th>Actions</th>
+                        :null}
                     </tr>
                     </thead>
                     <tbody>

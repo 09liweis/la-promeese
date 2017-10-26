@@ -28,3 +28,7 @@ body {
 #loading {
     background: #00c4a7;
 }
+
+.button.is-primary {
+    margin-bottom: 20px;
+}

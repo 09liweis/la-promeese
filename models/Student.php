@@ -90,11 +90,11 @@ class Student {
                 o.name AS office_name
                 FROM 
                 students s
-                JOIN agencies a ON s.agency_id = a.id
-                JOIN offices o ON s.office_id = o.id
-                JOIN regions r ON s.region_id = r.id
-                JOIN provinces p ON s.province_id = p.id
-                JOIN cities c ON s.city_id = c.id
+                LEFT JOIN agencies a ON s.agency_id = a.id
+                LEFT JOIN offices o ON s.office_id = o.id
+                LEFT JOIN regions r ON s.region_id = r.id
+                LEFT JOIN provinces p ON s.province_id = p.id
+                LEFT JOIN cities c ON s.city_id = c.id
                 WHERE s.id = :student_id';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':student_id', $student_id, PDO::PARAM_INT);
