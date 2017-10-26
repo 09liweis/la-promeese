@@ -85,18 +85,18 @@ class StudentDetail extends React.Component {
                         </p>
                     </div>
                     <div className="column">
-                        <p>Passport: {s.passport_date}</p>
-                        <p>Visa: {s.visa_info}</p>
-                        <p>Visa Expired: {s.visa_date}</p>
+                        <p>护照到期日: {s.passport_date}</p>
+                        <p>签证信息: {s.visa_info}</p>
+                        <p>签证到期日: {s.visa_date}</p>
                     </div>
                     <div className="column">
-                        <p>Region: {s.region_name}</p>
-                        <p>Province: {s.province_name}</p>
-                        <p>City: {s.city_name}</p>
+                        <p>地区: {s.region_name}</p>
+                        <p>省份: {s.province_name}</p>
+                        <p>城市: {s.city_name}</p>
                     </div>
                     <div className="column">
-                        <p>Office: {s.office_name}</p>
-                        <p>Agency: {s.agency_name}</p>
+                        <p>客人归属地: {s.office_name}</p>
+                        <p>代理公司: {s.agency_name}</p>
                     </div>
                     </div>
                     {(this.props.user.admin_level != 3) ?

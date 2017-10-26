@@ -84,8 +84,6 @@ class Student {
                 p.name AS province_name,
                 s.city_id AS city_id,
                 c.name AS city_name,
-                s.high_info AS high_info,
-                s.uni_info AS uni_info,
                 s.office_id AS office_id,
                 o.name AS office_name
                 FROM 

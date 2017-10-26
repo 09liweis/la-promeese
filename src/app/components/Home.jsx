@@ -2,9 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import $ from 'jquery';
 
+import Api from '../services/api.js';
 import Modal from './Modal.jsx';
 import StudentForm from './StudentForm.jsx';
 import { getCurrentDate, getDateDifferent } from '../services/functions.js';
+
+const api = new Api();
 
 class Home extends React.Component {
     constructor() {
@@ -41,7 +44,7 @@ class Home extends React.Component {
     search() {
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/student.php?action=getStudents',
+            url: api.getStudents(),
             data: _this.state.search,
             success(res) {
                 _this.setState({
@@ -66,8 +69,7 @@ class Home extends React.Component {
         this.refreshStudents();
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/employee.php?action=getEmployees',
-            data: {type: 'free'},
+            url: api.getEmployees(),
             success(res) {
                 _this.setState({
                     employees: res
@@ -75,8 +77,7 @@ class Home extends React.Component {
             }
         });
         $.ajax({
-            url: '/admin/controllers/employee.php?action=getEmployeesMaterial',
-            data: {type: 'free'},
+            url: api.getEmployeesMaterial(),
             success(res) {
                 _this.setState({
                     employeesMaterial: res
@@ -88,7 +89,7 @@ class Home extends React.Component {
         this.closeModal();
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/student.php?action=getStudents',
+            url: api.getStudents(),
             success(res) {
                 _this.setState({
                     students: res

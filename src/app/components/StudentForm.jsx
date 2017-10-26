@@ -18,8 +18,6 @@ class StudentForm extends React.Component {
                 region_id: '',
                 province_id: '',
                 city_id: '',
-                high_info: '',
-                uni_info: '',
                 visa_info: '',
                 visa_date: '',
                 passport_date: '',
@@ -198,7 +196,7 @@ class StudentForm extends React.Component {
                     </div>
                     <div className="column is-2">
                         <div className="field">
-                            <label className="label">客人归属</label>
+                            <label className="label">客人归属地</label>
                             <div className="control">
                                 <div className="select">
                                     <select name="office_id" value={student.office_id} onChange={this.handleChange}>
@@ -250,29 +248,15 @@ class StudentForm extends React.Component {
                             </div>
                         </div>
                         <div className="field">
-                            <label className="label">签证日期</label>
+                            <label className="label">签证到期日</label>
                             <div className="control">
                                 <input className="input" type="date" name="visa_date" value={student.visa_date} onChange={this.handleChange} />
                             </div>
                         </div>
                         <div className="field">
-                            <label className="label">护照日期</label>
+                            <label className="label">护照到期日</label>
                             <div className="control">
                                 <input className="input" type="date" name="passport_date" value={student.passport_date} onChange={this.handleChange} />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="column is-2">
-                        <div className="field">
-                            <label className="label">中国高中信息</label>
-                            <div className="control">
-                                <input className="input" type="text" name="high_info" value={student.high_info} onChange={this.handleChange} />
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label className="label">中国大学信息</label>
-                            <div className="control">
-                                <input className="input" type="text" name="uni_info" value={student.uni_info} onChange={this.handleChange} />
                             </div>
                         </div>
                     </div>
