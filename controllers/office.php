@@ -12,7 +12,7 @@ if ($_GET['action'] == 'getOffices') {
     echo json_encode($offices);
 }
 
-if ($_GET['action'] == 'upsertBusiness') {
+if ($_GET['action'] == 'upsertOffice') {
     $oRepo->upsert($_POST);
     echo json_encode('ok');
 }

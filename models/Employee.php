@@ -71,4 +71,25 @@ class Employee {
         }
         $pdostmt->execute();
     }
+    public function upsertMaterial($employee) {
+        $columns = '';
+        $values = '';
+        $updates = '';
+        foreach ($employee as $column => $value) {
+            $columns .= $column . ',';
+            $values .= ':' . $column . ',';
+            if ($column != 'id') {
+                $updates .= $column . '= VALUES(`' . $column . '`),';
+            }
+        }
+        $columns = rtrim($columns, ',');
+        $values = rtrim($values, ',');
+        $updates = rtrim($updates, ',');
+        $sql = 'INSERT INTO employees_material (' . $columns . ') VALUES (' . $values . ') ON DUPLICATE KEY UPDATE ' . $updates . ';';
+        $pdostmt = $this->db->prepare($sql);
+        foreach ($employee as $c => $v) {
+            $pdostmt->bindValue(':' . $c, $v, PDO::PARAM_STR);
+        }
+        $pdostmt->execute();
+    }
 }

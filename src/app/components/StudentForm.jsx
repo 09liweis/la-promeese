@@ -1,6 +1,9 @@
 import React from 'react';
 import $ from 'jquery';
 
+import Api from '../services/api.js';
+const api = new Api();
+
 class StudentForm extends React.Component {
     constructor() {
         super();
@@ -57,7 +60,7 @@ class StudentForm extends React.Component {
     componentDidMount() {
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/location.php?action=getRegions',
+            url: api.getRegions(),
             success(res) {
                 _this.setState({
                     regions: res
@@ -65,7 +68,7 @@ class StudentForm extends React.Component {
             }
         });
         $.ajax({
-            url: '/admin/controllers/office.php?action=getOffices',
+            url: api.getOffices(),
             success(res) {
                 _this.setState({
                     offices: res
@@ -73,7 +76,7 @@ class StudentForm extends React.Component {
             }
         });
         $.ajax({
-            url: '/admin/controllers/agency.php?action=getAgencies',
+            url: api.getAgencies(),
             success(res) {
                 _this.setState({
                     agencies: res
@@ -84,7 +87,7 @@ class StudentForm extends React.Component {
     getProvinces(id) {
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/location.php?action=getProvinces',
+            url: api.getProvinces(),
             data: {
                 id: id
             },
@@ -98,7 +101,7 @@ class StudentForm extends React.Component {
     getCities(id) {
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/location.php?action=getCities',
+            url: api.getCities(),
             data: {id: id},
             success(res) {
                 _this.setState({

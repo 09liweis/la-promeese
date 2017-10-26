@@ -54,3 +54,8 @@ if ($_GET['action'] == 'upsertEmployee') {
     $empRepo->upsert($_POST);
     echo json_encode(array('code' => 200));
 }
+
+if ($_GET['action'] == 'upsertEmployeeMaterial') {
+    $empRepo->upsertMaterial($_POST);
+    echo json_encode(array('code' => 200));
+}
