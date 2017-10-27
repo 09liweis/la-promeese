@@ -25,10 +25,10 @@ class SchoolApplication {
                 em.name AS employee_material_name
                 FROM 
                 post_graduate_applications pga
-                JOIN services s ON pga.service_id = s.id
-                JOIN commission_progresses cp ON pga.commission_progress_id = cp.id
-                JOIN employees e ON pga.employee_id = e.id
-                JOIN employees_material em ON pga.employee_material_id = em.id
+                LEFT JOIN services s ON pga.service_id = s.id
+                LEFT JOIN commission_progresses cp ON pga.commission_progress_id = cp.id
+                LEFT JOIN employees e ON pga.employee_id = e.id
+                LEFT JOIN employees_material em ON pga.employee_material_id = em.id
                 WHERE pga.student_id = :student_id';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':student_id', $student_id);

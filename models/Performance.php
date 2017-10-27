@@ -23,12 +23,13 @@ class Performance {
                 p.employee_material_id AS employee_material_id,
                 em.name AS employee_material_name
                 FROM 
-                performances p JOIN services s ON p.service_id = s.id
-                JOIN sub_services ss ON p.sub_service_id = ss.id
-                JOIN progresses ps ON p.progress_id = ps.id
-                JOIN commission_progresses cp ON p.commission_progress_id = cp.id
-                JOIN employees e ON p.employee_id = e.id
-                JOIN employees_material em ON p.employee_material_id = em.id
+                performances p 
+                LEFT JOIN services s ON p.service_id = s.id
+                LEFT JOIN sub_services ss ON p.sub_service_id = ss.id
+                LEFT JOIN progresses ps ON p.progress_id = ps.id
+                LEFT JOIN commission_progresses cp ON p.commission_progress_id = cp.id
+                LEFT JOIN employees e ON p.employee_id = e.id
+                LEFT JOIN employees_material em ON p.employee_material_id = em.id
                 WHERE p.student_id = :student_id';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':student_id', $student_id);

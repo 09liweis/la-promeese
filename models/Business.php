@@ -26,11 +26,12 @@ class Business {
                 b.employee_material_id AS employee_material_id,
                 em.name AS employee_material_name
                 FROM 
-                businesses b JOIN services s ON b.service_id = s.id
-                JOIN sub_services ss ON b.sub_service_id = ss.id
-                JOIN progresses ps ON b.progress_id = ps.id
-                JOIN employees e ON b.employee_id = e.id
-                JOIN employees_material em ON b.employee_material_id = em.id
+                businesses b 
+                LEFT JOIN services s ON b.service_id = s.id
+                LEFT JOIN sub_services ss ON b.sub_service_id = ss.id
+                LEFT JOIN progresses ps ON b.progress_id = ps.id
+                LEFT JOIN employees e ON b.employee_id = e.id
+                LEFT JOIN employees_material em ON b.employee_material_id = em.id
                 WHERE b.student_id = :student_id';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':student_id', $student_id);
