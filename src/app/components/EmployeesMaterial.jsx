@@ -56,7 +56,7 @@ class EmployeesMaterial extends React.Component {
         e.preventDefault();
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/employee.php?action=upsertEmployeMaterial',
+            url: '/admin/controllers/employee.php?action=upsertEmployeeMaterial',
             data: _this.state.employee,
             method: 'POST',
             success(res) {

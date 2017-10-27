@@ -171,9 +171,15 @@ class Home extends React.Component {
                     </div>
                     <div className="column field">
                         <label className="label">签证到期日</label>
-                        <input className="input" type="date" name="start_date" value={this.state.search.start_date} onChange={this.handleSearchChange} />
-                        <input className="input" type="date" name="end_date" value={this.state.search.end_date} onChange={this.handleSearchChange}/>
+                        <div className="columns field">
+                            <label className="label">开始日期</label>
+                            <input className="input column" type="date" name="start_date" value={this.state.search.start_date} onChange={this.handleSearchChange} />
+                            <label className="label">结束日期</label>
+                            <input className="input column" type="date" name="end_date" value={this.state.search.end_date} onChange={this.handleSearchChange}/>
+                        </div>
                     </div>
+                </div>
+                <div className="columns">
                     <div className="column field">
                         <label className="label">责任客服</label>
                         <div className="control">
