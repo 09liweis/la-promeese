@@ -7,6 +7,8 @@ import Modal from './Modal.jsx';
 import StudentForm from './StudentForm.jsx';
 import { getCurrentDate, getDateDifferent } from '../services/functions.js';
 
+import Datepicker from '../elements/Datepicker.jsx';
+
 const api = new Api();
 
 class Home extends React.Component {
@@ -175,11 +177,11 @@ class Home extends React.Component {
                     <div className="columns">
                     <div className="column field">
                         <label className="label">开始日期</label>
-                        <input className="input column" type="date" name="start_date" value={this.state.search.start_date} onChange={this.handleSearchChange} />
+                        <Datepicker name={'start_date'} value={this.state.search.start_date} handleChange={this.handleSearchChange} />
                     </div>
                     <div className="column field">
                         <label className="label">结束日期</label>
-                        <input className="input column" type="date" name="end_date" value={this.state.search.end_date} onChange={this.handleSearchChange}/>
+                        <Datepicker name={"end_date"} value={this.state.search.end_date} handleChange={this.handleSearchChange}/>
                     </div>
                     </div>
                 </div>

@@ -1,6 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
 
+import Datepicker from '../elements/Datepicker.jsx';
+
 class BusinessForm extends React.Component {
     constructor(props) {
         super(props);
@@ -208,7 +210,7 @@ class BusinessForm extends React.Component {
                     <div className="field">
                         <label className="label">递交时间</label>
                         <div className="control">
-                            <input className="input" type="date" name="submit_date" value={business.submit_date} onChange={this.handleChange} />
+                            <Datepicker name={"submit_date"} value={business.submit_date} handleChange={this.handleChange} />
                         </div>
                     </div>
                     <div className="field">
@@ -225,7 +227,7 @@ class BusinessForm extends React.Component {
                     <div className="field">
                         <label className="label">{newDateDes}</label>
                         <div className="control">
-                            <input className="input" type="date" name="new_date" value={business.new_date} onChange={this.handleChange} />
+                            <Datepicker name={"new_date"} value={business.new_date} handleChange={this.handleChange} />
                         </div>
                     </div>
                 </div>

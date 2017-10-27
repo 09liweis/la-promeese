@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 
+import Datepicker from '../elements/Datepicker.jsx';
 import Api from '../services/api.js';
 const api = new Api();
 
@@ -181,7 +182,7 @@ class StudentForm extends React.Component {
                         <div className="field">
                             <label className="label">生日</label>
                             <div className="control">
-                                <input className="input" type="date" name="dob" value={student.dob} onChange={this.handleChange} />
+                                <Datepicker name={"dob"} value={student.dob} handleChange={this.handleChange}/>
                             </div>
                         </div>
                         <div className="field">
@@ -260,13 +261,13 @@ class StudentForm extends React.Component {
                         <div className="field">
                             <label className="label">签证到期日</label>
                             <div className="control">
-                                <input className="input" type="date" name="visa_date" value={student.visa_date} onChange={this.handleChange} />
+                                <Datepicker name={"visa_date"} value={student.visa_date} handleChange={this.handleChange} />
                             </div>
                         </div>
                         <div className="field">
                             <label className="label">护照到期日</label>
                             <div className="control">
-                                <input className="input" type="date" name="passport_date" value={student.passport_date} onChange={this.handleChange} />
+                                <Datepicker name={"passport_date"} value={student.passport_date} handleChange={this.handleChange} />
                             </div>
                         </div>
                     </div>
