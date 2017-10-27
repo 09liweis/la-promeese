@@ -247,7 +247,14 @@ class StudentForm extends React.Component {
                         <div className="field">
                             <label className="label">签证信息</label>
                             <div className="control">
-                                <input className="input" type="text" name="visa_info" value={student.visa_info} onChange={this.handleChange} />
+                                <div className="select">
+                                    <select name="visa_info" value={student.visa_info} onChange={this.handleChange}>
+                                        <option>Please Select</option>
+                                        <option value="学签">学签</option>
+                                        <option value="工签">工签</option>
+                                        <option value="访问签">访问签</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div className="field">
