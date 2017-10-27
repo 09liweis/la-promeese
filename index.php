@@ -10,6 +10,6 @@
     </head>
     <body>
         <div id="app"></div>
-        <script type="text/javascript" src="/admin/src/public/bundle.js?v=2.0"></script>
+        <script type="text/javascript" src="/admin/src/public/bundle.js?v=2.1"></script>
     </body>
 </html>

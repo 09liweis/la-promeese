@@ -161,7 +161,7 @@ class Home extends React.Component {
                 <a className="button is-primary" onClick={this.addStudent}>添加学生</a>
                 :null}
                 <div className="serach columns">
-                    <div className="column">
+                    <div className="column is-3">
                         <div className="field">
                             <label className="label">姓名</label>
                             <div className="control">
@@ -169,18 +169,22 @@ class Home extends React.Component {
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="field">
+                    <label className="label">签证到期日</label>
+                    <div className="columns">
                     <div className="column field">
-                        <label className="label">签证到期日</label>
-                        <div className="columns field">
-                            <label className="label">开始日期</label>
-                            <input className="input column" type="date" name="start_date" value={this.state.search.start_date} onChange={this.handleSearchChange} />
-                            <label className="label">结束日期</label>
-                            <input className="input column" type="date" name="end_date" value={this.state.search.end_date} onChange={this.handleSearchChange}/>
-                        </div>
+                        <label className="label">开始日期</label>
+                        <input className="input column" type="date" name="start_date" value={this.state.search.start_date} onChange={this.handleSearchChange} />
+                    </div>
+                    <div className="column field">
+                        <label className="label">结束日期</label>
+                        <input className="input column" type="date" name="end_date" value={this.state.search.end_date} onChange={this.handleSearchChange}/>
+                    </div>
                     </div>
                 </div>
                 <div className="columns">
-                    <div className="column field">
+                    <div className="column field is-2">
                         <label className="label">责任客服</label>
                         <div className="control">
                         <div className="select">
@@ -191,7 +195,7 @@ class Home extends React.Component {
                         </div>
                         </div>
                     </div>
-                    <div className="column field">
+                    <div className="column field is-2">
                         <label className="label">责任文案</label>
                         <div className="control">
                         <div className="select">
@@ -202,7 +206,7 @@ class Home extends React.Component {
                         </div>
                         </div>
                     </div>
-                    <div className="column">
+                    <div className="column is-2">
                         <a className="button is-primary" onClick={this.search}>搜素</a>
                         <a className="button is-danger" onClick={this.reset}>重置</a>
                     </div>
