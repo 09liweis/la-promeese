@@ -13,6 +13,7 @@ class Performance {
                 p.service_id as service_id,
                 ss.name AS sub_service_name, 
                 ss.id AS sub_service_id,
+                p.semester AS semester,
                 p.fee AS fee,
                 p.tuition AS tuition,
                 ps.name AS progress_name,
