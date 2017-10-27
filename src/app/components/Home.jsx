@@ -148,7 +148,7 @@ class Home extends React.Component {
                     <th>{s.employee_name}</th>
                     <th>{s.employee_material_name}</th>
                     <th>{s.service}</th>
-                    <th>{s.service_fee}</th>
+                    <th>${s.service_fee}</th>
                     <th>{s.progress}</th>
                     <th>{s.updated_at}</th>
                 </tr>
@@ -170,7 +170,7 @@ class Home extends React.Component {
                         </div>
                     </div>
                     <div className="column field">
-                        <label className="label">签证日期</label>
+                        <label className="label">签证到期日</label>
                         <input className="input" type="date" name="start_date" value={this.state.search.start_date} onChange={this.handleSearchChange} />
                         <input className="input" type="date" name="end_date" value={this.state.search.end_date} onChange={this.handleSearchChange}/>
                     </div>

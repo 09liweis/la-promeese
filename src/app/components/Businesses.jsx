@@ -107,12 +107,12 @@ class Businesses extends React.Component {
                 
                 <div className="column">
                 { b.service_id == '7' ?
-                    <p>政府费: {b.government_fee}</p>
+                    <p>政府费: ${b.government_fee}</p>
                 :
-                    <p>申请费: {b.application_fee}</p>
+                    <p>申请费: ${b.application_fee}</p>
                 }
-                    <p>服务费: {b.service_fee}</p>
-                    <p>邮寄费: {b.post_fee}</p>
+                    <p>服务费: ${b.service_fee}</p>
+                    <p>邮寄费: ${b.post_fee}</p>
                 </div>
                 <div className="column">
                     <p>递交时间: {b.submit_date}</p>

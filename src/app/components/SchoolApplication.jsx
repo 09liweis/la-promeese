@@ -20,7 +20,7 @@ class SchoolApplication extends React.Component {
         const list = schools.map((s, i)=>
             <tr key={i}>
                 <td>{s.sub_service_name}</td>
-                <td>{s.application_fee}</td>
+                <td>${s.application_fee}</td>
                 <td>{s.student_number}</td>
                 <td>{s.password}</td>
                 <td>{s.progress_name}</td>

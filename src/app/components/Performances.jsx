@@ -103,7 +103,7 @@ class Performances extends React.Component {
             <tr key={p.id}>
                 <td>{p.service_name}</td>
                 <td>{p.sub_service_name}</td>
-                <td>{p.fee}</td>
+                <td>${p.fee}</td>
                 <td>{p.progress_name}</td>
                 <td>{p.commission_progress_name}</td>
                 <td>{p.employee_name}</td>
