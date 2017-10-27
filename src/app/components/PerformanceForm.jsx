@@ -165,9 +165,15 @@ class PerformanceForm extends React.Component {
                     </div>
                 </div>
                 <div className="field column is-2">
-                    <label className="label">学费</label>
+                    <label className="label">申请费</label>
                     <div className="control">
                         <input className="input" type="text" name="fee" value={performance.fee} onChange={this.handleChange} />
+                    </div>
+                </div>
+                <div className="field column is-2">
+                    <label className="label">学费</label>
+                    <div className="control">
+                        <input className="input" type="text" name="tuition" value={performance.tuition} onChange={this.handleChange} />
                     </div>
                 </div>
                 <div className="field column is-2">

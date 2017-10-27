@@ -14,6 +14,7 @@ class Performance {
                 ss.name AS sub_service_name, 
                 ss.id AS sub_service_id,
                 p.fee AS fee,
+                p.tuition AS tuition,
                 ps.name AS progress_name,
                 p.progress_id AS progress_id,
                 p.commission_progress_id AS commission_progress_id,
