@@ -21,3 +21,8 @@ if ($_GET['action'] == 'upsertStudent') {
     $sRepo->upsert($_POST);
     echo json_encode('ok');
 }
+
+if ($_GET['action'] == 'deleteStudent') {
+    $sRepo->delete($_POST['id']);
+    echo json_encode('ok');
+}

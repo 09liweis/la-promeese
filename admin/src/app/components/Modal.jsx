@@ -3,14 +3,24 @@ import React from 'react';
 class Modal extends React.Component {
     constructor(props) {
         super(props);
-        
+        this.state = {
+            width: '100%'
+        };
+    }
+    componentWillReceiveProps(nextProps) {
+        if (typeof nextProps.width != 'undefined') {
+            this.setState({
+                width: nextProps.width
+            });
+        }
     }
     render() {
         const modalClass = this.props.modal ? 'modal is-active' : 'modal';
+        const style = {'width': this.state.width};
         return (
             <div className={modalClass}>
                 <div className="modal-background" onClick={this.props.closeModal}></div>
-                <div className="modal-card" style={{'width': '100%'}}>
+                <div className="modal-card" style={style}>
                     <header className="modal-card-head">
                         <p className="modal-card-title">{this.props.title}</p>
                         <button className="delete" aria-label="close" onClick={this.props.closeModal}></button>

@@ -5,7 +5,9 @@ import $ from 'jquery';
 import Api from '../services/api.js';
 import Modal from './Modal.jsx';
 import StudentForm from './StudentForm.jsx';
+import DeleteConfirmForm from './DeleteConfirmForm.jsx';
 import { getCurrentDate, getDateDifferent } from '../services/functions.js';
+
 
 import Datepicker from '../elements/Datepicker.jsx';
 
@@ -19,6 +21,7 @@ class Home extends React.Component {
             employees: [],
             employeesMaterial: [],
             modal: false,
+            deleteStudent: false,
             search: {
                 name: '',
                 start_date: '',
@@ -33,6 +36,7 @@ class Home extends React.Component {
         this.handleSearchChange = this.handleSearchChange.bind(this);
         this.search = this.search.bind(this);
         this.reset = this.reset.bind(this);
+        this.deleteStudent = this.deleteStudent.bind(this);
     }
     handleSearchChange(e) {
         let search = this.state.search;
@@ -106,8 +110,15 @@ class Home extends React.Component {
     }
     closeModal() {
         this.setState({
-            modal: false
+            modal: false,
+            deleteStudent: false
         });
+    }
+    deleteStudent(id) {
+        this.setState({
+            deleteStudent: true
+        });
+        console.log(id);
     }
     render() {
         const employees = this.state.employees.map((c) =>
@@ -141,7 +152,7 @@ class Home extends React.Component {
             } else {
                 passColor = 'has-text-danger';
             }
-            
+            const _this = this;
             return (
                 <tr key={s.id}>
                     <th><Link to={`/admin/student/${s.id}`}>{s.name}</Link></th>
@@ -153,6 +164,7 @@ class Home extends React.Component {
                     <th>${s.service_fee}</th>
                     <th>{s.progress}</th>
                     <th>{s.updated_at}</th>
+                    <th><a className="button is-danger" onClick={_this.deleteStudent.bind(_this, s.id)}>Delete</a></th>
                 </tr>
             );
         }
@@ -213,6 +225,7 @@ class Home extends React.Component {
                         <a className="button is-danger" onClick={this.reset}>重置</a>
                     </div>
                 </div>
+                <Modal modal={this.state.deleteStudent} width={'414px'} form={<DeleteConfirmForm refreshPage={this.refreshStudents} />} closeModal={this.closeModal} title='删除学生' />
                 <table className="table is-fullwidth is-striped is-narrow">
                     <thead>
                         <tr>
@@ -225,6 +238,7 @@ class Home extends React.Component {
                             <th>服务金额</th>
                             <th>进度</th>
                             <th>更新时间</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
