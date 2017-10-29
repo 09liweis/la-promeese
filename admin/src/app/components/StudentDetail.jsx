@@ -99,7 +99,7 @@ class StudentDetail extends React.Component {
                         <p>代理公司: {s.agency_name}</p>
                     </div>
                     </div>
-                    <a className="button is-danger" onClick={this.edit}>编辑学生</a>
+                    <a className="button is-danger" onClick={this.edit}>编辑客户</a>
                 </div>;
         }
         return(

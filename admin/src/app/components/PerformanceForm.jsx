@@ -1,6 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
 
+import Datepicker from '../elements/Datepicker.jsx';
+
 class PerformanceForm extends React.Component {
     constructor(props) {
         super(props);
@@ -175,6 +177,12 @@ class PerformanceForm extends React.Component {
                                 <option value="2nd Semester">2nd Semester</option>
                             </select>
                         </div>
+                    </div>
+                </div>
+                <div className="field column is-2">
+                    <label className="label">开学日期</label>
+                    <div className="control">
+                        <Datepicker name={"school_start_date"} value={performance.school_start_date} handleChange={this.handleChange} />
                     </div>
                 </div>
                 <div className="field column is-2">

@@ -14,6 +14,7 @@ class Performance {
                 ss.name AS sub_service_name, 
                 ss.id AS sub_service_id,
                 p.semester AS semester,
+                p.school_start_date,
                 p.fee AS fee,
                 p.tuition AS tuition,
                 ps.name AS progress_name,
@@ -40,6 +41,9 @@ class Performance {
         return $performances;
     }
     public function upsert($performance) {
+        if (($performance['school_start_date']) != '') {
+            $performance['school_start_date'] = substr($performance['school_start_date'], 0, 7);
+        }
         $columns = '';
         $values = '';
         $updates = '';

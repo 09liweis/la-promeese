@@ -49,6 +49,7 @@ class Performances extends React.Component {
             service_id: '',
             sub_service_id: '',
             semester: '',
+            school_start_date: '',
             fee: '',
             tuition: '',
             progress_id: '',
@@ -106,6 +107,7 @@ class Performances extends React.Component {
                 <td>{p.service_name}</td>
                 <td>{p.sub_service_name}</td>
                 <td>{p.semester}</td>
+                <td>{p.school_start_date}</td>
                 <td>${p.fee}</td>
                 <td>${p.tuition}</td>
                 <td>{p.progress_name}</td>
@@ -132,6 +134,7 @@ class Performances extends React.Component {
                         <th>服务</th>
                         <th>学校</th>
                         <th>Semester</th>
+                        <th>开学日期</th>
                         <th>申请费</th>
                         <th>学费</th>
                         <th>进度</th>
