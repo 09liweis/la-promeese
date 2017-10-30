@@ -22,6 +22,8 @@ class Home extends React.Component {
             employeesMaterial: [],
             modal: false,
             deleteStudent: false,
+            currentPage: '1',
+            totalPages: '',
             search: {
                 name: '',
                 start_date: '',
@@ -172,7 +174,7 @@ class Home extends React.Component {
         return(
             <div className="card">
                 {(this.props.user.admin_level != 3) ?
-                <a className="button is-primary" onClick={this.addStudent}>添加学生</a>
+                <a className="button is-primary" onClick={this.addStudent}>添加客户</a>
                 :null}
                 <div className="serach columns">
                     <div className="column is-3">

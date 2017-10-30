@@ -28,7 +28,8 @@ class Student {
                 students s
                 LEFT JOIN employees e ON s.employee_id = e.id
                 LEFT JOIN employees_material em ON s.employee_material_id = em.id
-                LEFT JOIN agencies a ON s.agency_id = a.id WHERE 1';
+                LEFT JOIN agencies a ON s.agency_id = a.id 
+                WHERE 1';
         if ($search['name'] != '') {
             $sql .= ' AND s.name LIKE :name';
         }
@@ -44,6 +45,7 @@ class Student {
         if ($search['end_date'] != '') {
             $sql .= ' AND s.visa_date <= :end_date';
         }
+        $sql .= ' ORDER BY s.id DESC';
         $pdostmt = $this->db->prepare($sql);
         if ($search['name'] != '') {
             $pdostmt->bindValue(':name', '%'.$search['name'].'%', PDO::PARAM_STR);
