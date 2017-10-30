@@ -75,13 +75,13 @@ class Employees extends React.Component {
             let level = '';
             switch (em.admin_level) {
                 case '1':
-                    level = '一级权限';
+                    level = '一级';
                     break;
                 case '2':
-                    level = '二级权限';
+                    level = '二级';
                     break;
                 case '3':
-                    level = '三级权限';
+                    level = '三级';
                     break;
                 default:
                     // code
