@@ -85,6 +85,7 @@ class StudentDetail extends React.Component {
                         </p>
                     </div>
                     <div className="column">
+                        <p>护照号码: {s.passport_number}</p>
                         <p>护照到期日: {s.passport_date}</p>
                         <p>签证信息: {s.visa_info}</p>
                         <p>签证到期日: {s.visa_date}</p>

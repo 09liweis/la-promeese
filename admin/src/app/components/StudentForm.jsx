@@ -24,6 +24,7 @@ class StudentForm extends React.Component {
                 city_id: '',
                 visa_info: '',
                 visa_date: '',
+                passport_number: '',
                 passport_date: '',
                 phone: '',
                 email: '',
@@ -262,6 +263,12 @@ class StudentForm extends React.Component {
                             <label className="label">签证到期日</label>
                             <div className="control">
                                 <Datepicker name={"visa_date"} value={student.visa_date} handleChange={this.handleChange} />
+                            </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">护照号码</label>
+                            <div className="control">
+                                <input className="input" type="text" name="passport_number" value={student.passport_number} onChange={this.handleChange} />
                             </div>
                         </div>
                         <div className="field">

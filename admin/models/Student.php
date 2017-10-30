@@ -70,6 +70,7 @@ class Student {
                 s.name AS name,
                 s.visa_date AS visa_date,
                 s.visa_info AS visa_info,
+                s.passport_number AS passport_number,
                 s.passport_date AS passport_date,
                 s.phone AS phone,
                 s.email AS email,

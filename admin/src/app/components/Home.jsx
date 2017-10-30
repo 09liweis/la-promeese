@@ -163,7 +163,7 @@ class Home extends React.Component {
                     <th>{s.service}</th>
                     <th>${s.service_fee}</th>
                     <th>{s.progress}</th>
-                    <th>{s.updated_at}</th>
+                    <th>{s.updated_at.substring(0, 10)}</th>
                     <th><a className="button is-danger" onClick={_this.deleteStudent.bind(_this, s.id)}>Delete</a></th>
                 </tr>
             );
