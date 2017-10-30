@@ -7,7 +7,20 @@ class Student {
     public function __construct($db) {
         $this->db = $db;
     }
-    public function students($search) {
+    public function totalStudents() {
+        $sql = 'SELECT COUNT(*) FROM students';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->execute();
+        $total = $pdostmt->fetch(PDO::FETCH_COLUMN);
+        return $total;
+    }
+    public function students($search, $page = null) {
+        $limit = 20;
+        if ($page == null) {
+            $page = 0;
+        }
+        $offset = $page * $limit;
+        
         $sql = 'SELECT 
                 s.id as id,
                 s.name AS name,
@@ -45,8 +58,12 @@ class Student {
         if ($search['end_date'] != '') {
             $sql .= ' AND s.visa_date <= :end_date';
         }
-        $sql .= ' ORDER BY s.id DESC';
+        $sql .= ' ORDER BY s.id DESC LIMIT :limit OFFSET :offset';
         $pdostmt = $this->db->prepare($sql);
+        
+        $pdostmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $pdostmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        
         if ($search['name'] != '') {
             $pdostmt->bindValue(':name', '%'.$search['name'].'%', PDO::PARAM_STR);
         }

@@ -22,8 +22,8 @@ class Home extends React.Component {
             employeesMaterial: [],
             modal: false,
             deleteStudent: false,
-            currentPage: '1',
-            totalPages: '',
+            currentPage: '0',
+            totalStudents: '',
             search: {
                 name: '',
                 start_date: '',
@@ -39,6 +39,7 @@ class Home extends React.Component {
         this.search = this.search.bind(this);
         this.reset = this.reset.bind(this);
         this.deleteStudent = this.deleteStudent.bind(this);
+        this.changePage = this.changePage.bind(this);
     }
     handleSearchChange(e) {
         let search = this.state.search;
@@ -92,6 +93,14 @@ class Home extends React.Component {
                 });
             }
         });
+        $.ajax({
+            url: '/admin/controllers/student.php?action=getTotalStudents',
+            success(res) {
+                _this.setState({
+                    totalStudents: res
+                });
+            }
+        });
     }
     refreshStudents() {
         this.closeModal();
@@ -122,7 +131,21 @@ class Home extends React.Component {
         });
         console.log(id);
     }
+    changePage(page) {
+        const _this = this;
+        $.ajax({
+            url: api.getStudents(),
+            data: {page: page},
+            success(res) {
+                _this.setState({
+                    students: res,
+                    currentPage: page
+                });
+            }
+        });
+    }
     render() {
+        const _this = this;
         const employees = this.state.employees.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
         );
@@ -171,6 +194,19 @@ class Home extends React.Component {
             );
         }
         );
+        
+        const totalStudents = this.state.totalStudents;
+        const currentPage = this.state.currentPage;
+        const totalPages = Math.ceil(totalStudents / 20);
+        const pagination = Array(totalPages).fill().map((x, i) => {
+            const currentClass = currentPage == i ? 'pagination-link is-current' : 'pagination-link';
+            return (
+                <li key={i}>
+                    <a className={currentClass} aria-label="Page {i+1}" aria-current="page" onClick={_this.changePage.bind(_this, (i))}>{i+1}</a>
+                </li>
+            );
+        });
+        
         return(
             <div className="card">
                 {(this.props.user.admin_level != 3) ?
@@ -247,6 +283,11 @@ class Home extends React.Component {
                     {list}
                     </tbody>
                 </table>
+                <nav className="pagination is-centered" role="navigation" aria-label="pagination">
+                    <ul className="pagination-list">
+                    {pagination}
+                    </ul>
+                </nav>
                 <Modal modal={this.state.modal} form={<StudentForm refreshPage={this.refreshStudents} />} closeModal={this.closeModal} title='添加学生' />
             </div>
         );

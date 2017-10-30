@@ -8,8 +8,17 @@ header('Content-Type: application/json');
 $sRepo = new Student(Database::dbConnect());
 
 if ($_GET['action'] == 'getStudents') {
-    $students = $sRepo->students($_GET);
+    if (isset($_GET['page'])) {
+        $students = $sRepo->students($_GET, $_GET['page']);    
+    } else {
+        $students = $sRepo->students($_GET);   
+    }
     echo json_encode($students);
+}
+
+if ($_GET['action'] == 'getTotalStudents') {
+    $total = $sRepo->totalStudents();
+    echo json_encode($total);
 }
 
 if ($_GET['action'] == 'getStudent') {
