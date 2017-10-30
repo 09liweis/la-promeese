@@ -9,16 +9,19 @@ $sRepo = new Student(Database::dbConnect());
 
 if ($_GET['action'] == 'getStudents') {
     if (isset($_GET['page'])) {
-        $students = $sRepo->students($_GET, $_GET['page']);    
+        $currentPage = $_GET['page'];
+        $students = $sRepo->students($_GET, $_GET['page']);
     } else {
+        $currentPage = 0;
         $students = $sRepo->students($_GET);   
     }
-    echo json_encode($students);
-}
-
-if ($_GET['action'] == 'getTotalStudents') {
     $total = $sRepo->totalStudents();
-    echo json_encode($total);
+    $result = array(
+        'data' => $students,
+        'total' => $total,
+        'current' => $currentPage
+    );
+    echo json_encode($result);
 }
 
 if ($_GET['action'] == 'getStudent') {

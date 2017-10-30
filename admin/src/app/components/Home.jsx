@@ -52,15 +52,9 @@ class Home extends React.Component {
     }
     search() {
         const _this = this;
-        $.ajax({
-            url: api.getStudents(),
-            data: _this.state.search,
-            success(res) {
-                _this.setState({
-                    students: res
-                });
-            }
-        });
+        let data = _this.state.search;
+        data.page = this.state.currentPage;
+        this.refreshStudents(data);
     }
     reset() {
         this.setState({
@@ -93,23 +87,18 @@ class Home extends React.Component {
                 });
             }
         });
-        $.ajax({
-            url: '/admin/controllers/student.php?action=getTotalStudents',
-            success(res) {
-                _this.setState({
-                    totalStudents: res
-                });
-            }
-        });
     }
-    refreshStudents() {
+    refreshStudents(data) {
         this.closeModal();
         const _this = this;
         $.ajax({
             url: api.getStudents(),
+            data: data,
             success(res) {
                 _this.setState({
-                    students: res
+                    students: res.data,
+                    totalStudents: res.total,
+                    currentPage: res.current
                 });
             }
         });
@@ -132,17 +121,9 @@ class Home extends React.Component {
         console.log(id);
     }
     changePage(page) {
-        const _this = this;
-        $.ajax({
-            url: api.getStudents(),
-            data: {page: page},
-            success(res) {
-                _this.setState({
-                    students: res,
-                    currentPage: page
-                });
-            }
-        });
+        let data = this.state.search;
+        data.page = page;
+        this.refreshStudents(data);
     }
     render() {
         const _this = this;
@@ -283,11 +264,13 @@ class Home extends React.Component {
                     {list}
                     </tbody>
                 </table>
+                {(this.state.totalStudents > 20) ?
                 <nav className="pagination is-centered" role="navigation" aria-label="pagination">
                     <ul className="pagination-list">
                     {pagination}
                     </ul>
                 </nav>
+                :null}
                 <Modal modal={this.state.modal} form={<StudentForm refreshPage={this.refreshStudents} />} closeModal={this.closeModal} title='添加学生' />
             </div>
         );
