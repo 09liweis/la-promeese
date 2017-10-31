@@ -71,4 +71,10 @@ class Performance {
         $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
         $pdostmt->execute();
     }
+    public function removeByStudent($id) {
+        $sql = 'DELETE FROM performances WHERE student_id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $pdostmt->execute();
+    }
 }

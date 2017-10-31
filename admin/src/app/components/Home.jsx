@@ -22,6 +22,7 @@ class Home extends React.Component {
             employeesMaterial: [],
             modal: false,
             deleteStudent: false,
+            studentToDelete: {},
             currentPage: '0',
             totalStudents: '',
             search: {
@@ -114,11 +115,11 @@ class Home extends React.Component {
             deleteStudent: false
         });
     }
-    deleteStudent(id) {
+    deleteStudent(s) {
         this.setState({
-            deleteStudent: true
+            deleteStudent: true,
+            studentToDelete: s
         });
-        console.log(id);
     }
     changePage(page) {
         let data = this.state.search;
@@ -170,7 +171,7 @@ class Home extends React.Component {
                     <th>${s.service_fee}</th>
                     <th>{s.progress}</th>
                     <th>{s.updated_at.substring(0, 10)}</th>
-                    <th><a className="button is-danger" onClick={_this.deleteStudent.bind(_this, s.id)}>Delete</a></th>
+                    <th><a className="button is-danger" onClick={_this.deleteStudent.bind(_this, s)}>Delete</a></th>
                 </tr>
             );
         }
@@ -244,7 +245,7 @@ class Home extends React.Component {
                         <a className="button is-danger" onClick={this.reset}>重置</a>
                     </div>
                 </div>
-                <Modal modal={this.state.deleteStudent} width={'414px'} form={<DeleteConfirmForm refreshPage={this.refreshStudents} />} closeModal={this.closeModal} title='删除学生' />
+                <Modal modal={this.state.deleteStudent} width={'414px'} form={<DeleteConfirmForm studentToDelete={this.state.studentToDelete} refreshPage={this.refreshStudents} />} closeModal={this.closeModal} title='删除客户' />
                 <table className="table is-fullwidth is-striped is-narrow">
                     <thead>
                         <tr>

@@ -67,4 +67,10 @@ class Business {
         $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
         $pdostmt->execute();
     }
+    public function removeByStudent($id) {
+        $sql = 'DELETE FROM businesses WHERE student_id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $pdostmt->execute();
+    }
 }

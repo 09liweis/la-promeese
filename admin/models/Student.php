@@ -175,4 +175,11 @@ class Student {
         $pdostmt->bindValue(':id', $student_id, PDO::PARAM_INT);
         $pdostmt->execute();
     }
+    
+    public function delete($id) {
+        $sql = 'DELETE FROM students WHERE id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $pdostmt->execute();
+    }
 }
