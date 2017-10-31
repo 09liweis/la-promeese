@@ -171,7 +171,9 @@ class Home extends React.Component {
                     <th>${s.service_fee}</th>
                     <th>{s.progress}</th>
                     <th>{s.updated_at.substring(0, 10)}</th>
+                    {(this.props.user.admin_level == 1) ?
                     <th><a className="button is-danger" onClick={_this.deleteStudent.bind(_this, s)}>Delete</a></th>
+                    :null}
                 </tr>
             );
         }
@@ -258,7 +260,9 @@ class Home extends React.Component {
                             <th>服务金额</th>
                             <th>进度</th>
                             <th>更新时间</th>
+                            {(this.props.user.admin_level == 1) ?
                             <th>Actions</th>
+                            :null}
                         </tr>
                     </thead>
                     <tbody>
