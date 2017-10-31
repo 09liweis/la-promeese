@@ -241,6 +241,12 @@ class PerformanceForm extends React.Component {
                         </div>
                     </div>
                 </div>
+                <div className="field column is-2">
+                    <label className="label">备注</label>
+                    <div className="control">
+                        <input type="text" className="input" name="remark" value={performance.remark} onChange={this.handleChange}/>
+                    </div>
+                </div>
                 <div className="column is-2">
                     <button className="button is-primary">提交</button>
                 </div>

@@ -75,7 +75,8 @@ class SchoolApplicatoins extends React.Component {
             service_fee: '',
             commission_progress_id: '',
             employee_id: '',
-            employee_material_id: ''
+            employee_material_id: '',
+            remark: ''
         };
     }
     setNewSchoolApplication() {

@@ -57,7 +57,8 @@ class Businesses extends React.Component {
             application_fee: '',
             new_date: '',
             employee_id: '',
-            employee_material_id: ''
+            employee_material_id: '',
+            remark: ''
         };
     }
     setEmptyBusiness() {

@@ -22,7 +22,8 @@ class SchoolApplication {
                 pga.employee_id AS employee_id,
                 e.name AS employee_name,
                 pga.employee_material_id AS employee_material_id,
-                em.name AS employee_material_name
+                em.name AS employee_material_name,
+                pga.remark AS remark
                 FROM 
                 post_graduate_applications pga
                 LEFT JOIN services s ON pga.service_id = s.id

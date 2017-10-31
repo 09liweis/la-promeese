@@ -24,7 +24,8 @@ class Performance {
                 p.employee_id AS employee_id,
                 e.name AS employee_name,
                 p.employee_material_id AS employee_material_id,
-                em.name AS employee_material_name
+                em.name AS employee_material_name,
+                p.remark AS remark
                 FROM 
                 performances p 
                 LEFT JOIN services s ON p.service_id = s.id

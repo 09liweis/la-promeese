@@ -55,7 +55,8 @@ class Performances extends React.Component {
             progress_id: '',
             commission_progress_id: '',
             employee_id: '',
-            employee_material_id: ''
+            employee_material_id: '',
+            remark: ''
         };
     }
     getNewPerformance() {

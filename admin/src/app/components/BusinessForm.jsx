@@ -256,6 +256,14 @@ class BusinessForm extends React.Component {
                     </div>
                 </div>
                 <div className="field column">
+                    <div className="field">
+                        <label className="label">备注</label>
+                        <div className="control">
+                            <input className="input" type="text" name="remark" value={business.remark} onChange={this.handleChange} />
+                        </div>
+                    </div>
+                </div>
+                <div className="field column">
                     <button className="button is-primary">Submit</button>
                 </div>
             </form>

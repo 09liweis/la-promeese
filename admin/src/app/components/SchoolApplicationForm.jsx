@@ -379,6 +379,12 @@ class SchoolApplicationForm extends React.Component {
                             </div>
                         </div>
                     </div>
+                    <div className="field column">
+                        <label className="label">备注</label>
+                        <div className="control">
+                            <input className="input" type="text" name="remark" value={application.remark} onChange={this.handleChange} />
+                        </div>
+                    </div>
                 </div>
                 <a className="button is-primary" onClick={this.addSchool}>添加学校</a>
                 {applications}

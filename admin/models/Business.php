@@ -24,7 +24,8 @@ class Business {
                 b.employee_id AS employee_id,
                 e.name AS employee_name,
                 b.employee_material_id AS employee_material_id,
-                em.name AS employee_material_name
+                em.name AS employee_material_name,
+                b.remark AS remark
                 FROM 
                 businesses b 
                 LEFT JOIN services s ON b.service_id = s.id
