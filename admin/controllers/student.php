@@ -34,8 +34,13 @@ if ($_GET['action'] == 'getStudent') {
 }
 
 if ($_GET['action'] == 'upsertStudent') {
-    $sRepo->upsert($_POST);
-    echo json_encode('ok');
+    $exist = $sRepo->checkPassport($_POST['passport_number']);
+    if ($exist) {
+        echo json_encode('fail');
+    } else {
+        $sRepo->upsert($_POST);   
+        echo json_encode('ok');
+    }
 }
 
 if ($_GET['action'] == 'deleteStudent') {

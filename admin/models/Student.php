@@ -175,7 +175,14 @@ class Student {
         $pdostmt->bindValue(':id', $student_id, PDO::PARAM_INT);
         $pdostmt->execute();
     }
-    
+    public function checkPassport($passport) {
+        $sql = 'SELECT passport_number FROM students WHERE passport_number = :passport_number';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':passport_number', $passport, PDO::PARAM_STR);
+        $pdostmt->execute();
+        $exist = $pdostmt->fetch(PDO::FETCH_COLUMN);
+        return $exist;
+    }
     public function delete($id) {
         $sql = 'DELETE FROM students WHERE id = :id';
         $pdostmt = $this->db->prepare($sql);

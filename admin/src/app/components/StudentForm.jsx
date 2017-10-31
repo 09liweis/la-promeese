@@ -137,7 +137,11 @@ class StudentForm extends React.Component {
             data: _this.state.student,
             method: 'POST',
             success(res) {
-                _this.props.refreshPage();
+                if (res == 'ok') {
+                    _this.props.refreshPage();
+                } else {
+                    alert('客户护照已存在');
+                }
             }
         });
     }
