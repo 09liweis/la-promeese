@@ -137,6 +137,9 @@ class Businesses extends React.Component {
                         <p>责任客服: {b.employee_name}</p>
                         <p>责任文案: {b.employee_material_name}</p>
                     </div>
+                    <div className="column">
+                        <p>备注: {b.remark}</p>
+                    </div>
                     {(this.props.user.admin_level != 3) ?
                     <div className="column">
                         <a className="button is-warning" onClick={_this.edit.bind(_this, b)}>Edit</a>

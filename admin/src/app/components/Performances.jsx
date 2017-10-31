@@ -115,6 +115,7 @@ class Performances extends React.Component {
                 <td>{p.commission_progress_name}</td>
                 <td>{p.employee_name}</td>
                 <td>{p.employee_material_name}</td>
+                <td>{p.remark}</td>
                 {(this.props.user.admin_level != 3) ?
                 <td>
                     <a className="button is-warning" onClick={_this.addPerformanceForm.bind(_this, p)}>Edit</a>
@@ -142,6 +143,7 @@ class Performances extends React.Component {
                         <th>佣金申报</th>
                         <th>责任客服</th>
                         <th>责任文案</th>
+                        <th>备注</th>
                         {(this.props.user.admin_level != 3) ?
                         <th>Actions</th>
                         :null}

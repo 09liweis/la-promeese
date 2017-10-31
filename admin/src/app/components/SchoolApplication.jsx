@@ -40,6 +40,9 @@ class SchoolApplication extends React.Component {
                     <p>Email: {a.email}</p>
                     <p>Email密码: {a.email_password}</p>
                     </div>
+                    <div className="column">
+                    <p>备注: {a.remark}</p>
+                    </div>
                     {(this.props.user.admin_level != 3) ?
                     <div className="column">
                         <a className="button is-warning" onClick={this.props.edit}>Edit</a>
