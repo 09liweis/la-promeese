@@ -91,7 +91,7 @@ class Employees extends React.Component {
                     <th>{em.name}</th>
                     <th>{em.email}</th>
                     <th>{level}</th>
-                    <th>{em.last_login.substring(0, 10)}</th>
+                    <th>{(em.last_login != '') ? em.last_login.substring(0, 10) : ''}</th>
                     <th><a className="button is-danger" onClick={_this.edit.bind(_this, em)}>Edit</a></th>
                 </tr>
             );
