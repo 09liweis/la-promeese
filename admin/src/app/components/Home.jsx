@@ -12,6 +12,7 @@ import { getCurrentDate, getDateDifferent } from '../services/functions.js';
 import Datepicker from '../elements/Datepicker.jsx';
 
 const api = new Api();
+const studentsPerPage = 50;
 
 class Home extends React.Component {
     constructor() {
@@ -181,7 +182,7 @@ class Home extends React.Component {
         
         const totalStudents = this.state.totalStudents;
         const currentPage = this.state.currentPage;
-        const totalPages = Math.ceil(totalStudents / 20);
+        const totalPages = Math.ceil(totalStudents / studentsPerPage );
         const pagination = Array(totalPages).fill().map((x, i) => {
             const currentClass = currentPage == i ? 'pagination-link is-current' : 'pagination-link';
             return (
@@ -269,7 +270,7 @@ class Home extends React.Component {
                     {list}
                     </tbody>
                 </table>
-                {(this.state.totalStudents > 20) ?
+                {(this.state.totalStudents > studentsPerPage) ?
                 <nav className="pagination is-centered" role="navigation" aria-label="pagination">
                     <ul className="pagination-list">
                     {pagination}
