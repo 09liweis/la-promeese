@@ -36,7 +36,7 @@ if ($_GET['action'] == 'getStudent') {
 if ($_GET['action'] == 'upsertStudent') {
     if ($_POST['passport_number'] != '') {
         $exist = $sRepo->checkPassport($_POST['passport_number']);   
-        if ($exist['id'] != $_POST['id']) {
+        if ($exist && $exist['id'] != $_POST['id']) {
             echo json_encode('fail');
         } else {
             $sRepo->upsert($_POST);   
