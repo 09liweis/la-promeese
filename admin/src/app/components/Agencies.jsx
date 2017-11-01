@@ -41,6 +41,17 @@ class Agencies extends React.Component {
             agency: agency
         });
     }
+    remove(agency) {
+        const _this = this;
+        $.ajax({
+            url: '/admin/controllers/agency.php?action=removeAgency',
+            data: {id: agency.id},
+            method: 'POST',
+            success(res) {
+                _this.getAgencies();
+            }
+        });
+    }
     getAgencies() {
         const _this = this;
         $.ajax({
@@ -72,7 +83,10 @@ class Agencies extends React.Component {
             return (
                 <tr key={i}>
                     <th>{o.name}</th>
-                    <th><a className="button is-danger" onClick={_this.edit.bind(_this, o)}>Edit</a></th>
+                    <th>
+                        <a className="button is-warning" onClick={_this.edit.bind(_this, o)}>Edit</a>
+                        <a className="button is-danger" onClick={_this.remove.bind(_this, o)}>Delete</a>
+                    </th>
                 </tr>
             );
         }

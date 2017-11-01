@@ -34,7 +34,8 @@ class Performance {
                 LEFT JOIN commission_progresses cp ON p.commission_progress_id = cp.id
                 LEFT JOIN employees e ON p.employee_id = e.id
                 LEFT JOIN employees_material em ON p.employee_material_id = em.id
-                WHERE p.student_id = :student_id';
+                WHERE p.student_id = :student_id
+                ORDER BY p.id ASC';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':student_id', $student_id);
         $pdostmt->execute();

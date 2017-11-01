@@ -15,6 +15,7 @@ class Employees extends React.Component {
         this.edit = this.edit.bind(this);
         this.setNew = this.setNew.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.remove = this.remove.bind(this);
     }
     componentDidMount() {
         this.getEmployees();
@@ -45,6 +46,17 @@ class Employees extends React.Component {
     edit(employee) {
         this.setState({
             employee: employee
+        });
+    }
+    remove(em) {
+        const _this = this;
+        $.ajax({
+            url: '/admin/controllers/employee.php?action=removeEmployee',
+            data: {id: em.id},
+            method: 'POST',
+            success(res) {
+                _this.getEmployees();
+            }
         });
     }
     getEmployees() {
@@ -95,14 +107,17 @@ class Employees extends React.Component {
                     <th>{em.email}</th>
                     <th>{level}</th>
                     <th>{(em.last_login != null && em.last_login != '') ? em.last_login.substring(0, 10) : ''}</th>
-                    <th><a className="button is-danger" onClick={_this.edit.bind(_this, em)}>Edit</a></th>
+                    <th>
+                        <a className="button is-warning" onClick={_this.edit.bind(_this, em)}>Edit</a>
+                        <a className="button is-danger" onClick={_this.remove.bind(_this, em)}>Delete</a>
+                    </th>
                 </tr>
             );
         }
         );
         return(
             <div className="columns">
-                <div className="column card is-6">
+                <div className="column card is-8">
                 <a className="button is-primary" onClick={this.setNew}>Add</a>
                 <table className="table is-fullwidth is-striped is-narrow">
                     <thead>
@@ -111,6 +126,7 @@ class Employees extends React.Component {
                             <th>Email</th>
                             <th>权限</th>
                             <th>最后登陆时间</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -118,7 +134,7 @@ class Employees extends React.Component {
                     </tbody>
                 </table>
                 </div>
-                <form className="column card is-6" onSubmit={this.handleSubmit}>
+                <form className="column card" onSubmit={this.handleSubmit}>
                     <h2 className="is-size-2 has-text-centered">责任客服</h2>
                     <div className="field">
                         <label className="label">姓名</label>

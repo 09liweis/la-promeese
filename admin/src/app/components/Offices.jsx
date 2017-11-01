@@ -15,6 +15,7 @@ class Offices extends React.Component {
         this.edit = this.edit.bind(this);
         this.setNew = this.setNew.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.remove = this.remove.bind(this);
     }
     componentDidMount() {
         this.getOffices();
@@ -39,6 +40,17 @@ class Offices extends React.Component {
     edit(office) {
         this.setState({
             office: office
+        });
+    }
+    remove(office) {
+        const _this = this;
+        $.ajax({
+            url: '/admin/controllers/office.php?action=removeOffice',
+            data: {id: office.id},
+            method: 'POST',
+            success(res) {
+                _this.getOffices();
+            }
         });
     }
     getOffices() {
@@ -72,7 +84,10 @@ class Offices extends React.Component {
             return (
                 <tr key={i}>
                     <th>{o.name}</th>
-                    <th><a className="button is-danger" onClick={_this.edit.bind(_this, o)}>Edit</a></th>
+                    <th>
+                        <a className="button is-warning" onClick={_this.edit.bind(_this, o)}>Edit</a>
+                        <a className="button is-danger" onClick={_this.remove.bind(_this, o)}>Delete</a>
+                    </th>
                 </tr>
             );
         }

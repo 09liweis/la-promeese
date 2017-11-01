@@ -92,4 +92,16 @@ class Employee {
         }
         $pdostmt->execute();
     }
+    public function remove($id) {
+        $sql = 'DELETE FROM employees WHERE id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $id, PDO::PARAM_STR);
+        $pdostmt->execute();
+    }
+    public function removeMaterial($id) {
+        $sql = 'DELETE FROM employees_material WHERE id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $id, PDO::PARAM_STR);
+        $pdostmt->execute();
+    }
 }

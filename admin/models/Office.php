@@ -34,4 +34,10 @@ class Office {
         }
         $pdostmt->execute();
     }
+    public function remove($id) {
+        $sql = 'DELETE FROM offices WHERE id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $id, PDO::PARAM_STR);
+        $pdostmt->execute();
+    }
 }

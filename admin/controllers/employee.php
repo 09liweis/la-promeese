@@ -59,3 +59,13 @@ if ($_GET['action'] == 'upsertEmployeeMaterial') {
     $empRepo->upsertMaterial($_POST);
     echo json_encode(array('code' => 200));
 }
+
+if ($_GET['action'] == 'removeEmployee') {
+    $empRepo->remove($_POST['id']);
+    echo json_encode('ok');
+}
+
+if ($_GET['action'] == 'removeEmployeeMaterial') {
+    $empRepo->removeMaterial($_POST['id']);
+    echo json_encode('ok');
+}

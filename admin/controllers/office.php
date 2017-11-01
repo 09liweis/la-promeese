@@ -16,3 +16,8 @@ if ($_GET['action'] == 'upsertOffice') {
     $oRepo->upsert($_POST);
     echo json_encode('ok');
 }
+
+if ($_GET['action'] == 'removeOffice') {
+    $oRepo->remove($_POST['id']);
+    echo json_encode('ok');
+}

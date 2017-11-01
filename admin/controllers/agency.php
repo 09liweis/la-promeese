@@ -16,3 +16,8 @@ if ($_GET['action'] == 'upsertAgency') {
     $aRepo->upsert($_POST);
     echo json_encode('ok');
 }
+
+if ($_GET['action'] == 'removeAgency') {
+    $aRepo->remove($_POST['id']);
+    echo json_encode('ok');
+}

@@ -15,6 +15,7 @@ class EmployeesMaterial extends React.Component {
         this.edit = this.edit.bind(this);
         this.setNew = this.setNew.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.remove = this.remove.bind(this);
     }
     componentDidMount() {
         this.getEmployeesMaterial();
@@ -39,6 +40,17 @@ class EmployeesMaterial extends React.Component {
     edit(employee) {
         this.setState({
             employee: employee
+        });
+    }
+    remove(em) {
+        const _this = this;
+        $.ajax({
+            url: '/admin/controllers/employee.php?action=removeEmployeeMaterial',
+            data: {id: em.id},
+            method: 'POST',
+            success(res) {
+                _this.getEmployeesMaterial();
+            }
         });
     }
     getEmployeesMaterial() {
@@ -72,7 +84,10 @@ class EmployeesMaterial extends React.Component {
             return (
                 <tr key={i}>
                     <th>{em.name}</th>
-                    <th><a className="button is-danger" onClick={_this.edit.bind(_this, em)}>Edit</a></th>
+                    <th>
+                        <a className="button is-warning" onClick={_this.edit.bind(_this, em)}>Edit</a>
+                        <a className="button is-danger" onClick={_this.remove.bind(_this, em)}>Delete</a>
+                    </th>
                 </tr>
             );
         }
@@ -85,6 +100,7 @@ class EmployeesMaterial extends React.Component {
                     <thead>
                         <tr>
                             <th>姓名</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
