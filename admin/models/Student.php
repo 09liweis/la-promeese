@@ -15,7 +15,7 @@ class Student {
         return $total;
     }
     public function students($search, $page = null) {
-        $limit = 50;
+        $limit = 25;
         if ($page == null) {
             $page = 0;
         }

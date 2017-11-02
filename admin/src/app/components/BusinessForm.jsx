@@ -136,7 +136,7 @@ class BusinessForm extends React.Component {
         const employeesMaterial = this.state.employeesMaterial.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
         );
-        var newDateDes = '新时间';
+        var newDateDes = '获批时间至';
         switch (business.service_id) {
             case '7':
                 newDateDes = '获批时间至';
@@ -148,7 +148,7 @@ class BusinessForm extends React.Component {
                 newDateDes = '入职时间';
                 break;
             default:
-                newDateDes = '新时间';
+                newDateDes = '获批时间至';
         }
         
         return (

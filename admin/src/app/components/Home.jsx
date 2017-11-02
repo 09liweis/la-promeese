@@ -12,7 +12,7 @@ import { getCurrentDate, getDateDifferent } from '../services/functions.js';
 import Datepicker from '../elements/Datepicker.jsx';
 
 const api = new Api();
-const studentsPerPage = 50;
+const studentsPerPage = 25;
 
 class Home extends React.Component {
     constructor() {
