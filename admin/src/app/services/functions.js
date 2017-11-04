@@ -42,6 +42,9 @@ export function getNewDateDes(id) {
             case '74': //调档
                 newDateDes = '调档下达日期';
                 break;
+            case '76':
+                newDateDes = '获批时间';
+                break;
             default:
                 newDateDes = '获批时间至';
         }
@@ -50,6 +53,6 @@ export function getNewDateDes(id) {
 }
 
 export function checkNeedExtraVisa(id) {
-    const subServices = ['53', '54', '55'];
+    const subServices = ['53', '54', '55', '76'];
     return subServices.indexOf(id) != -1;
 }

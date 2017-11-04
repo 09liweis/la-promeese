@@ -129,7 +129,7 @@ class Businesses extends React.Component {
                     <div className="column">
                         <p>递交时间: {b.extra_submit_date}</p>
                         <p>进度: {b.extra_progress_name}</p>
-                        <p>{date}: {b.extra_new_date}</p>
+                        <p>{getNewDateDes(b.sub_service_id)}: {b.extra_new_date}</p>
                     </div>
                     :null}
                     <div className="column">

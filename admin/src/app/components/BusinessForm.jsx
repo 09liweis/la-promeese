@@ -216,7 +216,7 @@ class BusinessForm extends React.Component {
                         </div>
                     </div>
                     <div className="field">
-                        <label className="label">{newDateDes}</label>
+                        <label className="label">{getNewDateDes(business.sub_service_id)}</label>
                         <div className="control">
                             <Datepicker name={"extra_new_date"} value={business.extra_new_date} handleChange={this.handleChange} />
                         </div>
