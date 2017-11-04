@@ -138,8 +138,9 @@ class BusinessForm extends React.Component {
             <option key={c.id} value={c.id}>{c.name}</option>
         );
         var newDateDes = getNewDateDes(business.service_id);
-        newDateDes = getNewDateDes(business.sub_service_id);
-        
+        if (business.sub_service_id != '0') {
+            newDateDes = getNewDateDes(business.sub_service_id);   
+        }
         return (
             <form className="columns is-multiline" autoComplete="off" onSubmit={this.handleSubmit}>
                 <div className="column is-2">

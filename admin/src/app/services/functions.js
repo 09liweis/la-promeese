@@ -32,8 +32,15 @@ export function getNewDateDes(id) {
             case '9':
                 newDateDes = '入职时间';
                 break;
+            case '53':
+            case '54':
+            case '55':
+            case '75': //过期签证
             case '47': //小签
                 newDateDes = '准签信出信时间';
+                break;
+            case '74': //调档
+                newDateDes = '调档下达日期';
                 break;
             default:
                 newDateDes = '获批时间至';

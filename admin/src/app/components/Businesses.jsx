@@ -4,6 +4,8 @@ import $ from 'jquery';
 import Modal from './Modal.jsx';
 import BusinessForm from './BusinessForm.jsx';
 
+import {getNewDateDes} from '../services/functions.js';
+
 class Businesses extends React.Component {
     constructor(props) {
         super(props);
@@ -103,17 +105,9 @@ class Businesses extends React.Component {
     render() {
         const _this = this;
         const businesses = this.state.businesses.map((b) => {
-            let date = '';
-            switch (b.service_id) {
-                case '7':
-                    date = '获批时间至';
-                    break;
-                case '8':
-                    date = '登陆时间';
-                    break;
-                case '9':
-                    date = '入职时间';
-                    break;
+            let date = getNewDateDes(b.service_id);
+            if (b.sub_service_id != 0) {
+                date = getNewDateDes(b.sub_service_id);
             }
             return (
                 <div key={b.id} className="columns is-multiline card">
