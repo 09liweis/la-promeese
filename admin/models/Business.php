@@ -25,12 +25,17 @@ class Business {
                 e.name AS employee_name,
                 b.employee_material_id AS employee_material_id,
                 em.name AS employee_material_name,
-                b.remark AS remark
+                b.remark AS remark,
+                b.extra_new_date AS extra_new_date,
+                b.extra_submit_date AS extra_submit_date,
+                b.extra_progress_id AS extra_progress_id,
+                pps.name AS extra_progress_name
                 FROM 
                 businesses b 
                 LEFT JOIN services s ON b.service_id = s.id
                 LEFT JOIN sub_services ss ON b.sub_service_id = ss.id
                 LEFT JOIN progresses ps ON b.progress_id = ps.id
+                LEFT JOIN progresses pps ON b.extra_progress_id = pps.id
                 LEFT JOIN employees e ON b.employee_id = e.id
                 LEFT JOIN employees_material em ON b.employee_material_id = em.id
                 WHERE b.student_id = :student_id';

@@ -56,6 +56,9 @@ class Businesses extends React.Component {
             post_fee: '',
             application_fee: '',
             new_date: '',
+            extra_submit_date: '',
+            extra_progress_id: '',
+            extra_new_date: '',
             employee_id: '',
             employee_material_id: '',
             remark: ''
@@ -128,6 +131,13 @@ class Businesses extends React.Component {
                         <p>服务费: ${b.service_fee}</p>
                         <p>邮寄费: ${b.post_fee}</p>
                     </div>
+                    { b.extra_progress_id != '0' ?
+                    <div className="column">
+                        <p>递交时间: {b.extra_submit_date}</p>
+                        <p>进度: {b.extra_progress_name}</p>
+                        <p>{date}: {b.extra_new_date}</p>
+                    </div>
+                    :null}
                     <div className="column">
                         <p>递交时间: {b.submit_date}</p>
                         <p>进度: {b.progress_name}</p>

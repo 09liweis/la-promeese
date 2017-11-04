@@ -18,3 +18,31 @@ export function getDateDifferent(date) {
     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
     return diffDays;
 }
+
+export function getNewDateDes(id) {
+    var newDateDes = '获批时间至';
+    if (id != '') {
+        switch (id) {
+            case '7': //签证申请
+                newDateDes = '获批时间至';
+                break;
+            case '8': //移民申请
+                newDateDes = '登陆时间';
+                break;
+            case '9':
+                newDateDes = '入职时间';
+                break;
+            case '47': //小签
+                newDateDes = '准签信出信时间';
+                break;
+            default:
+                newDateDes = '获批时间至';
+        }
+    }
+    return newDateDes;
+}
+
+export function checkNeedExtraVisa(id) {
+    const subServices = ['53', '54', '55'];
+    return subServices.indexOf(id) != -1;
+}

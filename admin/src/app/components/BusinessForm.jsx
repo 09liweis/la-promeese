@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 
 import Datepicker from '../elements/Datepicker.jsx';
+import {getNewDateDes, checkNeedExtraVisa} from '../services/functions.js';
 
 class BusinessForm extends React.Component {
     constructor(props) {
@@ -136,20 +137,8 @@ class BusinessForm extends React.Component {
         const employeesMaterial = this.state.employeesMaterial.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
         );
-        var newDateDes = '获批时间至';
-        switch (business.service_id) {
-            case '7':
-                newDateDes = '获批时间至';
-                break;
-            case '8':
-                newDateDes = '登陆时间';
-                break;
-            case '9':
-                newDateDes = '入职时间';
-                break;
-            default:
-                newDateDes = '获批时间至';
-        }
+        var newDateDes = getNewDateDes(business.service_id);
+        newDateDes = getNewDateDes(business.sub_service_id);
         
         return (
             <form className="columns is-multiline" autoComplete="off" onSubmit={this.handleSubmit}>
@@ -206,6 +195,33 @@ class BusinessForm extends React.Component {
                         </div>
                     </div>
                 </div>
+                {checkNeedExtraVisa(business.sub_service_id) ?
+                <div className="column is-2">
+                    <div className="field">
+                        <label className="label">递交时间</label>
+                        <div className="control">
+                            <Datepicker name={"extra_submit_date"} value={business.extra_submit_date} handleChange={this.handleChange} />
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">进度</label>
+                        <div className="control">
+                            <div className="select">
+                                <select name="extra_progress_id" value={business.extra_progress_id} onChange={this.handleChange}>
+                                    <option>Please Select</option>
+                                    {progresses}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">{newDateDes}</label>
+                        <div className="control">
+                            <Datepicker name={"extra_new_date"} value={business.extra_new_date} handleChange={this.handleChange} />
+                        </div>
+                    </div>
+                </div>
+                :null}
                 <div className="column is-2">
                     <div className="field">
                         <label className="label">递交时间</label>
