@@ -43,7 +43,7 @@ class SchoolApplication extends React.Component {
                     <div className="column">
                     <p>备注: {a.remark}</p>
                     </div>
-                    {(this.props.user.admin_level != 3) ?
+                    {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
                     <div className="column">
                         <a className="button is-warning" onClick={this.props.edit}>Edit</a>
                         <a className="button is-danger" onClick={this.props.remove}>Delete</a>

@@ -107,7 +107,7 @@ class SchoolApplicatoins extends React.Component {
         return(
             <div className="card">
                 <h2 className="is-size-3 has-text-centered">收费学校申请</h2>
-                {(this.props.user.admin_level != 3) ?
+                {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
                 <a className="button is-primary" onClick={this.openForm}>添加学校申请</a>
                 :null}
                 {applications}

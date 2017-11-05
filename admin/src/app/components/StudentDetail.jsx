@@ -100,7 +100,9 @@ class StudentDetail extends React.Component {
                         <p>代理公司: {s.agency_name}</p>
                     </div>
                     </div>
+                    {this.props.user.admin_level != '4' ?
                     <a className="button is-danger" onClick={this.edit}>编辑客户</a>
+                    :null}
                 </div>;
         }
         return(

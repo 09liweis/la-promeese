@@ -144,7 +144,7 @@ class Businesses extends React.Component {
                     <div className="column">
                         <p>备注: {b.remark}</p>
                     </div>
-                    {(this.props.user.admin_level != 3) ?
+                    {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
                     <div className="column">
                         <a className="button is-warning" onClick={_this.edit.bind(_this, b)}>Edit</a>
                         <a className="button is-danger" onClick={_this.remove.bind(_this, b)}>Delete</a>
@@ -155,8 +155,8 @@ class Businesses extends React.Component {
         });
         return (
             <div className="card">
-                <h2 className="is-size-3 has-text-centered">业务</h2>
-                {(this.props.user.admin_level != 3) ?
+                <h2 className="is-size-3 has-text-centered" style={{'marginBottom': '20px'}}>业务</h2>
+                {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
                 <button className="button is-primary" onClick={this.addNew}>添加</button>
                 :null}
                 {businesses}

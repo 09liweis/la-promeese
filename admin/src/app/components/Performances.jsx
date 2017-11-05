@@ -116,7 +116,7 @@ class Performances extends React.Component {
                 <td>{p.employee_name}</td>
                 <td>{p.employee_material_name}</td>
                 <td>{p.remark}</td>
-                {(this.props.user.admin_level != 3) ?
+                {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
                 <td>
                     <a className="button is-warning" onClick={_this.addPerformanceForm.bind(_this, p)}>Edit</a>
                     <a className="button is-danger" onClick={_this.remove.bind(_this, p)}>Delete</a>
@@ -127,7 +127,7 @@ class Performances extends React.Component {
         return(
             <div className="card">
                 <h2 className="is-size-3 has-text-centered">业绩</h2>
-                {(this.props.user.admin_level != 3) ?
+                {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
                 <button className="button is-primary" onClick={this.openForm}>添加</button>
                 :null}
                 <table className="table is-fullwidth is-striped is-narrow">
@@ -144,7 +144,7 @@ class Performances extends React.Component {
                         <th>责任客服</th>
                         <th>责任文案</th>
                         <th>备注</th>
-                        {(this.props.user.admin_level != 3) ?
+                        {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
                         <th>Actions</th>
                         :null}
                     </tr>

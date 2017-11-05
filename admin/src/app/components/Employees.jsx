@@ -159,9 +159,10 @@ class Employees extends React.Component {
                         <div className="select">
                             <select name="admin_level" value={employee.admin_level} onChange={this.handleChange}>
                                 <option>Please Select</option>
-                                <option value="1">Admin</option>
-                                <option value="2">Normal</option>
-                                <option value="3">Read Only</option>
+                                <option value="1">一级管理</option>
+                                <option value="2">二级管理</option>
+                                <option value="3">三级管理</option>
+                                <option value="4">合作方</option>
                             </select>
                         </div>
                     </div>

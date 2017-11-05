@@ -194,7 +194,7 @@ class Home extends React.Component {
         
         return(
             <div className="card">
-                {(this.props.user.admin_level != 3) ?
+                {(this.props.user.admin_level != 4) ?
                 <a className="button is-primary" onClick={this.addStudent}>添加客户</a>
                 :null}
                 <div className="serach columns">

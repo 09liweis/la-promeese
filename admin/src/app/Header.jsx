@@ -30,7 +30,7 @@ class Header extends React.Component {
             <nav className="navbar is-light is-primary" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     <Link to="/admin" className="navbar-item">
-                        <h2>La Promeese</h2>
+                        <h2>La Promesse</h2>
                     </Link>
                 </div>
                 <div className="navbar-start">
@@ -41,6 +41,10 @@ class Header extends React.Component {
                 </div>
                 { this.state.user.id != 0 ?
                 <div className="navbar-end">
+                    <div className="navbar-item">
+                        <h3>{this.state.user.name}</h3>
+                        <h4>Level: {this.state.user.admin_level}</h4>
+                    </div>
                     <div className="navbar-item">
                         <a className="button is-danger" onClick={this.logout}>Logout</a>
                     </div>
