@@ -2,7 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 
 import Datepicker from '../elements/Datepicker.jsx';
-import {getNewDateDes, checkNeedExtraVisa} from '../services/functions.js';
+import {getNewDateDes, checkNeedExtraVisa, getExtraVisaDes} from '../services/functions.js';
 
 class BusinessForm extends React.Component {
     constructor(props) {
@@ -216,7 +216,7 @@ class BusinessForm extends React.Component {
                         </div>
                     </div>
                     <div className="field">
-                        <label className="label">{getNewDateDes(business.sub_service_id)}</label>
+                        <label className="label">{getExtraVisaDes(business.sub_service_id)}</label>
                         <div className="control">
                             <Datepicker name={"extra_new_date"} value={business.extra_new_date} handleChange={this.handleChange} />
                         </div>

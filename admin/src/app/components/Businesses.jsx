@@ -4,7 +4,7 @@ import $ from 'jquery';
 import Modal from './Modal.jsx';
 import BusinessForm from './BusinessForm.jsx';
 
-import {getNewDateDes} from '../services/functions.js';
+import {getNewDateDes, getExtraVisaDes} from '../services/functions.js';
 
 class Businesses extends React.Component {
     constructor(props) {
@@ -129,7 +129,7 @@ class Businesses extends React.Component {
                     <div className="column">
                         <p>递交时间: {b.extra_submit_date}</p>
                         <p>进度: {b.extra_progress_name}</p>
-                        <p>{getNewDateDes(b.sub_service_id)}: {b.extra_new_date}</p>
+                        <p>{getExtraVisaDes(b.sub_service_id)}: {b.extra_new_date}</p>
                     </div>
                     :null}
                     <div className="column">

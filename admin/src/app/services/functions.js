@@ -56,3 +56,17 @@ export function checkNeedExtraVisa(id) {
     const subServices = ['53', '54', '55', '76'];
     return subServices.indexOf(id) != -1;
 }
+
+export function getExtraVisaDes(id) {
+    let des = '';
+    switch (id) {
+        case '53':
+        case '54':
+        case '55':
+            des = '签证获批至';
+            break;
+        default:
+            des = '';
+    }
+    return des;
+}
