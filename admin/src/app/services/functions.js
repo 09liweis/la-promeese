@@ -43,7 +43,7 @@ export function getNewDateDes(id) {
                 newDateDes = '调档下达日期';
                 break;
             case '76':
-                newDateDes = '获批时间';
+                newDateDes = '获批时间至';
                 break;
             default:
                 newDateDes = '获批时间至';
@@ -64,6 +64,9 @@ export function getExtraVisaDes(id) {
         case '54':
         case '55':
             des = '签证获批至';
+            break;
+        case '76':
+            des = '获批时间至';
             break;
         default:
             des = '';
