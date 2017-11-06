@@ -87,6 +87,7 @@ class StudentDetail extends React.Component {
                     <div className="column">
                         <p>护照号码: {s.passport_number}</p>
                         <p>护照到期日: {s.passport_date}</p>
+                        <p>身份: {s.status}</p>
                         <p>签证信息: {s.visa_info}</p>
                         <p>签证到期日: {s.visa_date}</p>
                     </div>
@@ -98,6 +99,7 @@ class StudentDetail extends React.Component {
                     <div className="column">
                         <p>客人归属地: {s.office_name}</p>
                         <p>代理公司: {s.agency_name}</p>
+                        <p>备注: {s.remark}</p>
                     </div>
                     </div>
                     {this.props.user.admin_level != '4' ?

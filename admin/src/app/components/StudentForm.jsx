@@ -26,6 +26,7 @@ class StudentForm extends React.Component {
                 visa_date: '',
                 passport_number: '',
                 passport_date: '',
+                status: '',
                 phone: '',
                 email: '',
                 service: '',
@@ -281,11 +282,23 @@ class StudentForm extends React.Component {
                                 <Datepicker name={"passport_date"} value={student.passport_date} handleChange={this.handleChange} />
                             </div>
                         </div>
+                        <div className="field">
+                            <label className="label">身份</label>
+                            <div className="control">
+                                <div className="select">
+                                    <select name="status" value={student.status} onChange={this.handleChange}>
+                                        <option>Please Select</option>
+                                        <option value="留学生">留学生</option>
+                                        <option value="移民">移民</option>
+                                        <option value="公民">公民</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div className="column is-2">
                         <div className="field">
                             <label className="label">代理公司</label>
-                            <div className="control">
                                 <div className="control">
                                     <div className="select">
                                         <select name="agency_id" value={student.agency_id} onChange={this.handleChange}>
@@ -294,6 +307,11 @@ class StudentForm extends React.Component {
                                         </select>
                                     </div>
                                 </div>
+                        </div>
+                        <div className="field">
+                            <label className="label">备注</label>
+                            <div className="control">
+                                <textarea className="textarea" name="remark" onChange={this.handleChange}>{student.remark}</textarea>
                             </div>
                         </div>
                     </div>

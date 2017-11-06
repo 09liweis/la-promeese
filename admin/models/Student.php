@@ -91,6 +91,7 @@ class Student {
                 s.visa_info AS visa_info,
                 s.passport_number AS passport_number,
                 s.passport_date AS passport_date,
+                s.status AS status,
                 s.phone AS phone,
                 s.email AS email,
                 s.gender AS gender,
@@ -105,7 +106,8 @@ class Student {
                 s.city_id AS city_id,
                 c.name AS city_name,
                 s.office_id AS office_id,
-                o.name AS office_name
+                o.name AS office_name,
+                s.remark AS remark
                 FROM 
                 students s
                 LEFT JOIN agencies a ON s.agency_id = a.id
