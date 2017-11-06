@@ -15,8 +15,8 @@ const api = new Api();
 const studentsPerPage = 25;
 
 class Home extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             students: [],
             employees: [],
@@ -24,7 +24,7 @@ class Home extends React.Component {
             modal: false,
             deleteStudent: false,
             studentToDelete: {},
-            currentPage: '0',
+            currentPage: props.match.params.id - 1,
             totalStudents: '',
             search: {
                 name: '',
@@ -41,7 +41,6 @@ class Home extends React.Component {
         this.search = this.search.bind(this);
         this.reset = this.reset.bind(this);
         this.deleteStudent = this.deleteStudent.bind(this);
-        this.changePage = this.changePage.bind(this);
     }
     handleSearchChange(e) {
         let search = this.state.search;
@@ -70,8 +69,20 @@ class Home extends React.Component {
         });
         this.refreshStudents();
     }
+    componentWillReceiveProps(nextProps) {
+        const currentPage = nextProps.match.params.id - 1;
+        let data = this.state.search;
+        data.page = currentPage;
+        this.refreshStudents(data);
+    }
     componentDidMount() {
-        this.refreshStudents();
+        const currentPage = this.props.match.params.id - 1;
+        this.setState({
+            currentPage: currentPage
+        });
+        let data = this.state.search;
+        data.page = this.state.currentPage;
+        this.refreshStudents(data);
         const _this = this;
         $.ajax({
             url: api.getEmployees(),
@@ -91,6 +102,7 @@ class Home extends React.Component {
         });
     }
     refreshStudents(data) {
+        console.log(data);
         this.closeModal();
         const _this = this;
         $.ajax({
@@ -121,11 +133,6 @@ class Home extends React.Component {
             deleteStudent: true,
             studentToDelete: s
         });
-    }
-    changePage(page) {
-        let data = this.state.search;
-        data.page = page;
-        this.refreshStudents(data);
     }
     render() {
         const _this = this;
@@ -187,7 +194,7 @@ class Home extends React.Component {
             const currentClass = currentPage == i ? 'pagination-link is-current' : 'pagination-link';
             return (
                 <li key={i}>
-                    <a className={currentClass} aria-label="Page {i+1}" aria-current="page" onClick={_this.changePage.bind(_this, (i))}>{i+1}</a>
+                    <Link className={currentClass} to={`/admin/students/page/${i+1}`} aria-label="Page {i+1}" aria-current="page">{i+1}</Link>
                 </li>
             );
         });

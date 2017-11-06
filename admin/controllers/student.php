@@ -19,7 +19,11 @@ if ($_GET['action'] == 'getStudents') {
         $currentPage = 0;
         $students = $sRepo->students($_GET);   
     }
-    $total = $sRepo->totalStudents();
+    if ($_GET['name'] != '' || $_GET['start_date'] != '' || $_GET['end_date'] != '' || $_GET['employee_id'] != '' || $_GET['employee_material_id'] != '') {
+        $total = count($students);
+    } else {
+        $total = $sRepo->totalStudents();   
+    }
     $result = array(
         'data' => $students,
         'total' => $total,

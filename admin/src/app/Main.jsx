@@ -14,6 +14,7 @@ class Main extends React.Component {
       <main className="container">
         <Switch>
             <Route exact path='/admin' render={(props) => <Home {...props} user={this.props.user}/>}/>
+            <Route path='/admin/students/page/:id' render={(props) => <Home {...props} user={this.props.user}/>}/>
             <Route path='/admin/student/:id' render={(props) => <StudentDetail {...props} user={this.props.user}/>}/>
             <Route path='/admin/cms' component={CMS}/>
         </Switch>
