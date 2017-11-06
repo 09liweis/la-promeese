@@ -34,7 +34,8 @@ class StudentForm extends React.Component {
                 school: '',
                 progress: '',
                 office_id: '',
-                agency_id: ''
+                agency_id: '',
+                remark: ''
             }
         };
         this.getProvinces = this.getProvinces.bind(this);
@@ -311,7 +312,7 @@ class StudentForm extends React.Component {
                         <div className="field">
                             <label className="label">备注</label>
                             <div className="control">
-                                <textarea className="textarea" name="remark" onChange={this.handleChange}>{student.remark}</textarea>
+                                <textarea className="textarea" name="remark" onChange={this.handleChange} value={student.remark}></textarea>
                             </div>
                         </div>
                     </div>
