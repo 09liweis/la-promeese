@@ -45,6 +45,10 @@ export function getNewDateDes(id) {
             case '76':
                 newDateDes = '获批时间至';
                 break;
+            case '79':
+            case '80':
+                newDateDes = '获批时间';
+                break;
             default:
                 newDateDes = '获批时间至';
         }
