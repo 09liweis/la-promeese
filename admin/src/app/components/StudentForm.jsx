@@ -258,7 +258,8 @@ class StudentForm extends React.Component {
                                 <div className="select">
                                     <select name="visa_info" value={student.visa_info} onChange={this.handleChange}>
                                         <option>Please Select</option>
-                                        <option value="学签">学签</option>
+                                        <option value="大学学签">大学学签</option>
+                                        <option value="高中学签">高中学签</option>
                                         <option value="工签">工签</option>
                                         <option value="访问签">访问签</option>
                                     </select>
