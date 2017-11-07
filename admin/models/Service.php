@@ -23,6 +23,9 @@ class Service {
             $service_id = 5;
         }
         $sql = 'SELECT * FROM sub_services WHERE service_id = :service_id';
+        if ($service_id == 5) {
+            $sql .= ' ORDER BY name ASC';
+        }
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':service_id', $service_id, PDO::PARAM_INT);
         $pdostmt->execute();
