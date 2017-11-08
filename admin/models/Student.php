@@ -52,12 +52,6 @@ class Student {
         if ($search['employee_material_id'] != '') {
             $sql .= ' AND s.employee_material_id = :employee_material_id';
         }
-        if ($search['start_date'] != '') {
-            $sql .= ' AND s.visa_date >= :start_date';
-        }
-        if ($search['end_date'] != '') {
-            $sql .= ' AND s.visa_date <= :end_date';
-        }
         $sql .= ' ORDER BY s.id DESC LIMIT :limit OFFSET :offset';
         $pdostmt = $this->db->prepare($sql);
         
@@ -72,12 +66,6 @@ class Student {
         }
         if ($search['employee_material_id'] != '') {
             $pdostmt->bindValue(':employee_material_id', $search['employee_material_id'], PDO::PARAM_INT);
-        }
-        if ($search['start_date'] != '') {
-            $pdostmt->bindValue(':start_date', $search['start_date'], PDO::PARAM_STR);
-        }
-        if ($search['end_date'] != '') {
-            $pdostmt->bindValue(':end_date', $search['end_date'], PDO::PARAM_STR);
         }
         $pdostmt->execute();
         $students = $pdostmt->fetchAll(PDO::FETCH_ASSOC);

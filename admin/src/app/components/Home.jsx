@@ -28,8 +28,6 @@ class Home extends React.Component {
             totalStudents: '',
             search: {
                 name: '',
-                start_date: '',
-                end_date: '',
                 employee_id: '',
                 employee_material_id: ''
             }
@@ -212,19 +210,6 @@ class Home extends React.Component {
                                 <input className="input" type="text" name="name" value={this.state.search.name} onChange={this.handleSearchChange} />
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div className="field">
-                    <label className="label">签证到期日</label>
-                    <div className="columns">
-                    <div className="column field">
-                        <label className="label">开始日期</label>
-                        <Datepicker name={'start_date'} value={this.state.search.start_date} handleChange={this.handleSearchChange} />
-                    </div>
-                    <div className="column field">
-                        <label className="label">结束日期</label>
-                        <Datepicker name={"end_date"} value={this.state.search.end_date} handleChange={this.handleSearchChange}/>
-                    </div>
                     </div>
                 </div>
                 <div className="columns">
