@@ -33,6 +33,7 @@ class SchoolApplication extends React.Component {
                     {a.service_name}
                     </div>
                     <div className="column">
+                    <p>OUAC Confirmation Number: {a.ouac_confirmation_number}</p>
                     <p>OUAC账号: {a.ouac_account}</p>
                     <p>OUAC密码: {a.ouac_password}</p>
                     </div>

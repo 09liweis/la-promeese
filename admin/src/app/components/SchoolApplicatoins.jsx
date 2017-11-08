@@ -68,6 +68,7 @@ class SchoolApplicatoins extends React.Component {
             id: 0,
             service_id: '',
             schools: '',
+            ouac_confirmation_number: '',
             ouac_account: '',
             ouac_password: '',
             email: '',

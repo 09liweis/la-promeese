@@ -14,6 +14,9 @@ class Login extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
     }
+    componentDidMount() {
+        this.emailInput.focus(); 
+    }
     handleChange(e) {
         const p = e.target.name;
         const v = e.target.value;
@@ -52,7 +55,7 @@ class Login extends React.Component {
                 <div className="field">
                     <label className="label">Email</label>
                     <div className="control">
-                        <input className="input" type="text" name="email" onChange={this.handleChange} />
+                        <input className="input" type="text" name="email" onChange={this.handleChange} ref={(input) => { this.emailInput = input; }} />
                     </div>
                 </div>
                 <div className="field">

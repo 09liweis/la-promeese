@@ -10,6 +10,7 @@ class SchoolApplication {
                 pga.id AS id,
                 pga.service_id AS service_id,
                 s.name AS service_name,
+                pga.ouac_confirmation_number as ouac_confirmation_number,
                 pga.ouac_account AS ouac_account,
                 pga.ouac_password AS ouac_password,
                 pga.email AS email,

@@ -311,6 +311,12 @@ class SchoolApplicationForm extends React.Component {
                     {(application.service_id == '5') ?
                     <div className="column">
                     <div className="field">
+                        <label className="label">OUAC Confirmation Number</label>
+                        <div className="control">
+                            <input className="input" type="text" name="ouac_confirmation_number" value={application.ouac_confirmation_number} onChange={this.handleChange} />
+                        </div>
+                    </div>
+                    <div className="field">
                         <label className="label">OUAC account</label>
                         <div className="control">
                             <input className="input" type="text" name="ouac_account" value={application.ouac_account} onChange={this.handleChange} />

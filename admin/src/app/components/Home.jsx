@@ -74,6 +74,7 @@ class Home extends React.Component {
         this.refreshStudents(data);
     }
     componentDidMount() {
+        console.log(this.props.location);
         const currentPage = this.props.match.params.id - 1;
         this.setState({
             currentPage: currentPage
