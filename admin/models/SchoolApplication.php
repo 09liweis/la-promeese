@@ -24,13 +24,17 @@ class SchoolApplication {
                 e.name AS employee_name,
                 pga.employee_material_id AS employee_material_id,
                 em.name AS employee_material_name,
-                pga.remark AS remark
+                pga.remark AS remark,
+                pga.last_modified_id AS last_modified_id,
+                ee.name AS last_modified_name,
+                pga.updated_at AS updated_at
                 FROM 
                 post_graduate_applications pga
                 LEFT JOIN services s ON pga.service_id = s.id
                 LEFT JOIN commission_progresses cp ON pga.commission_progress_id = cp.id
                 LEFT JOIN employees e ON pga.employee_id = e.id
                 LEFT JOIN employees_material em ON pga.employee_material_id = em.id
+                LEFT JOIN employees ee ON pga.last_modified_id = ee.id
                 WHERE pga.student_id = :student_id';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':student_id', $student_id);
@@ -39,6 +43,8 @@ class SchoolApplication {
         return $schools;
     }
     public function upsert($school) {
+        session_start();
+        $school['last_modified_id'] = $_SESSION['id'];
         $columns = '';
         $values = '';
         $updates = '';

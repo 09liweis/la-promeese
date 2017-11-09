@@ -104,25 +104,35 @@ class Performances extends React.Component {
     render() {
         const _this = this;
         const performances = this.state.performances.map((p) =>
-            <tr key={p.id}>
-                <td>{p.service_name}</td>
-                <td>{p.sub_service_name}</td>
-                <td>{p.semester}</td>
-                <td>{p.school_start_date}</td>
-                <td>${p.fee}</td>
-                <td>${p.tuition}</td>
-                <td>{p.progress_name}</td>
-                <td>{p.commission_progress_name}</td>
-                <td>{p.employee_name}</td>
-                <td>{p.employee_material_name}</td>
-                <td>{p.remark}</td>
+            <div key={p.id} className="columns card">
+                <div className="column">
+                <p>服务: {p.service_name}</p>
+                <p>学校: {p.sub_service_name}</p>
+                </div>
+                <div className="column">
+                <p>Semester: {p.semester}</p>
+                <p>开学日期: {p.school_start_date}</p>
+                <p>申请费: ${p.fee}</p>
+                <p>学费: ${p.tuition}</p>
+                </div>
+                <div className="column">
+                <p>进度: {p.progress_name}</p>
+                <p>佣金申报: {p.commission_progress_name}</p>
+                <p>责任客服: {p.employee_name}</p>
+                <p>责任文案: {p.employee_material_name}</p>
+                <p>备注: {p.remark}</p>
+                </div>
+                <div className="column">
+                <p>最后修改: {p.last_modified_name}</p>
+                <p>最后修改时间: {p.updated_at}</p>
+                </div>
                 {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
-                <td>
+                <div className="column">
                     <a className="button is-warning" onClick={_this.addPerformanceForm.bind(_this, p)}>Edit</a>
                     <a className="button is-danger" onClick={_this.remove.bind(_this, p)}>Delete</a>
-                </td>
+                </div>
                 :null}
-            </tr>
+            </div>
         );
         return(
             <div className="card">
@@ -130,29 +140,7 @@ class Performances extends React.Component {
                 {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
                 <button className="button is-primary" onClick={this.openForm}>添加</button>
                 :null}
-                <table className="table is-fullwidth is-striped is-narrow">
-                    <thead>
-                    <tr>
-                        <th>服务</th>
-                        <th>学校</th>
-                        <th>Semester</th>
-                        <th>开学日期</th>
-                        <th>申请费</th>
-                        <th>学费</th>
-                        <th>进度</th>
-                        <th>佣金申报</th>
-                        <th>责任客服</th>
-                        <th>责任文案</th>
-                        <th>备注</th>
-                        {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
-                        <th>Actions</th>
-                        :null}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {performances}
-                    </tbody>
-                </table>
+                {performances}
                 <Modal modal={this.state.modal} form={<PerformanceForm performance={this.state.performance} refreshPage={this.refreshPage} />} closeModal={this.closeModal} />
             </div>
         );

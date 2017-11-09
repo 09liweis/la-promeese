@@ -43,6 +43,8 @@ class SchoolApplication extends React.Component {
                     </div>
                     <div className="column">
                     <p>备注: {a.remark}</p>
+                    <p>最后修改人: {a.last_modified_name}</p>
+                    <p>最后修改时间: {a.updated_at}</p>
                     </div>
                     {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
                     <div className="column">

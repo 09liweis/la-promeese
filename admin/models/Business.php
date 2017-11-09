@@ -29,7 +29,10 @@ class Business {
                 b.extra_new_date AS extra_new_date,
                 b.extra_submit_date AS extra_submit_date,
                 b.extra_progress_id AS extra_progress_id,
-                pps.name AS extra_progress_name
+                pps.name AS extra_progress_name,
+                b.last_modified_id AS last_modified_id,
+                ee.name AS last_modified_name,
+                b.updated_at AS updated_at
                 FROM 
                 businesses b 
                 LEFT JOIN services s ON b.service_id = s.id
@@ -38,6 +41,7 @@ class Business {
                 LEFT JOIN progresses pps ON b.extra_progress_id = pps.id
                 LEFT JOIN employees e ON b.employee_id = e.id
                 LEFT JOIN employees_material em ON b.employee_material_id = em.id
+                LEFT JOIN employees ee ON b.last_modified_id = ee.id
                 WHERE b.student_id = :student_id';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':student_id', $student_id);
@@ -46,6 +50,8 @@ class Business {
         return $businesses;
     }
     public function upsert($business) {
+        session_start();
+        $business['last_modified_id'] = $_SESSION['id'];
         $columns = '';
         $values = '';
         $updates = '';

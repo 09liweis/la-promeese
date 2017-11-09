@@ -114,14 +114,11 @@ class Businesses extends React.Component {
                     <div className="column">
                         <p>服务: {b.service_name}</p>
                         <p>副服务: {b.sub_service_name}</p>
-                    </div>
-                    
-                    <div className="column">
-                    { b.service_id == '7' ?
+                        { b.service_id == '7' ?
                         <p>政府费: ${b.government_fee}</p>
-                    :
+                        :
                         <p>申请费: ${b.application_fee}</p>
-                    }
+                        }
                         <p>服务费: ${b.service_fee}</p>
                         <p>邮寄费: ${b.post_fee}</p>
                     </div>
@@ -143,6 +140,8 @@ class Businesses extends React.Component {
                     </div>
                     <div className="column">
                         <p>备注: {b.remark}</p>
+                        <p>最后修改人: {b.last_modified_name}</p>
+                        <p>修改时间: {b.updated_at}</p>
                     </div>
                     {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
                     <div className="column">
