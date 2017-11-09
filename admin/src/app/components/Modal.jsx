@@ -15,7 +15,7 @@ class Modal extends React.Component {
         }
     }
     render() {
-        let modalClass = 'modal animated slideInDown';
+        let modalClass = 'modal animated bounceInDown';
         modalClass = this.props.modal ? modalClass + ' is-active' : modalClass;
         const style = {'width': this.state.width};
         return (
