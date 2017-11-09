@@ -51,7 +51,7 @@ class Login extends React.Component {
     render() {
         return (
             <form id="login" autoComplete="false" className="container card" onSubmit={this.handleLogin}>
-                <h1 className="is-size-1 has-text-centered">后台管理登陆</h1>
+                <h1 className="is-size-2 has-text-centered">La Promesse Management System</h1>
                 <div className="field">
                     <label className="label">Email</label>
                     <div className="control">
