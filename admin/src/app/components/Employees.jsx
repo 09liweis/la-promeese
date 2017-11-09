@@ -1,6 +1,9 @@
 import React from 'react';
 import $ from 'jquery';
 
+import Api from '../services/api.js';
+const api = new Api();
+
 class Employees extends React.Component {
     constructor(props) {
         super(props);
@@ -51,7 +54,7 @@ class Employees extends React.Component {
     remove(em) {
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/employee.php?action=removeEmployee',
+            url: api.removeEmployee(),
             data: {id: em.id},
             method: 'POST',
             success(res) {
@@ -62,7 +65,7 @@ class Employees extends React.Component {
     getEmployees() {
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/employee.php?action=getEmployees',
+            url: api.getEmployees(),
             success(res) {
                 _this.setState({
                     employees: res
@@ -74,7 +77,7 @@ class Employees extends React.Component {
         e.preventDefault();
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/employee.php?action=upsertEmployee',
+            url: api.upserEmployee(),
             data: _this.state.employee,
             method: 'POST',
             success(res) {
