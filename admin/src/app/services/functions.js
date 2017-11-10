@@ -82,7 +82,11 @@ export function getColor(id) {
     let color = '';
     switch(id) {
         case '1':
-            color = 'has-text-warning';
+        case '材料欠缺':
+            color = 'has-text-info';
+            break;
+        default:
+            color = '';
             break;
     }
     return color;

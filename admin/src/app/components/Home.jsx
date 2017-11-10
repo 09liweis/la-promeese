@@ -6,7 +6,7 @@ import Api from '../services/api.js';
 import Modal from './Modal.jsx';
 import StudentForm from './StudentForm.jsx';
 import DeleteConfirmForm from './DeleteConfirmForm.jsx';
-import { getCurrentDate, getDateDifferent } from '../services/functions.js';
+import { getCurrentDate, getDateDifferent, getColor } from '../services/functions.js';
 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -175,7 +175,7 @@ class Home extends React.Component {
                     <th>{s.employee_material_name}</th>
                     <th>{s.service}</th>
                     <th>${s.service_fee}</th>
-                    <th>{s.progress}</th>
+                    <th><span className={getColor(s.progress)}>{s.progress}</span></th>
                     <th>{s.updated_at.substring(0, 10)}</th>
                     {(this.props.user.admin_level == 1) ?
                     <th><a className="button is-danger" onClick={_this.deleteStudent.bind(_this, s)}>Delete</a></th>
