@@ -6,6 +6,7 @@ export default class Api {
         this.employeesMaterial = 'employee.php?action=getEmployeesMaterial';
         this.upsertEmployee = 'employee.php?action=upsertEmployee';
         this.removeEmployee = 'employee.php?action=removeEmployee';
+        this.upsertEmployeeMaterial = 'employee.php?action=upsertEmployeeMaterial';
         
         this.regions = 'location.php?action=getRegions';
         this.provinces = 'location.php?action=getProvinces';
@@ -28,6 +29,9 @@ export default class Api {
     }
     getEmployeesMaterial() {
         return this.base + this.employeesMaterial;
+    }
+    upsertEmployeeMaterial() {
+        return this.base + this.upsertEmployeeMaterial;
     }
     getRegions() {
         return this.base + this.regions;

@@ -1,6 +1,9 @@
 import React from 'react';
 import $ from 'jquery';
 
+import Api from '../services/api.js';
+const api = new Api();
+
 class EmployeesMaterial extends React.Component {
     constructor(props) {
         super(props);
@@ -56,7 +59,7 @@ class EmployeesMaterial extends React.Component {
     getEmployeesMaterial() {
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/employee.php?action=getEmployeesMaterial',
+            url: api.getEmployeesMaterial(),
             success(res) {
                 _this.setState({
                     employeesMaterial: res

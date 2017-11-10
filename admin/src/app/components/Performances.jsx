@@ -4,6 +4,8 @@ import $ from 'jquery';
 import Modal from './Modal.jsx';
 import PerformanceForm from './PerformanceForm.jsx';
 
+import {getColor} from '../services/functions.js';
+
 class Performances extends React.Component {
     constructor(props) {
         super(props);
@@ -116,7 +118,7 @@ class Performances extends React.Component {
                 <p>学费: ${p.tuition}</p>
                 </div>
                 <div className="column">
-                <p>进度: {p.progress_name}</p>
+                <p>进度: <span className={getColor(p.progress_id)}>{p.progress_name}</span></p>
                 <p>佣金申报: {p.commission_progress_name}</p>
                 <p>责任客服: {p.employee_name}</p>
                 <p>责任文案: {p.employee_material_name}</p>

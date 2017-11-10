@@ -77,3 +77,13 @@ export function getExtraVisaDes(id) {
     }
     return des;
 }
+
+export function getColor(id) {
+    let color = '';
+    switch(id) {
+        case '1':
+            color = 'has-text-warning';
+            break;
+    }
+    return color;
+}

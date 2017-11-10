@@ -8,8 +8,7 @@ import StudentForm from './StudentForm.jsx';
 import DeleteConfirmForm from './DeleteConfirmForm.jsx';
 import { getCurrentDate, getDateDifferent } from '../services/functions.js';
 
-
-import Datepicker from '../elements/Datepicker.jsx';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 const api = new Api();
 const studentsPerPage = 25;
@@ -201,7 +200,9 @@ class Home extends React.Component {
         return(
             <div className="card">
                 {(this.props.user.admin_level != 4) ?
+                <ReactCSSTransitionGroup transitionName="anim" transitionAppear={true} transitionAppearTimeout={5000} transitionEnter={false} transitionLeave={false}>
                 <a className="button is-primary" onClick={this.addStudent}>添加客户</a>
+                </ReactCSSTransitionGroup>
                 :null}
                 <div className="serach columns">
                     <div className="column is-3">
