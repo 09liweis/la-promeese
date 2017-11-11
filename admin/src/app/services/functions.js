@@ -113,6 +113,5 @@ export function getSearchLink(search) {
     Object.keys(search).map((key) => {
         query += '&' + key + '=' + search[key];
     });
-    console.log(query);
     return query;
 }

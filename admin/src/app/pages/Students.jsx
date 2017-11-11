@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import $ from 'jquery';
 
 import Api from '../services/api.js';
-import Modal from './Modal.jsx';
-import StudentForm from './StudentForm.jsx';
-import DeleteConfirmForm from './DeleteConfirmForm.jsx';
+import Modal from '../components/Modal.jsx';
+import StudentForm from '../components/StudentForm.jsx';
+import DeleteConfirmForm from '../components/DeleteConfirmForm.jsx';
 import { getCurrentDate, getDateDifferent, getColor, parseSearchParams, getSearchLink } from '../services/functions.js';
 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -56,6 +56,7 @@ class Home extends React.Component {
         this.refreshStudents(params);
     }
     componentDidMount() {
+        this.refreshStudents();
         const _this = this;
         $.ajax({
             url: api.getEmployees(),
