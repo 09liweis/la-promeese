@@ -7,19 +7,17 @@ class Student {
     public function __construct($db) {
         $this->db = $db;
     }
-    public function totalStudents() {
-        $sql = 'SELECT COUNT(*) FROM students';
-        $pdostmt = $this->db->prepare($sql);
-        $pdostmt->execute();
-        $total = $pdostmt->fetch(PDO::FETCH_COLUMN);
-        return $total;
-    }
-    public function students($search, $page = null) {
-        $limit = 25;
-        if ($page == null) {
-            $page = 0;
+
+    public function students($search, $limit = null) {
+        if (isset($limit)) {
+            $limit = 25;
+            if (isset($search['page'])) {
+                $page = $search['page'] - 1;
+            } else {
+                $page = 0;
+            }
+            $offset = $page * $limit;
         }
-        $offset = $page * $limit;
         
         $sql = 'SELECT 
                 s.id as id,
@@ -52,11 +50,15 @@ class Student {
         if ($search['employee_material_id'] != '') {
             $sql .= ' AND s.employee_material_id = :employee_material_id';
         }
-        $sql .= ' ORDER BY s.id DESC LIMIT :limit OFFSET :offset';
+        if (isset($limit)) {
+            $sql .= ' ORDER BY s.id DESC LIMIT :limit OFFSET :offset';
+        }
         $pdostmt = $this->db->prepare($sql);
         
-        $pdostmt->bindValue(':limit', $limit, PDO::PARAM_INT);
-        $pdostmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        if (isset($limit)) {
+            $pdostmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+            $pdostmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        }
         
         if ($search['name'] != '') {
             $pdostmt->bindValue(':name', '%'.$search['name'].'%', PDO::PARAM_STR);

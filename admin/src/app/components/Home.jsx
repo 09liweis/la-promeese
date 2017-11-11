@@ -6,7 +6,7 @@ import Api from '../services/api.js';
 import Modal from './Modal.jsx';
 import StudentForm from './StudentForm.jsx';
 import DeleteConfirmForm from './DeleteConfirmForm.jsx';
-import { getCurrentDate, getDateDifferent, getColor } from '../services/functions.js';
+import { getCurrentDate, getDateDifferent, getColor, parseSearchParams, getSearchLink } from '../services/functions.js';
 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -23,9 +23,10 @@ class Home extends React.Component {
             modal: false,
             deleteStudent: false,
             studentToDelete: {},
-            currentPage: props.match.params.id - 1,
             totalStudents: '',
+            currentPage: 1,
             search: {
+                page: '1',
                 name: '',
                 employee_id: '',
                 employee_material_id: ''
@@ -35,8 +36,6 @@ class Home extends React.Component {
         this.closeModal = this.closeModal.bind(this);
         this.refreshStudents = this.refreshStudents.bind(this);
         this.handleSearchChange = this.handleSearchChange.bind(this);
-        this.search = this.search.bind(this);
-        this.reset = this.reset.bind(this);
         this.deleteStudent = this.deleteStudent.bind(this);
     }
     handleSearchChange(e) {
@@ -45,42 +44,18 @@ class Home extends React.Component {
         const v = e.target.value;
         search[p] = v;
         this.setState({
-            search: search
+            search: search,
+            currentPage: 1
         });
-    }
-    search() {
-        const _this = this;
-        let data = _this.state.search;
-        data.page = this.state.currentPage;
-        this.refreshStudents(data);
-    }
-    reset() {
-        this.setState({
-            search: {
-                name: '',
-                start_date: '',
-                end_date: '',
-                employee_id: '',
-                employee_material_id: ''
-            }
-        });
-        this.refreshStudents();
     }
     componentWillReceiveProps(nextProps) {
-        const currentPage = nextProps.match.params.id - 1;
-        let data = this.state.search;
-        data.page = currentPage;
-        this.refreshStudents(data);
+        const params = parseSearchParams(nextProps.location.search);
+        this.setState({
+            currentPage: params.page
+        });
+        this.refreshStudents(params);
     }
     componentDidMount() {
-        console.log(this.props.location);
-        const currentPage = this.props.match.params.id - 1;
-        this.setState({
-            currentPage: currentPage
-        });
-        let data = this.state.search;
-        data.page = this.state.currentPage;
-        this.refreshStudents(data);
         const _this = this;
         $.ajax({
             url: api.getEmployees(),
@@ -100,7 +75,6 @@ class Home extends React.Component {
         });
     }
     refreshStudents(data) {
-        console.log(data);
         this.closeModal();
         const _this = this;
         $.ajax({
@@ -110,7 +84,13 @@ class Home extends React.Component {
                 _this.setState({
                     students: res.data,
                     totalStudents: res.total,
-                    currentPage: res.current
+                    currentPage: res.search.page,
+                    search: {
+                        page: res.search.page,
+                        name: res.search.name,
+                        employee_id: res.search.employee_id,
+                        employee_material_id: res.search.employee_material_id
+                    }
                 });
             }
         });
@@ -133,6 +113,7 @@ class Home extends React.Component {
         });
     }
     render() {
+        const searchQuery = getSearchLink(this.state.search);
         const _this = this;
         const employees = this.state.employees.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
@@ -189,10 +170,10 @@ class Home extends React.Component {
         const currentPage = this.state.currentPage;
         const totalPages = Math.ceil(totalStudents / studentsPerPage );
         const pagination = Array(totalPages).fill().map((x, i) => {
-            const currentClass = currentPage == i ? 'pagination-link is-current' : 'pagination-link';
+            const currentClass = (currentPage - 1) == i ? 'pagination-link is-current' : 'pagination-link';
             return (
                 <li key={i}>
-                    <Link className={currentClass} to={`/admin/students/page/${i+1}`} aria-label="Page {i+1}" aria-current="page">{i+1}</Link>
+                    <Link className={currentClass} to={`/admin/students?page=${i+1}${searchQuery}`} aria-label="Page {i+1}" aria-current="page">{i+1}</Link>
                 </li>
             );
         });
@@ -213,8 +194,6 @@ class Home extends React.Component {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="columns">
                     <div className="column field is-2">
                         <label className="label">责任客服</label>
                         <div className="control">
@@ -238,8 +217,8 @@ class Home extends React.Component {
                         </div>
                     </div>
                     <div className="column is-2">
-                        <a className="button is-primary" onClick={this.search}>搜素</a>
-                        <a className="button is-danger" onClick={this.reset}>重置</a>
+                        <Link className="button is-primary" to={`/admin/students?page=${this.state.currentPage}${searchQuery}`}>搜素</Link>
+                        <Link className="button is-danger" to={'/admin/students'}>重置</Link>
                     </div>
                 </div>
                 <Modal modal={this.state.deleteStudent} width={'414px'} form={<DeleteConfirmForm studentToDelete={this.state.studentToDelete} refreshPage={this.refreshStudents} />} closeModal={this.closeModal} title='删除客户' />

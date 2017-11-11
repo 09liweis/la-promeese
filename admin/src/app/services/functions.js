@@ -91,3 +91,28 @@ export function getColor(id) {
     }
     return color;
 }
+
+export function parseSearchParams(search) {
+    let params = {};
+    search.replace('?', '').split('&').map((param) => {
+        const array = param.split('=');
+        params[array[0]] = array[1];
+    });
+    
+    if (typeof params.page == 'undefined') {
+        params.page = 1;
+    } else {
+        params.page = params.page;
+    }
+    return params;
+}
+
+export function getSearchLink(search) {
+    let query = '';
+    delete search['page'];
+    Object.keys(search).map((key) => {
+        query += '&' + key + '=' + search[key];
+    });
+    console.log(query);
+    return query;
+}

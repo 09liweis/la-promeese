@@ -12,22 +12,18 @@ header('Content-Type: application/json');
 $sRepo = new Student(Database::dbConnect());
 
 if ($_GET['action'] == 'getStudents') {
-    if (isset($_GET['page'])) {
-        $currentPage = $_GET['page'];
-        $students = $sRepo->students($_GET, $_GET['page']);
-    } else {
-        $currentPage = 0;
-        $students = $sRepo->students($_GET);   
-    }
-    if ($_GET['name'] != '' || $_GET['start_date'] != '' || $_GET['end_date'] != '' || $_GET['employee_id'] != '' || $_GET['employee_material_id'] != '') {
-        $total = count($students);
-    } else {
-        $total = $sRepo->totalStudents();   
-    }
+    
+    $students = $sRepo->students($_GET, 25);
+    $total = count($sRepo->students($_GET));
     $result = array(
         'data' => $students,
         'total' => $total,
-        'current' => $currentPage
+        'search' => array(
+            'page' => $_GET['page'],
+            'name' => isset($_GET['name']) ? $_GET['name'] : '',
+            'employee_id' => isset($_GET['employee_id']) ? $_GET['employee_id'] : '',
+            'employee_material_id' => isset($_GET['employee_material_id']) ? $_GET['employee_material_id'] : ''
+        )
     );
     echo json_encode($result);
 }
