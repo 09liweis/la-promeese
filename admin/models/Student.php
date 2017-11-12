@@ -39,10 +39,11 @@ class Student {
                 students s
                 LEFT JOIN employees e ON s.employee_id = e.id
                 LEFT JOIN employees_material em ON s.employee_material_id = em.id
-                LEFT JOIN agencies a ON s.agency_id = a.id 
+                LEFT JOIN agencies a ON s.agency_id = a.id
+                LEFT JOIN cities c ON c.id = s.city_id
                 WHERE 1';
         if ($search['name'] != '') {
-            $sql .= ' AND s.name LIKE :name';
+            $sql .= ' AND (s.name LIKE :name OR c.name LIKE :name OR s.visa_info LIKE :name OR s.status LIKE :name)';
         }
         if ($search['employee_id'] != '') {
             $sql .= ' AND s.employee_id = :employee_id';
