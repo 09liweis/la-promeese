@@ -7,6 +7,11 @@ header('Content-Type: application/json');
 
 $sRepo = new Service(Database::dbConnect());
 
+if ($_GET['action'] == 'getServices') {
+    $services = $sRepo->services();
+    echo json_encode($services);
+}
+
 if ($_GET['action'] == 'getFreeServices') {
     $services = $sRepo->services(1);
     echo json_encode($services);

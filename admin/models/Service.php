@@ -5,14 +5,19 @@ class Service {
     public function __construct($db) {
         $this->db = $db;
     }
-    public function services($free) {
-        $sql = 'SELECT * FROM services WHERE is_free = :free';
-        if ($free == 0) {
-            //remove 101/105 school application on paid service
-            $sql .= ' AND (id != 5 AND id != 6)';
+    public function services($free = null) {
+        $sql = 'SELECT * FROM services';
+        if (isset($free)) {
+            $sql .= ' WHERE is_free = :free';
+            if ($free == 0) {
+                //remove 101/105 school application on paid service
+                $sql .= ' AND (id != 5 AND id != 6)';
+            }   
         }
         $pdostmt = $this->db->prepare($sql);
-        $pdostmt->bindValue(':free', $free, PDO::PARAM_INT);
+        if (isset($free)) {
+            $pdostmt->bindValue(':free', $free, PDO::PARAM_INT);   
+        }
         $pdostmt->execute();
         $services = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         return $services;

@@ -8,6 +8,8 @@ export default class Api {
         this.removeEmployee = 'employee.php?action=removeEmployee';
         this.upsertEmployeeMaterial = 'employee.php?action=upsertEmployeeMaterial';
         
+        this.services = 'service.php?action=getServices';
+        
         this.regions = 'location.php?action=getRegions';
         this.provinces = 'location.php?action=getProvinces';
         this.cities = 'location.php?action=getCities';
@@ -47,6 +49,9 @@ export default class Api {
     }
     getAgencies() {
         return this.base + this.agencies;
+    }
+    getServices() {
+        return this.base + this.services;
     }
     
 }

@@ -18,6 +18,7 @@ class Home extends React.Component {
         super(props);
         this.state = {
             students: [],
+            services: [],
             employees: [],
             employeesMaterial: [],
             modal: false,
@@ -29,7 +30,8 @@ class Home extends React.Component {
                 page: '1',
                 name: '',
                 employee_id: '',
-                employee_material_id: ''
+                employee_material_id: '',
+                service: ''
             }
         };
         this.addStudent = this.addStudent.bind(this);
@@ -74,6 +76,14 @@ class Home extends React.Component {
                 });
             }
         });
+        $.ajax({
+            url: api.getServices(),
+            success(res) {
+                _this.setState({
+                    services: res
+                });
+            }
+        });
     }
     refreshStudents(data) {
         this.closeModal();
@@ -90,7 +100,8 @@ class Home extends React.Component {
                         page: res.search.page,
                         name: res.search.name,
                         employee_id: res.search.employee_id,
-                        employee_material_id: res.search.employee_material_id
+                        employee_material_id: res.search.employee_material_id,
+                        service: res.search.service
                     }
                 });
             }
@@ -121,6 +132,9 @@ class Home extends React.Component {
         );
         const employeesMaterial = this.state.employeesMaterial.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
+        );
+        const services = this.state.services.map((s) =>
+            <option key={s.id} value={s.name}>{s.name}</option>
         );
         const students = this.state.students;
         const currentDate = getCurrentDate();
@@ -189,13 +203,13 @@ class Home extends React.Component {
                 <div className="serach columns">
                     <div className="column is-3">
                         <div className="field">
-                            <label className="label">姓名</label>
+                            <label className="label">关键词</label>
                             <div className="control">
                                 <input className="input" type="text" name="name" value={this.state.search.name} onChange={this.handleSearchChange} />
                             </div>
                         </div>
                     </div>
-                    <div className="column field is-2">
+                    <div className="column field">
                         <label className="label">责任客服</label>
                         <div className="control">
                         <div className="select">
@@ -206,13 +220,24 @@ class Home extends React.Component {
                         </div>
                         </div>
                     </div>
-                    <div className="column field is-2">
+                    <div className="column field">
                         <label className="label">责任文案</label>
                         <div className="control">
                         <div className="select">
                             <select name="employee_material_id" value={this.state.search.employee_material_id} onChange={this.handleSearchChange}>
                                 <option value="">Select dropdown</option>
                                 {employeesMaterial}
+                            </select>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="column field">
+                        <label className="label">服务内容</label>
+                        <div className="control">
+                        <div className="select">
+                            <select name="service" value={this.state.search.service} onChange={this.handleSearchChange}>
+                                <option value="">Select dropdown</option>
+                                {services}
                             </select>
                         </div>
                         </div>

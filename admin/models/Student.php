@@ -50,6 +50,9 @@ class Student {
         if ($search['employee_material_id'] != '') {
             $sql .= ' AND s.employee_material_id = :employee_material_id';
         }
+        if ($search['service'] != '') {
+            $sql .= ' AND s.service = :service';
+        }
         if (isset($limit)) {
             $sql .= ' ORDER BY s.id DESC LIMIT :limit OFFSET :offset';
         }
@@ -68,6 +71,9 @@ class Student {
         }
         if ($search['employee_material_id'] != '') {
             $pdostmt->bindValue(':employee_material_id', $search['employee_material_id'], PDO::PARAM_INT);
+        }
+        if ($search['service'] != '') {
+            $pdostmt->bindValue(':service', $search['service'], PDO::PARAM_INT);
         }
         $pdostmt->execute();
         $students = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
