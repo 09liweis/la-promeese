@@ -12,6 +12,8 @@ header('Content-Type: application/json');
 $sRepo = new Student(Database::dbConnect());
 
 if ($_GET['action'] == 'getStudents') {
+    $_GET['name'] = urldecode($_GET['name']);
+    $_GET['service'] = urldecode(($_GET['service']));
     $students = $sRepo->students($_GET, 25);
     $total = count($sRepo->students($_GET));
     $result = array(
