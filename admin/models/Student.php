@@ -164,8 +164,11 @@ class Student {
             $schools = json_decode($student['schools'], true);
             $progress_name = $schools[0]['progress_name'];
         }
-        $sql = 'UPDATE students SET
-                service = :service,
+        $sql = 'UPDATE students SET ';
+        if ($service_id == '7' && $progress_id == '11') {
+            $sql .= 'visa_date = :visa_date,';
+        }
+        $sql .= 'service = :service,
                 service_fee = :service_fee,
                 progress = :progress,
                 employee_id = :employee_id,
@@ -177,6 +180,9 @@ class Student {
         $pdostmt->bindValue(':service_fee', $service_fee, PDO::PARAM_INT);
         $pdostmt->bindValue(':employee_id', $employee_id, PDO::PARAM_INT);
         $pdostmt->bindValue(':employee_material_id', $employee_material_id, PDO::PARAM_INT);
+        if ($service_id == '7' && $progress_id == '11') {
+            $pdostmt->bindValue(':visa_date', $student['new_date'], PDO::PARAM_STR);
+        }
         $pdostmt->bindValue(':id', $student_id, PDO::PARAM_INT);
         $pdostmt->execute();
     }
