@@ -6,6 +6,7 @@ import Api from '../services/api.js';
 import Modal from '../components/Modal.jsx';
 import StudentForm from '../components/StudentForm.jsx';
 import DeleteConfirmForm from '../components/DeleteConfirmForm.jsx';
+import Pagination from '../components/Pagination.jsx';
 import { getDateColor, getColor, parseSearchParams, getSearchLink } from '../services/functions.js';
 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -149,7 +150,7 @@ class Home extends React.Component {
             <option key={s.id} value={s.name}>{s.name}</option>
         );
         const progresses = this.state.progresses.map((p) =>
-            <option key={p.id} value={p.name}>{p.name}</option>
+            <option key={p.name} value={p.name}>{p.name}</option>
         );
         const students = this.state.students;
         let passColor = '';
@@ -175,19 +176,6 @@ class Home extends React.Component {
             );
         }
         );
-        
-        const totalStudents = this.state.totalStudents;
-        
-        const totalPages = Math.ceil(totalStudents / studentsPerPage );
-        const pagination = Array(totalPages).fill().map((x, i) => {
-            const currentClass = (currentPage - 1) == i ? 'pagination-link is-current' : 'pagination-link';
-            return (
-                <li key={i}>
-                    <Link className={currentClass} to={`/admin/students?page=${i+1}${searchQuery}`} aria-label="Page {i+1}" aria-current="page">{i+1}</Link>
-                </li>
-            );
-        });
-        
         return(
             <div className="card">
                 {(this.props.user.admin_level != 4) ?
@@ -254,6 +242,9 @@ class Home extends React.Component {
                     </div>
                 </div>
                 <Modal modal={this.state.deleteStudent} width={'414px'} form={<DeleteConfirmForm studentToDelete={this.state.studentToDelete} refreshPage={this.refreshStudents} />} closeModal={this.closeModal} title='删除客户' />
+                {(this.state.totalStudents > studentsPerPage) ?
+                <Pagination totalStudents={this.state.totalStudents} studentsPerPage={studentsPerPage} currentPage={currentPage} searchQuery={searchQuery} />
+                :null}
                 <table className="table is-fullwidth is-striped is-narrow">
                     <thead>
                         <tr>
@@ -276,11 +267,7 @@ class Home extends React.Component {
                     </tbody>
                 </table>
                 {(this.state.totalStudents > studentsPerPage) ?
-                <nav className="pagination is-centered" role="navigation" aria-label="pagination">
-                    <ul className="pagination-list">
-                    {pagination}
-                    </ul>
-                </nav>
+                <Pagination totalStudents={this.state.totalStudents} studentsPerPage={studentsPerPage} currentPage={currentPage} searchQuery={searchQuery} />
                 :null}
                 <Modal modal={this.state.modal} form={<StudentForm refreshPage={this.refreshStudents} />} closeModal={this.closeModal} title='添加学生' />
             </div>
