@@ -207,50 +207,10 @@ class StudentForm extends React.Component {
                         </div>
                     </div>
                     <div className="column is-2">
-                        <div className="field">
-                            <label className="label">客人归属地</label>
-                            <div className="control">
-                                <div className="select">
-                                    <select name="office_id" value={student.office_id} onChange={this.handleChange}>
-                                        <option>Please Select</option>
-                                        {offices}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label className="label">地区</label>
-                            <div className="control">
-                                <div className="select">
-                                    <select name="region_id" value={student.region_id} onChange={this.handleChange}>
-                                        <option>Please Select</option>
-                                        {regions}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label className="label">省份</label>
-                            <div className="control">
-                                <div className="select">
-                                    <select name="province_id" value={student.province_id} onChange={this.handleChange}>
-                                        <option>Please Select</option>
-                                        {provinces}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label className="label">城市</label>
-                            <div className="control">
-                                <div className="select">
-                                    <select name="city_id" value={student.city_id} onChange={this.handleChange}>
-                                        <option>Please Select</option>
-                                        {cities}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                        <Dropdown title={'客人归属地'} name={'office_id'} value={student.office_id} handleChange={this.handleChange} options={offices} />
+                        <Dropdown title={'地区'} name={'region_id'} value={student.region_id} handleChange={this.handleChange} options={regions} />
+                        <Dropdown title={'省份'} name={'province_id'} value={student.province_id} handleChange={this.handleChange} options={provinces} />
+                        <Dropdown title={'城市'} name={'city_id'} value={student.city_id} handleChange={this.handleChange} options={cities} />
                     </div>
                     <div className="column is-2">
                         <div className="field">
