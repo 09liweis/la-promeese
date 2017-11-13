@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 
 import Datepicker from '../elements/Datepicker.jsx';
+import Dropdown from '../elements/Dropdown.jsx';
 import Api from '../services/api.js';
 const api = new Api();
 
@@ -299,17 +300,7 @@ class StudentForm extends React.Component {
                         </div>
                     </div>
                     <div className="column is-2">
-                        <div className="field">
-                            <label className="label">代理公司</label>
-                                <div className="control">
-                                    <div className="select">
-                                        <select name="agency_id" value={student.agency_id} onChange={this.handleChange}>
-                                            <option>Please Select</option>
-                                            {agencies}
-                                        </select>
-                                    </div>
-                                </div>
-                        </div>
+                        <Dropdown title={'代理公司'} name={'agency_id'} value={student.agency_id} handleChange={this.handleChange} options={agencies} />
                         <div className="field">
                             <label className="label">备注</label>
                             <div className="control">

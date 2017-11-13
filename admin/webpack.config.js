@@ -16,6 +16,10 @@ var APP_DIR = path.resolve(__dirname, 'src/app');
                     test : /\.jsx?/,
                     include : APP_DIR,
                     loader : 'babel-loader'
+                },
+                {
+                    test: /\.scss$/,
+                    loaders: ['style', 'css', 'sass']
                 }
             ]
         }

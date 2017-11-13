@@ -7,6 +7,7 @@ import Modal from '../components/Modal.jsx';
 import StudentForm from '../components/StudentForm.jsx';
 import DeleteConfirmForm from '../components/DeleteConfirmForm.jsx';
 import Pagination from '../components/Pagination.jsx';
+import Dropdown from '../elements/Dropdown.jsx';
 import { getDateColor, getColor, parseSearchParams, getSearchLink } from '../services/functions.js';
 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -192,49 +193,17 @@ class Home extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="column field">
-                        <label className="label">责任客服</label>
-                        <div className="control">
-                        <div className="select">
-                            <select name="employee_id" value={this.state.search.employee_id} onChange={this.handleSearchChange}>
-                                <option value="">Select dropdown</option>
-                                {employees}
-                            </select>
-                        </div>
-                        </div>
+                    <div className="column">
+                        <Dropdown title={'责任客服'} name={'employee_id'} value={this.state.search.employee_id} handleChange={this.handleSearchChange} options={employees} />
                     </div>
-                    <div className="column field">
-                        <label className="label">责任文案</label>
-                        <div className="control">
-                        <div className="select">
-                            <select name="employee_material_id" value={this.state.search.employee_material_id} onChange={this.handleSearchChange}>
-                                <option value="">Select dropdown</option>
-                                {employeesMaterial}
-                            </select>
-                        </div>
-                        </div>
+                    <div className="column">
+                        <Dropdown title={'责任文案'} name={'employee_material_id'} value={this.state.search.employee_material_id} handleChange={this.handleSearchChange} options={employeesMaterial} />
                     </div>
-                    <div className="column field">
-                        <label className="label">服务内容</label>
-                        <div className="control">
-                        <div className="select">
-                            <select name="service" value={this.state.search.service} onChange={this.handleSearchChange}>
-                                <option value="">Select dropdown</option>
-                                {services}
-                            </select>
-                        </div>
-                        </div>
+                    <div className="column">
+                        <Dropdown title={'服务内容'} name={'service'} value={this.state.search.service} handleChange={this.handleSearchChange} options={services} />
                     </div>
-                    <div className="column field">
-                        <label className="label">进度</label>
-                        <div className="control">
-                        <div className="select">
-                            <select name="progress" value={this.state.search.progress} onChange={this.handleSearchChange}>
-                                <option value="">Select dropdown</option>
-                                {progresses}
-                            </select>
-                        </div>
-                        </div>
+                    <div className="column">
+                        <Dropdown title={'进度'} name={'progress'} value={this.state.search.progress} handleChange={this.handleSearchChange} options={progresses} />
                     </div>
                     <div className="column">
                         <Link className="button is-primary" to={`/admin/students?page=${this.state.currentPage}${searchQuery}`}>搜素</Link>
