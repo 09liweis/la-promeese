@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 
 import Datepicker from '../elements/Datepicker.jsx';
+import Dropdown from '../elements/Dropdown.jsx';
 
 class PerformanceForm extends React.Component {
     constructor(props) {
@@ -144,27 +145,11 @@ class PerformanceForm extends React.Component {
         const performance = this.state.performance;
         return (
             <form className="columns is-multiline" onSubmit={this.handleSubmit}>
-                <div className="field column is-2">
-                    <label className="label">服务</label>
-                    <div className="control">
-                        <div className="select">
-                            <select name="service_id" value={performance.service_id} onChange={this.handleChange}>
-                                <option>Please Select</option>
-                                {services}
-                            </select>
-                        </div>
-                    </div>
+                <div className="column is-2">
+                    <Dropdown title={'服务'} name={'service_id'} value={performance.service_id} handleChange={this.handleChange} options={services} />
                 </div>
-                <div className="field column is-2">
-                    <label className="label">学校</label>
-                    <div className="control">
-                        <div className="select">
-                            <select name="sub_service_id" value={performance.sub_service_id} onChange={this.handleChange}>
-                                <option>Please Select</option>
-                                {subServices}
-                            </select>
-                        </div>
-                    </div>
+                <div className="column is-2">
+                    <Dropdown title={'学校'} name={'sub_service_id'} value={performance.sub_service_id} handleChange={this.handleChange} options={subServices} />
                 </div>
                 <div className="field column is-2">
                     <label className="label">Semester</label>
@@ -197,49 +182,17 @@ class PerformanceForm extends React.Component {
                         <input className="input" type="text" name="tuition" value={performance.tuition} onChange={this.handleChange} />
                     </div>
                 </div>
-                <div className="field column is-2">
-                    <label className="label">进度</label>
-                    <div className="control">
-                        <div className="select">
-                            <select name="progress_id" value={performance.progress_id} onChange={this.handleChange}>
-                                <option>Please Select</option>
-                                {progresses}
-                            </select>
-                        </div>
-                    </div>
+                <div className="column is-2">
+                    <Dropdown title={'进度'} name={'progress_id'} value={performance.progress_id} handleChange={this.handleChange} options={progresses} />
+                </div>
+                <div className="column is-2">
+                    <Dropdown title={'佣金申报'} name={'commission_progress_id'} value={performance.commission_progress_id} handleChange={this.handleChange} options={commissionProgresses} />
+                </div>
+                <div className="column is-2">
+                    <Dropdown title={'责任服务'} name={'employee_id'} value={performance.employee_id} handleChange={this.handleChange} options={employees} />
                 </div>
                 <div className="field column is-2">
-                    <label className="label">佣金申报</label>
-                    <div className="control">
-                        <div className="select">
-                            <select name="commission_progress_id" value={performance.commission_progress_id} onChange={this.handleChange}>
-                                <option>Please Select</option>
-                                {commissionProgresses}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div className="field column is-2">
-                    <label className="label">责任服务</label>
-                    <div className="control">
-                        <div className="select">
-                            <select name="employee_id" value={performance.employee_id} onChange={this.handleChange}>
-                                <option>Please Select</option>
-                                {employees}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div className="field column is-2">
-                    <label className="label">责任文案</label>
-                    <div className="control">
-                        <div className="select">
-                            <select name="employee_material_id" value={performance.employee_material_id} onChange={this.handleChange}>
-                                <option>Please Select</option>
-                                {employeesMaterial}
-                            </select>
-                        </div>
-                    </div>
+                    <Dropdown title={'责任文案'} name={'employee_material_id'} value={performance.employee_material_id} handleChange={this.handleChange} options={employeesMaterial} />
                 </div>
                 <div className="field column is-2">
                     <label className="label">备注</label>

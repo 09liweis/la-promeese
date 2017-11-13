@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 
 import Datepicker from '../elements/Datepicker.jsx';
+import Dropdown from '../elements/Dropdown.jsx';
 import {getNewDateDes, checkNeedExtraVisa, getExtraVisaDes} from '../services/functions.js';
 
 class BusinessForm extends React.Component {
@@ -144,28 +145,8 @@ class BusinessForm extends React.Component {
         return (
             <form className="columns is-multiline" autoComplete="off" onSubmit={this.handleSubmit}>
                 <div className="column is-2">
-                    <div className="field">
-                        <label className="label">服务</label>
-                        <div className="control">
-                            <div className="select">
-                                <select name="service_id" value={business.service_id} onChange={this.handleChange}>
-                                    <option>Please Select</option>
-                                    {services}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="field">
-                        <label className="label">副服务</label>
-                        <div className="control">
-                            <div className="select">
-                                <select name="sub_service_id" value={business.sub_service_id} onChange={this.handleChange}>
-                                    <option>Please Select</option>
-                                    {subServices}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    <Dropdown title={'服务'} name={'service_id'} value={business.service_id} handleChange={this.handleChange} options={services} />
+                    <Dropdown title={'副服务'} name={'sub_service_id'} value={business.sub_service_id} handleChange={this.handleChange} options={subServices} />
                 </div>
                 <div className="column is-2">
                     {(business.service_id == '7') ?
@@ -204,17 +185,8 @@ class BusinessForm extends React.Component {
                             <Datepicker name={"extra_submit_date"} value={business.extra_submit_date} handleChange={this.handleChange} />
                         </div>
                     </div>
-                    <div className="field">
-                        <label className="label">进度</label>
-                        <div className="control">
-                            <div className="select">
-                                <select name="extra_progress_id" value={business.extra_progress_id} onChange={this.handleChange}>
-                                    <option>Please Select</option>
-                                    {progresses}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    <Dropdown title={'进度'} name={'extra_progress_id'} value={business.extra_progress_id} handleChange={this.handleChange} options={progresses} />
+
                     <div className="field">
                         <label className="label">{getExtraVisaDes(business.sub_service_id)}</label>
                         <div className="control">
@@ -230,17 +202,7 @@ class BusinessForm extends React.Component {
                             <Datepicker name={"submit_date"} value={business.submit_date} handleChange={this.handleChange} />
                         </div>
                     </div>
-                    <div className="field">
-                        <label className="label">进度</label>
-                        <div className="control">
-                            <div className="select">
-                                <select name="progress_id" value={business.progress_id} onChange={this.handleChange}>
-                                    <option>Please Select</option>
-                                    {progresses}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    <Dropdown title={'进度'} name={'progress_id'} value={business.progress_id} handleChange={this.handleChange} options={progresses} />
                     <div className="field">
                         <label className="label">{newDateDes}</label>
                         <div className="control">
@@ -249,28 +211,8 @@ class BusinessForm extends React.Component {
                     </div>
                 </div>
                 <div className="column is-2">
-                    <div className="field">
-                        <label className="label">责任服务</label>
-                        <div className="control">
-                            <div className="select">
-                                <select name="employee_id" value={business.employee_id} onChange={this.handleChange}>
-                                    <option>Please Select</option>
-                                    {employees}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="field">
-                        <label className="label">责任文案</label>
-                        <div className="control">
-                            <div className="select">
-                                <select name="employee_material_id" value={business.employee_material_id} onChange={this.handleChange}>
-                                    <option>Please Select</option>
-                                    {employeesMaterial}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    <Dropdown title={'责任服务'} name={'employee_id'} value={business.employee_id} handleChange={this.handleChange} options={employees} />
+                    <Dropdown title={'责任文案'} name={'employee_material_id'} value={business.employee_material_id} handleChange={this.handleChange} options={employeesMaterial} />
                 </div>
                 <div className="field column">
                     <div className="field">
