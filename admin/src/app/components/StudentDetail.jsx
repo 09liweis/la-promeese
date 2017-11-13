@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import { Link } from 'react-router-dom';
 
 import Modal from './Modal.jsx';
 import StudentForm from './StudentForm.jsx';
@@ -14,12 +15,22 @@ class StudentDetail extends React.Component {
             student: {
                 id: props.match.params.id
             },
+            returnURL: '',
             modal: false
         };
         this.closeModal = this.closeModal.bind(this);
         this.refreshPage = this.refreshPage.bind(this);
         this.edit = this.edit.bind(this);
         this.getStudent = this.getStudent.bind(this);
+    }
+    componentWillReceiveProps(nextProps) {
+        const search = nextProps.location.search;
+        if (search != '') {
+            const returnURL = search.substring(11);
+            this.setState({
+                returnURL: returnURL
+            });
+        }
     }
     edit() {
         this.setState({
@@ -51,6 +62,7 @@ class StudentDetail extends React.Component {
         this.getStudent();
     }
     render() {
+        console.log(this.state.returnURL);
         const s = this.state.student;
         let student = '';
         if (typeof s.name != 'undefined') {

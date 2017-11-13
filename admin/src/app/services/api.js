@@ -16,6 +16,8 @@ export default class Api {
         
         this.offices = 'office.php?action=getOffices';
         this.agencies = 'agency.php?action=getAgencies';
+        
+        this.progresses = 'progress.php?action=getProgresses';
     }
     getStudents() {
         return this.base + this.students;
@@ -53,5 +55,7 @@ export default class Api {
     getServices() {
         return this.base + this.services;
     }
-    
+    getProgresses() {
+        return this.base + this.progresses;
+    }
 }

@@ -21,6 +21,7 @@ class Home extends React.Component {
             services: [],
             employees: [],
             employeesMaterial: [],
+            progresses: [],
             modal: false,
             deleteStudent: false,
             studentToDelete: {},
@@ -31,7 +32,8 @@ class Home extends React.Component {
                 name: '',
                 employee_id: '',
                 employee_material_id: '',
-                service: ''
+                service: '',
+                progress: ''
             }
         };
         this.addStudent = this.addStudent.bind(this);
@@ -84,6 +86,14 @@ class Home extends React.Component {
                 });
             }
         });
+        $.ajax({
+            url: api.getProgresses(),
+            success(res) {
+                _this.setState({
+                    progresses: res
+                });
+            }
+        });
     }
     refreshStudents(data) {
         this.closeModal();
@@ -101,7 +111,8 @@ class Home extends React.Component {
                         name: res.search.name,
                         employee_id: res.search.employee_id,
                         employee_material_id: res.search.employee_material_id,
-                        service: res.search.service
+                        service: res.search.service,
+                        progress: res.search.progress
                     }
                 });
             }
@@ -126,6 +137,7 @@ class Home extends React.Component {
     }
     render() {
         const searchQuery = getSearchLink(this.state.search);
+        const currentPage = this.state.currentPage;
         const _this = this;
         const employees = this.state.employees.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
@@ -135,6 +147,9 @@ class Home extends React.Component {
         );
         const services = this.state.services.map((s) =>
             <option key={s.id} value={s.name}>{s.name}</option>
+        );
+        const progresses = this.state.progresses.map((p) =>
+            <option key={p.id} value={p.name}>{p.name}</option>
         );
         const students = this.state.students;
         const currentDate = getCurrentDate();
@@ -164,7 +179,7 @@ class Home extends React.Component {
             const _this = this;
             return (
                 <tr key={s.id}>
-                    <th><Link to={`/admin/student/${s.id}`}>{s.name}</Link></th>
+                    <th><Link to={`/admin/student/${s.id}?returnURL=/admin/students?page=${currentPage}${searchQuery}`}>{s.name}</Link></th>
                     <th className={visaColor}>{s.visa_date}</th>
                     <th className={passColor}>{s.passport_date}</th>
                     <th>{s.employee_name}</th>
@@ -182,7 +197,7 @@ class Home extends React.Component {
         );
         
         const totalStudents = this.state.totalStudents;
-        const currentPage = this.state.currentPage;
+        
         const totalPages = Math.ceil(totalStudents / studentsPerPage );
         const pagination = Array(totalPages).fill().map((x, i) => {
             const currentClass = (currentPage - 1) == i ? 'pagination-link is-current' : 'pagination-link';
@@ -201,7 +216,7 @@ class Home extends React.Component {
                 </ReactCSSTransitionGroup>
                 :null}
                 <div className="serach columns">
-                    <div className="column is-3">
+                    <div className="column">
                         <div className="field">
                             <label className="label">关键词</label>
                             <div className="control">
@@ -242,7 +257,18 @@ class Home extends React.Component {
                         </div>
                         </div>
                     </div>
-                    <div className="column is-2">
+                    <div className="column field">
+                        <label className="label">进度</label>
+                        <div className="control">
+                        <div className="select">
+                            <select name="progress" value={this.state.search.progress} onChange={this.handleSearchChange}>
+                                <option value="">Select dropdown</option>
+                                {progresses}
+                            </select>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="column">
                         <Link className="button is-primary" to={`/admin/students?page=${this.state.currentPage}${searchQuery}`}>搜素</Link>
                         <Link className="button is-danger" to={'/admin/students'}>重置</Link>
                     </div>

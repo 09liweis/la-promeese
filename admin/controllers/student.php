@@ -24,7 +24,8 @@ if ($_GET['action'] == 'getStudents') {
             'name' => isset($_GET['name']) ? $_GET['name'] : '',
             'employee_id' => isset($_GET['employee_id']) ? $_GET['employee_id'] : '',
             'employee_material_id' => isset($_GET['employee_material_id']) ? $_GET['employee_material_id'] : '',
-            'service' => isset($_GET['service']) ? $_GET['service'] : ''
+            'service' => isset($_GET['service']) ? $_GET['service'] : '',
+            'progress' => isset($_GET['progress']) ? $_GET['progress'] : ''
         )
     );
     echo json_encode($result);

@@ -11,3 +11,8 @@ if ($_GET['action'] == 'getProgresses') {
     $progresses = $pRepo->progresses($_GET['id']);
     echo json_encode($progresses);
 }
+
+if ($_GET['action'] == 'getAllProgresses') {
+    $progresses = $pRepo->progresses();
+    echo json_encode($progresses);
+}
