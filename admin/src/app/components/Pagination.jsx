@@ -21,7 +21,7 @@ class Pagination extends React.Component {
             );
         });
         return (
-            <nav className="pagination is-centered" role="navigation" aria-label="pagination">
+            <nav className="pagination is-centered" role="navigation" aria-label="pagination" style={{'margin': '20px 0'}}>
                 <Link className="pagination-previous" to={`/admin/students?page=1${searchQuery}`}>第一页</Link>
                 <Link className="pagination-next" to={`/admin/students?page=${totalPages}${searchQuery}`}>最后一页</Link>
                 <ul className="pagination-list">

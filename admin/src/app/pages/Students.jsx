@@ -24,6 +24,7 @@ class Home extends React.Component {
             employees: [],
             employeesMaterial: [],
             progresses: [],
+            colors: [{key: 'green', value: '绿色'}, {key: 'yellow', value: '黄色'}],
             modal: false,
             deleteStudent: false,
             studentToDelete: {},
@@ -35,7 +36,8 @@ class Home extends React.Component {
                 employee_id: '',
                 employee_material_id: '',
                 service: '',
-                progress: ''
+                progress: '',
+                color: ''
             }
         };
         this.addStudent = this.addStudent.bind(this);
@@ -114,7 +116,8 @@ class Home extends React.Component {
                         employee_id: res.search.employee_id,
                         employee_material_id: res.search.employee_material_id,
                         service: res.search.service,
-                        progress: res.search.progress
+                        progress: res.search.progress,
+                        color: res.search.color
                     }
                 });
             }
@@ -152,6 +155,9 @@ class Home extends React.Component {
         );
         const progresses = this.state.progresses.map((p) =>
             <option key={p.name} value={p.name}>{p.name}</option>
+        );
+        const colors = this.state.colors.map((c) => 
+            <option key={c.key} value={c.key}>{c.value}</option>
         );
         const students = this.state.students;
         let passColor = '';
@@ -204,6 +210,9 @@ class Home extends React.Component {
                     </div>
                     <div className="column">
                         <Dropdown title={'进度'} name={'progress'} value={this.state.search.progress} handleChange={this.handleSearchChange} options={progresses} />
+                    </div>
+                    <div className="column">
+                        <Dropdown title={'颜色'} name={'color'} value={this.state.search.color} handleChange={this.handleSearchChange} options={colors} />
                     </div>
                     <div className="column">
                         <Link className="button is-primary" to={`/admin/students?page=${this.state.currentPage}${searchQuery}`}>搜素</Link>

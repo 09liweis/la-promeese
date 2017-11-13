@@ -57,6 +57,14 @@ class Student {
         if ($search['progress'] != '') {
             $sql .= ' AND s.progress = :progress';
         }
+        if ($search['color'] != '') {
+            if ($search['color'] == 'green') {
+                $sql .= ' AND s.visa_date >= NOW() AND DATEDIFF(s.visa_date, NOW()) < 90';
+            }
+            if ($search['color'] == 'yellow') {
+                $sql .= ' AND s.visa_date < NOW()';
+            }
+        }
         if (isset($limit)) {
             $sql .= ' ORDER BY s.id DESC LIMIT :limit OFFSET :offset';
         }
