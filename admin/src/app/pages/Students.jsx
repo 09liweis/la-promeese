@@ -6,7 +6,7 @@ import Api from '../services/api.js';
 import Modal from '../components/Modal.jsx';
 import StudentForm from '../components/StudentForm.jsx';
 import DeleteConfirmForm from '../components/DeleteConfirmForm.jsx';
-import { getCurrentDate, getDateDifferent, getColor, parseSearchParams, getSearchLink } from '../services/functions.js';
+import { getDateColor, getColor, parseSearchParams, getSearchLink } from '../services/functions.js';
 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -152,30 +152,10 @@ class Home extends React.Component {
             <option key={p.id} value={p.name}>{p.name}</option>
         );
         const students = this.state.students;
-        const currentDate = getCurrentDate();
-        let visaColor = '';
         let passColor = '';
         const list = students.map((s) => {
-            let visaDiffDate = getDateDifferent(s.visa_date);
-            if (s.visa_date > currentDate) {
-                visaColor = (visaDiffDate < 90) ? 'has-text-warning' : '';
-            } else {
-                visaColor = 'has-text-danger';
-            }
-            let passDiffDate = getDateDifferent(s.passport_date);
-            if (s.passport_date > currentDate) {
-                if (passDiffDate <= 180) {
-                    passColor = 'has-text-warning';
-                }
-                if (passDiffDate <=  30) {
-                    passColor = 'has-text-danger';
-                }
-                if (passDiffDate > 180) {
-                    passColor = '';
-                }
-            } else {
-                passColor = 'has-text-danger';
-            }
+            const visaColor = getDateColor(s.visa_date, 'visa');
+            const passColor = getDateColor(s.passport_date, 'passport');
             const _this = this;
             return (
                 <tr key={s.id}>

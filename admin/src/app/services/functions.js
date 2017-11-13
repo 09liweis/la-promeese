@@ -85,6 +85,9 @@ export function getColor(id) {
         case '材料欠缺':
             color = 'has-text-info';
             break;
+        case '放弃申请':
+            color = 'has-text-danger';
+            break;
         default:
             color = '';
             break;
@@ -114,4 +117,34 @@ export function getSearchLink(search) {
         query += '&' + key + '=' + search[key];
     });
     return query;
+}
+
+export function getDateColor(date, type) {
+    if (type == 'visa') {
+        let visaColor = '';
+        let visaDiffDate = getDateDifferent(date);
+        if (date > getCurrentDate()) {
+            visaColor = (visaDiffDate < 90) ? 'has-text-success' : '';
+        } else {
+            visaColor = 'has-text-warning';
+        }
+        return visaColor;   
+    } else {
+        let passColor = '';
+        let passDiffDate = getDateDifferent(date);
+        if (date > getCurrentDate()) {
+            if (passDiffDate <= 180) {
+                passColor = 'has-text-warning';
+            }
+            if (passDiffDate <=  30) {
+                passColor = 'has-text-danger';
+            }
+            if (passDiffDate > 180) {
+                passColor = '';
+            }
+        } else {
+            passColor = 'has-text-danger';
+        }
+        return passColor;
+    }
 }
