@@ -24,7 +24,7 @@ class Home extends React.Component {
             employees: [],
             employeesMaterial: [],
             progresses: [],
-            colors: [{key: 'green', value: '绿色'}, {key: 'yellow', value: '黄色'}],
+            colors: [{key: 'green', value: '绿色'}, {key: 'yellow', value: '黄色'}, {key: 'blue', value: '蓝色'}, {key: 'red', value: '红色'}],
             modal: false,
             deleteStudent: false,
             studentToDelete: {},
@@ -214,10 +214,10 @@ class Home extends React.Component {
                     <div className="column">
                         <Dropdown title={'颜色'} name={'color'} value={this.state.search.color} handleChange={this.handleSearchChange} options={colors} />
                     </div>
-                    <div className="column">
-                        <Link className="button is-primary" to={`/admin/students?page=${this.state.currentPage}${searchQuery}`}>搜素</Link>
-                        <Link className="button is-danger" to={'/admin/students'}>重置</Link>
-                    </div>
+                </div>
+                <div className="columns">
+                    <Link className="button is-primary" to={`/admin/students?page=${this.state.currentPage}${searchQuery}`}>搜素</Link>
+                    <Link className="button is-danger" to={'/admin/students'}>重置</Link>
                 </div>
                 <Modal modal={this.state.deleteStudent} width={'414px'} form={<DeleteConfirmForm studentToDelete={this.state.studentToDelete} refreshPage={this.refreshStudents} />} closeModal={this.closeModal} title='删除客户' />
                 {(this.state.totalStudents > studentsPerPage) ?

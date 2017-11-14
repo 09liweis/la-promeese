@@ -58,11 +58,19 @@ class Student {
             $sql .= ' AND s.progress = :progress';
         }
         if ($search['color'] != '') {
-            if ($search['color'] == 'green') {
-                $sql .= ' AND s.visa_date >= NOW() AND DATEDIFF(s.visa_date, NOW()) < 90';
-            }
-            if ($search['color'] == 'yellow') {
-                $sql .= ' AND s.visa_date < NOW()';
+            switch($search['color']) {
+                case 'green':
+                    $sql .= ' AND s.visa_date >= NOW() AND DATEDIFF(s.visa_date, NOW()) < 90';
+                    break;
+                case 'yellow':
+                    $sql .= ' AND s.visa_date < NOW()';
+                    break;
+                case 'blue':
+                    $sql .= ' AND s.progress = "材料欠缺"';
+                    break;
+                case 'red':
+                    $sql .= ' AND s.progress = "放弃申请"';
+                    break;
             }
         }
         if (isset($limit)) {
