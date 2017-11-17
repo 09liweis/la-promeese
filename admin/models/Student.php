@@ -54,7 +54,7 @@ class Student {
         if ($search['service'] != '') {
             $sql .= ' AND s.service = :service';
         }
-        if ($search['progress'] != '') {
+        if ($search['schoolProgress'] != '' || $search['visa_immigrate'] != '') {
             $sql .= ' AND s.progress = :progress';
         }
         if ($search['color'] != '') {
@@ -95,8 +95,9 @@ class Student {
         if ($search['service'] != '') {
             $pdostmt->bindValue(':service', $search['service'], PDO::PARAM_INT);
         }
-        if ($search['progress'] != '') {
-            $pdostmt->bindValue(':progress', $search['progress'], PDO::PARAM_INT);
+        if ($search['schoolProgress'] != '' || $search['visa_immigrate'] != '') {
+            $progress = ($search['schoolProgress'] != '') ? $search['schoolProgress'] : $search['visa_immigrate'];
+            $pdostmt->bindValue(':progress', $progress, PDO::PARAM_INT);
         }
         $pdostmt->execute();
         $students = $pdostmt->fetchAll(PDO::FETCH_ASSOC);

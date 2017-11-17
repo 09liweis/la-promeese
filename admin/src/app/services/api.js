@@ -18,6 +18,8 @@ export default class Api {
         this.agencies = 'agency.php?action=getAgencies';
         
         this.progresses = 'progress.php?action=getProgresses';
+        this.visaImmigrates = 'progress.php?action=getVisaImmiProgresses';
+        this.schoolProgresses = 'progress.php?action=getSchoolProgresses';
     }
     getStudents() {
         return this.base + this.students;
@@ -57,5 +59,11 @@ export default class Api {
     }
     getProgresses() {
         return this.base + this.progresses;
+    }
+    getVisaImmiProgresses() {
+        return this.base + this.visaImmigrates;
+    }
+    getSchoolProgresses() {
+        return this.base + this.schoolProgresses;
     }
 }

@@ -23,8 +23,9 @@ class Home extends React.Component {
             services: [],
             employees: [],
             employeesMaterial: [],
-            progresses: [],
+            schoolProgresses: [],
             colors: [{key: 'green', value: '绿色'}, {key: 'yellow', value: '黄色'}, {key: 'blue', value: '蓝色'}, {key: 'red', value: '红色'}],
+            visa_immigrates: [],
             modal: false,
             deleteStudent: false,
             studentToDelete: {},
@@ -36,8 +37,9 @@ class Home extends React.Component {
                 employee_id: '',
                 employee_material_id: '',
                 service: '',
-                progress: '',
-                color: ''
+                schoolProgress: '',
+                color: '',
+                visa_immigrate: ''
             }
         };
         this.addStudent = this.addStudent.bind(this);
@@ -91,10 +93,18 @@ class Home extends React.Component {
             }
         });
         $.ajax({
-            url: api.getProgresses(),
+            url: api.getSchoolProgresses(),
             success(res) {
                 _this.setState({
-                    progresses: res
+                    schoolProgresses: res
+                });
+            }
+        });
+        $.ajax({
+            url: api.getVisaImmiProgresses(),
+            success(res) {
+                _this.setState({
+                    visa_immigrates: res
                 });
             }
         });
@@ -116,7 +126,8 @@ class Home extends React.Component {
                         employee_id: res.search.employee_id,
                         employee_material_id: res.search.employee_material_id,
                         service: res.search.service,
-                        progress: res.search.progress,
+                        schoolProgress: res.search.schoolProgress,
+                        visa_immigrate: res.search.visa_immigrate,
                         color: res.search.color
                     }
                 });
@@ -153,11 +164,14 @@ class Home extends React.Component {
         const services = this.state.services.map((s) =>
             <option key={s.id} value={s.name}>{s.name}</option>
         );
-        const progresses = this.state.progresses.map((p) =>
+        const schoolProgresses = this.state.schoolProgresses.map((p) =>
             <option key={p.name} value={p.name}>{p.name}</option>
         );
         const colors = this.state.colors.map((c) => 
             <option key={c.key} value={c.key}>{c.value}</option>
+        );
+        const visa_immigrates = this.state.visa_immigrates.map((vi) =>
+            <option key={vi.name} value={vi.name}>{vi.name}</option>
         );
         const students = this.state.students;
         let passColor = '';
@@ -190,8 +204,8 @@ class Home extends React.Component {
                 <a className="button is-primary" onClick={this.addStudent}>添加客户</a>
                 </ReactCSSTransitionGroup>
                 :null}
-                <div className="serach columns">
-                    <div className="column">
+                <div className="columns">
+                    <div className="column is-3">
                         <div className="field">
                             <label className="label">关键词</label>
                             <div className="control">
@@ -199,17 +213,22 @@ class Home extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="column">
+                    <div className="column is-2">
                         <Dropdown title={'责任客服'} name={'employee_id'} value={this.state.search.employee_id} handleChange={this.handleSearchChange} options={employees} />
                     </div>
-                    <div className="column">
+                    <div className="column is-2">
                         <Dropdown title={'责任文案'} name={'employee_material_id'} value={this.state.search.employee_material_id} handleChange={this.handleSearchChange} options={employeesMaterial} />
                     </div>
+                </div>
+                <div className="serach columns">
                     <div className="column">
                         <Dropdown title={'服务内容'} name={'service'} value={this.state.search.service} handleChange={this.handleSearchChange} options={services} />
                     </div>
                     <div className="column">
-                        <Dropdown title={'进度'} name={'progress'} value={this.state.search.progress} handleChange={this.handleSearchChange} options={progresses} />
+                        <Dropdown title={'学校申请'} name={'schoolProgress'} value={this.state.search.schoolProgress} handleChange={this.handleSearchChange} options={schoolProgresses} />
+                    </div>
+                    <div className="column">
+                        <Dropdown title={'签证移民'} name={'visa_immigrate'} value={this.state.search.visa_immigrate} handleChange={this.handleSearchChange} options={visa_immigrates} />
                     </div>
                     <div className="column">
                         <Dropdown title={'颜色'} name={'color'} value={this.state.search.color} handleChange={this.handleSearchChange} options={colors} />

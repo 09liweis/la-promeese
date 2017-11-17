@@ -16,3 +16,13 @@ if ($_GET['action'] == 'getAllProgresses') {
     $progresses = $pRepo->progresses();
     echo json_encode($progresses);
 }
+
+if ($_GET['action'] == 'getVisaImmiProgresses') {
+    $progresses = $pRepo->getVisaImmiProgresses();
+    echo json_encode($progresses);
+}
+
+if ($_GET['action'] == 'getSchoolProgresses') {
+    $progresses = $pRepo->getSchoolProgresses();
+    echo json_encode($progresses);
+}
