@@ -37,9 +37,9 @@ class Home extends React.Component {
                 employee_id: '',
                 employee_material_id: '',
                 service: '',
-                schoolProgress: '',
+                school_progress_name: '',
                 color: '',
-                visa_immigrate: ''
+                visa_progress_name: ''
             }
         };
         this.addStudent = this.addStudent.bind(this);
@@ -126,8 +126,8 @@ class Home extends React.Component {
                         employee_id: res.search.employee_id,
                         employee_material_id: res.search.employee_material_id,
                         service: res.search.service,
-                        schoolProgress: res.search.schoolProgress,
-                        visa_immigrate: res.search.visa_immigrate,
+                        school_progress_name: res.search.school_progress_name,
+                        visa_progress_name: res.search.visa_progress_name,
                         color: res.search.color
                     }
                 });
@@ -188,7 +188,8 @@ class Home extends React.Component {
                     <th>{s.employee_material_name}</th>
                     <th>{s.service}</th>
                     <th>${s.service_fee}</th>
-                    <th><span className={getColor(s.progress)}>{s.progress}</span></th>
+                    <th><span className={getColor(s.school_progress_name)}>{s.school_progress_name}</span></th>
+                    <th><span className={getColor(s.visa_progress_name)}>{s.visa_progress_name}</span></th>
                     <th>{s.updated_at.substring(0, 10)}</th>
                     {(this.props.user.admin_level == 1) ?
                     <th><a className="button is-danger" onClick={_this.deleteStudent.bind(_this, s)}>Delete</a></th>
@@ -213,46 +214,30 @@ class Home extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div className="column is-2">
-                        <Dropdown title={'责任客服'} name={'employee_id'} value={this.state.search.employee_id} handleChange={this.handleSearchChange} options={employees} />
-                    </div>
-                    <div className="column is-2">
-                        <Dropdown title={'责任文案'} name={'employee_material_id'} value={this.state.search.employee_material_id} handleChange={this.handleSearchChange} options={employeesMaterial} />
-                    </div>
-                </div>
-                <div className="serach columns">
-                    <div className="column">
-                        <Dropdown title={'服务内容'} name={'service'} value={this.state.search.service} handleChange={this.handleSearchChange} options={services} />
-                    </div>
-                    <div className="column">
-                        <Dropdown title={'学校申请'} name={'schoolProgress'} value={this.state.search.schoolProgress} handleChange={this.handleSearchChange} options={schoolProgresses} />
-                    </div>
-                    <div className="column">
-                        <Dropdown title={'签证移民'} name={'visa_immigrate'} value={this.state.search.visa_immigrate} handleChange={this.handleSearchChange} options={visa_immigrates} />
-                    </div>
                     <div className="column">
                         <Dropdown title={'颜色'} name={'color'} value={this.state.search.color} handleChange={this.handleSearchChange} options={colors} />
                     </div>
-                </div>
-                <div className="columns">
-                    <Link className="button is-primary" to={`/admin/students?page=${this.state.currentPage}${searchQuery}`}>搜素</Link>
-                    <Link className="button is-danger" to={'/admin/students'}>重置</Link>
+                    <div className="column">
+                        <Link className="button is-primary" to={`/admin/students?page=${this.state.currentPage}${searchQuery}`}>搜素</Link>
+                        <Link className="button is-danger" to={'/admin/students'}>重置</Link>
+                    </div>
                 </div>
                 <Modal modal={this.state.deleteStudent} width={'414px'} form={<DeleteConfirmForm studentToDelete={this.state.studentToDelete} refreshPage={this.refreshStudents} />} closeModal={this.closeModal} title='删除客户' />
                 {(this.state.totalStudents > studentsPerPage) ?
                 <Pagination totalStudents={this.state.totalStudents} studentsPerPage={studentsPerPage} currentPage={currentPage} searchQuery={searchQuery} />
                 :null}
-                <table className="table is-fullwidth is-striped is-narrow">
+                <table id="students" className="table is-fullwidth is-striped is-narrow">
                     <thead>
                         <tr>
                             <th>姓名</th>
                             <th>签证到期日</th>
                             <th>护照到期日</th>
-                            <th>责任客服</th>
-                            <th>责任文案</th>
-                            <th>服务内容</th>
+                            <th><Dropdown title={'责任客服'} name={'employee_id'} value={this.state.search.employee_id} handleChange={this.handleSearchChange} options={employees} /></th>
+                            <th><Dropdown title={'责任文案'} name={'employee_material_id'} value={this.state.search.employee_material_id} handleChange={this.handleSearchChange} options={employeesMaterial} /></th>
+                            <th><Dropdown title={'服务内容'} name={'service'} value={this.state.search.service} handleChange={this.handleSearchChange} options={services} /></th>
                             <th>服务金额</th>
-                            <th>进度</th>
+                            <th><Dropdown title={'学校申请'} name={'school_progress_name'} value={this.state.search.school_progress_name} handleChange={this.handleSearchChange} options={schoolProgresses} /></th>
+                            <th><Dropdown title={'签证移民'} name={'visa_progress_name'} value={this.state.search.visa_progress_name} handleChange={this.handleSearchChange} options={visa_immigrates} /></th>
                             <th>更新时间</th>
                             {(this.props.user.admin_level == 1) ?
                             <th>Actions</th>

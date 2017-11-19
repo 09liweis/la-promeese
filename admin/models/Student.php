@@ -32,7 +32,8 @@ class Student {
                 a.name AS agency_name,
                 s.service AS service,
                 s.service_fee AS service_fee,
-                s.progress AS progress,
+                s.school_progress_name AS school_progress_name,
+                s.visa_progress_name AS visa_progress_name,
                 e.name AS employee_name,
                 em.name AS employee_material_name
                 FROM 
@@ -54,8 +55,11 @@ class Student {
         if ($search['service'] != '') {
             $sql .= ' AND s.service = :service';
         }
-        if ($search['schoolProgress'] != '' || $search['visa_immigrate'] != '') {
-            $sql .= ' AND s.progress = :progress';
+        if ($search['school_progress_name'] != '') {
+            $sql .= ' AND s.school_progress_name = :school_progress_name';
+        }
+        if ($search['visa_progress_name'] != '') {
+            $sql .= ' AND s.visa_progress_name = :visa_progress_name';
         }
         if ($search['color'] != '') {
             switch($search['color']) {
@@ -66,10 +70,10 @@ class Student {
                     $sql .= ' AND s.visa_date < NOW()';
                     break;
                 case 'blue':
-                    $sql .= ' AND s.progress = "材料欠缺"';
+                    $sql .= ' AND (s.school_progress_name = "材料欠缺" OR s.visa_progress_name = "材料欠缺")';
                     break;
                 case 'red':
-                    $sql .= ' AND s.progress = "放弃申请"';
+                    $sql .= ' AND (s.visa_progress_name = "放弃申请" OR s.school_progress_name = "放弃申请")';
                     break;
             }
         }
@@ -95,9 +99,11 @@ class Student {
         if ($search['service'] != '') {
             $pdostmt->bindValue(':service', $search['service'], PDO::PARAM_INT);
         }
-        if ($search['schoolProgress'] != '' || $search['visa_immigrate'] != '') {
-            $progress = ($search['schoolProgress'] != '') ? $search['schoolProgress'] : $search['visa_immigrate'];
-            $pdostmt->bindValue(':progress', $progress, PDO::PARAM_INT);
+        if ($search['school_progress_name'] != '') {
+            $pdostmt->bindValue(':school_progress_name', $search['school_progress_name'], PDO::PARAM_INT);
+        }
+        if ($search['visa_progress_name'] != '') {
+            $pdostmt->bindValue(':visa_progress_name', $search['visa_progress_name'], PDO::PARAM_INT);
         }
         $pdostmt->execute();
         $students = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
@@ -168,35 +174,41 @@ class Student {
         $employee_material_id = $student['employee_material_id'];
         $student_id = $student['student_id'];
         $service_id = $student['service_id'];
-        $sub_service_id = $student['sub_service_id'];
         $service_fee = $student['fee'] ? $student['fee'] : $student['service_fee'];
         $progress_id = $student['progress_id'];
+        
         $sRepo = new Service(Database::dbConnect());
-        $pRepo = new Progress(Database::dbConnect());
         $service = $sRepo->getService($service_id);
-        $subService = $sRepo->getSubService($sub_service_id);
+        
+        $pRepo = new Progress(Database::dbConnect());
         $progress = $pRepo->getProgress($progress_id);
-        $progress_name = $progress['name'];
-        if ($student['schools']) {
-            $schools = json_decode($student['schools'], true);
-            $progress_name = $schools[0]['progress_name'];
-        }
+
         $sql = 'UPDATE students SET ';
+        if (in_array($service_id, array('1', '2', '3', '4', '5', '6', '10'))) {
+            $sql .= 'school_progress_name = :progress_name,';    
+        }
+        if (in_array($service_id, array('7', '8', '9'))) {
+            $sql .= 'visa_progress_name = :progress_name,';
+        }
+        
         if ($service_id == '7' && $progress_id == '11') {
             $sql .= 'visa_date = :visa_date,';
         }
         $sql .= 'service = :service,
                 service_fee = :service_fee,
-                progress = :progress,
                 employee_id = :employee_id,
                 employee_material_id = :employee_material_id
                 WHERE id = :id';
         $pdostmt = $this->db->prepare($sql);
-        $pdostmt->bindValue(':progress', $progress_name, PDO::PARAM_STR);
         $pdostmt->bindValue(':service', $service['name'], PDO::PARAM_STR);
         $pdostmt->bindValue(':service_fee', $service_fee, PDO::PARAM_INT);
         $pdostmt->bindValue(':employee_id', $employee_id, PDO::PARAM_INT);
         $pdostmt->bindValue(':employee_material_id', $employee_material_id, PDO::PARAM_INT);
+        
+        if (in_array($service_id, array('1', '2', '3', '4', '5', '6', '10')) || in_array($service_id, array('7', '8', '9'))) {
+            $pdostmt->bindValue(':progress_name', $progress['name'], PDO::PARAM_INT);
+        }
+        
         if ($service_id == '7' && $progress_id == '11') {
             $pdostmt->bindValue(':visa_date', $student['new_date'], PDO::PARAM_STR);
         }

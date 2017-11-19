@@ -23,7 +23,7 @@ export default class Dropdown extends React.Component {
                 <div className="control">
                     <div className="select">
                         <select name={this.state.name} value={this.state.value} onChange={this.props.handleChange}>
-                            <option value="">Select dropdown</option>
+                            <option value="">选择</option>
                             {this.state.options}
                         </select>
                     </div>

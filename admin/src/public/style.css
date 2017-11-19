@@ -11,7 +11,9 @@ body {
 #login {
     max-width: 768px;
 }
-
+#students select {
+    padding-right: inherit;
+}
 .card {
     padding: 20px;
     margin-bottom: 20px;
@@ -39,5 +41,5 @@ body {
  
 .anim-appear.anim-appear-active{
     opacity: 2;
-    transition: opacity 5s ease-in;
+    transition: opacity 2s ease-in;
 }
