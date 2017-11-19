@@ -88,6 +88,9 @@ export function getColor(id) {
         case '放弃申请':
             color = 'has-text-danger';
             break;
+        case '申请递交':
+            color = 'has-text-success';
+            break;
         default:
             color = '';
             break;
@@ -126,7 +129,7 @@ export function getDateColor(date, type) {
         if (date > getCurrentDate()) {
             visaColor = (visaDiffDate < 90) ? 'has-text-success' : '';
         } else {
-            visaColor = 'has-text-warning';
+            visaColor = 'has-text-brown';
         }
         return visaColor;   
     } else {
@@ -134,7 +137,7 @@ export function getDateColor(date, type) {
         let passDiffDate = getDateDifferent(date);
         if (date > getCurrentDate()) {
             if (passDiffDate <= 180) {
-                passColor = 'has-text-warning';
+                passColor = 'has-text-brown';
             }
             if (passDiffDate <=  30) {
                 passColor = 'has-text-danger';
