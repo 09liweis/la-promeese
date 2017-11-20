@@ -85,4 +85,28 @@ class Performance {
         $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
         $pdostmt->execute();
     }
+    public function lastest($student_id) {
+        $sql = 'SELECT 
+                s.name as service_name,
+                p.service_id as service_id,
+                ps.name AS progress_name,
+                p.progress_id AS progress_id,
+                p.employee_id AS employee_id,
+                e.name AS employee_name,
+                p.employee_material_id AS employee_material_id,
+                em.name AS employee_material_name
+                FROM 
+                performances p 
+                LEFT JOIN services s ON p.service_id = s.id
+                LEFT JOIN progresses ps ON p.progress_id = ps.id
+                LEFT JOIN employees e ON p.employee_id = e.id
+                LEFT JOIN employees_material em ON p.employee_material_id = em.id
+                WHERE p.student_id = :student_id
+                ORDER BY p.updated_at DESC LIMIT 1';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':student_id', $student_id);
+        $pdostmt->execute();
+        $performance = $pdostmt->fetch(PDO::FETCH_ASSOC);
+        return $performance;
+    }
 }

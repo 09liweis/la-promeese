@@ -38,14 +38,27 @@ class Service {
         return $subServices;
     }
     
-    public function schoolServices() {
+    public function postGradServices() {
         $sql = 'SELECT * FROM services WHERE id = 5 OR id = 6';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->execute();
         $schoolServices = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         return $schoolServices;
     }
-    
+    public function schoolServices() {
+        $sql = 'SELECT * FROM services WHERE id in (4,5,6,10)';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->execute();
+        $schoolServices = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
+        return $schoolServices;
+    }
+    public function visaServices() {
+        $sql = 'SELECT * FROM services WHERE id in (7,8,9)';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->execute();
+        $visaServices = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
+        return $visaServices;
+    }
     public function getService($id) {
         $sql = 'SELECT name FROM services WHERE id = :id';
         $pdostmt = $this->db->prepare($sql);

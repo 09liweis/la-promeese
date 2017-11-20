@@ -23,9 +23,13 @@ class Home extends React.Component {
             services: [],
             employees: [],
             employeesMaterial: [],
+            schoolServices: [],
             schoolProgresses: [],
+            performances: [],
+            performancesProgresses: [],
             colors: [{key: 'green', value: '绿色'}, {key: 'yellow', value: '黄色'}, {key: 'blue', value: '蓝色'}, {key: 'red', value: '红色'}],
-            visa_immigrates: [],
+            visas: [],
+            visaProgresses: [],
             modal: false,
             deleteStudent: false,
             studentToDelete: {},
@@ -37,8 +41,12 @@ class Home extends React.Component {
                 employee_id: '',
                 employee_material_id: '',
                 service: '',
+                performance_service_id: '',
+                performance_progress_id: '',
+                school_service_id: '',
                 school_progress_name: '',
                 color: '',
+                visa_service_id: '',
                 visa_progress_name: ''
             }
         };
@@ -93,6 +101,22 @@ class Home extends React.Component {
             }
         });
         $.ajax({
+            url: api.getFreeServices(),
+            success(res) {
+                _this.setState({
+                    performances: res
+                });
+            }
+        });
+        $.ajax({
+            url: api.getSchoolServices(),
+            success(res) {
+                _this.setState({
+                    schoolServices: res
+                });
+            }
+        });
+        $.ajax({
             url: api.getSchoolProgresses(),
             success(res) {
                 _this.setState({
@@ -101,10 +125,18 @@ class Home extends React.Component {
             }
         });
         $.ajax({
+            url: api.getVisaServices(),
+            success(res) {
+                _this.setState({
+                    visas: res
+                });
+            }
+        });
+        $.ajax({
             url: api.getVisaImmiProgresses(),
             success(res) {
                 _this.setState({
-                    visa_immigrates: res
+                    visaProgresses: res
                 });
             }
         });
@@ -164,13 +196,22 @@ class Home extends React.Component {
         const services = this.state.services.map((s) =>
             <option key={s.id} value={s.name}>{s.name}</option>
         );
+        const performances = this.state.performances.map((p) =>
+            <option key={p.id} value={p.name}>{p.name}</option>
+        );
+        const schoolServices = this.state.schoolServices.map((p) =>
+            <option key={p.name} value={p.name}>{p.name}</option>
+        );
         const schoolProgresses = this.state.schoolProgresses.map((p) =>
             <option key={p.name} value={p.name}>{p.name}</option>
         );
         const colors = this.state.colors.map((c) => 
             <option key={c.key} value={c.key}>{c.value}</option>
         );
-        const visa_immigrates = this.state.visa_immigrates.map((vi) =>
+        const visas = this.state.visas.map((vi) =>
+            <option key={vi.name} value={vi.name}>{vi.name}</option>
+        );
+        const visaProgresses = this.state.visaProgresses.map((vi) =>
             <option key={vi.name} value={vi.name}>{vi.name}</option>
         );
         const students = this.state.students;
@@ -185,10 +226,11 @@ class Home extends React.Component {
                     <th className={visaColor}>{s.visa_date}</th>
                     <th className={passColor}>{s.passport_date}</th>
                     <th>{s.employee_name}</th>
-                    <th>{s.employee_material_name}</th>
-                    <th>{s.service}</th>
-                    <th>${s.service_fee}</th>
+                    <th>{s.performance}</th>
+                    <th><span className={getColor(s.performance_progress_name)}>{s.performance_progress_name}</span></th>
+                    <th>{s.school}</th>
                     <th><span className={getColor(s.school_progress_name)}>{s.school_progress_name}</span></th>
+                    <th>{s.visa}</th>
                     <th><span className={getColor(s.visa_progress_name)}>{s.visa_progress_name}</span></th>
                     <th>{s.updated_at.substring(0, 10)}</th>
                     {(this.props.user.admin_level == 1) ?
@@ -206,7 +248,7 @@ class Home extends React.Component {
                 </ReactCSSTransitionGroup>
                 :null}
                 <div className="columns">
-                    <div className="column is-3">
+                    <div className="column">
                         <div className="field">
                             <label className="label">关键词</label>
                             <div className="control">
@@ -216,6 +258,12 @@ class Home extends React.Component {
                     </div>
                     <div className="column">
                         <Dropdown title={'颜色'} name={'color'} value={this.state.search.color} handleChange={this.handleSearchChange} options={colors} />
+                    </div>
+                    <div className="column">
+                        <Dropdown title={'责任文案'} name={'employee_material_id'} value={this.state.search.employee_material_id} handleChange={this.handleSearchChange} options={employeesMaterial} />
+                    </div>
+                    <div className="column">
+                        <Dropdown title={'服务内容'} name={'service'} value={this.state.search.service} handleChange={this.handleSearchChange} options={services} />
                     </div>
                     <div className="column">
                         <Link className="button is-primary" to={`/admin/students?page=${this.state.currentPage}${searchQuery}`}>搜素</Link>
@@ -233,11 +281,12 @@ class Home extends React.Component {
                             <th>签证到期日</th>
                             <th>护照到期日</th>
                             <th><Dropdown title={'责任客服'} name={'employee_id'} value={this.state.search.employee_id} handleChange={this.handleSearchChange} options={employees} /></th>
-                            <th><Dropdown title={'责任文案'} name={'employee_material_id'} value={this.state.search.employee_material_id} handleChange={this.handleSearchChange} options={employeesMaterial} /></th>
-                            <th><Dropdown title={'服务内容'} name={'service'} value={this.state.search.service} handleChange={this.handleSearchChange} options={services} /></th>
-                            <th>服务金额</th>
-                            <th><Dropdown title={'学校申请'} name={'school_progress_name'} value={this.state.search.school_progress_name} handleChange={this.handleSearchChange} options={schoolProgresses} /></th>
-                            <th><Dropdown title={'签证移民'} name={'visa_progress_name'} value={this.state.search.visa_progress_name} handleChange={this.handleSearchChange} options={visa_immigrates} /></th>
+                            <th><Dropdown title={'业绩'} name={'performance_service_id'} value={this.state.search.performance_service_id} handleChange={this.handleSearchChange} options={performances} /></th>
+                            <th>进度</th>
+                            <th><Dropdown title={'学校申请'} name={'school_service_id'} value={this.state.search.school_service_id} handleChange={this.handleSearchChange} options={schoolServices} /></th>
+                            <th><Dropdown title={'进度'} name={'school_progress_name'} value={this.state.search.school_progress_name} handleChange={this.handleSearchChange} options={schoolProgresses} /></th>
+                            <th><Dropdown title={'签证移民'} name={'visa_service_id'} value={this.state.search.visa_service_id} handleChange={this.handleSearchChange} options={visas} /></th>
+                            <th><Dropdown title={'进度'} name={'visa_progress_name'} value={this.state.search.visa_progress_name} handleChange={this.handleSearchChange} options={visaProgresses} /></th>
                             <th>更新时间</th>
                             {(this.props.user.admin_level == 1) ?
                             <th>Actions</th>

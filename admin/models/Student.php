@@ -30,10 +30,6 @@ class Student {
                 s.updated_at AS updated_at,
                 s.agency_id AS agency_id,
                 a.name AS agency_name,
-                s.service AS service,
-                s.service_fee AS service_fee,
-                s.school_progress_name AS school_progress_name,
-                s.visa_progress_name AS visa_progress_name,
                 e.name AS employee_name,
                 em.name AS employee_material_name
                 FROM 
@@ -46,21 +42,13 @@ class Student {
         if ($search['name'] != '') {
             $sql .= ' AND (s.name LIKE :name OR c.name LIKE :name OR s.visa_info LIKE :name OR s.status LIKE :name OR s.progress LIKE :name)';
         }
-        if ($search['employee_id'] != '') {
-            $sql .= ' AND s.employee_id = :employee_id';
-        }
-        if ($search['employee_material_id'] != '') {
-            $sql .= ' AND s.employee_material_id = :employee_material_id';
-        }
-        if ($search['service'] != '') {
-            $sql .= ' AND s.service = :service';
-        }
-        if ($search['school_progress_name'] != '') {
-            $sql .= ' AND s.school_progress_name = :school_progress_name';
-        }
-        if ($search['visa_progress_name'] != '') {
-            $sql .= ' AND s.visa_progress_name = :visa_progress_name';
-        }
+        // if ($search['employee_id'] != '') {
+        //     $sql .= ' AND s.employee_id = :employee_id';
+        // }
+        // if ($search['employee_material_id'] != '') {
+        //     $sql .= ' AND s.employee_material_id = :employee_material_id';
+        // }
+
         if ($search['color'] != '') {
             switch($search['color']) {
                 case 'green':
@@ -69,16 +57,11 @@ class Student {
                 case 'yellow':
                     $sql .= ' AND s.visa_date < NOW()';
                     break;
-                case 'blue':
-                    $sql .= ' AND (s.school_progress_name = "材料欠缺" OR s.visa_progress_name = "材料欠缺")';
-                    break;
-                case 'red':
-                    $sql .= ' AND (s.visa_progress_name = "放弃申请" OR s.school_progress_name = "放弃申请")';
-                    break;
             }
         }
+        $sql .= ' ORDER BY s.id DESC';
         if (isset($limit)) {
-            $sql .= ' ORDER BY s.id DESC LIMIT :limit OFFSET :offset';
+            $sql .= ' LIMIT :limit OFFSET :offset';
         }
         $pdostmt = $this->db->prepare($sql);
         
@@ -90,21 +73,12 @@ class Student {
         if ($search['name'] != '') {
             $pdostmt->bindValue(':name', '%'.$search['name'].'%', PDO::PARAM_STR);
         }
-        if ($search['employee_id'] != '') {
-            $pdostmt->bindValue(':employee_id', $search['employee_id'], PDO::PARAM_INT);
-        }
-        if ($search['employee_material_id'] != '') {
-            $pdostmt->bindValue(':employee_material_id', $search['employee_material_id'], PDO::PARAM_INT);
-        }
-        if ($search['service'] != '') {
-            $pdostmt->bindValue(':service', $search['service'], PDO::PARAM_INT);
-        }
-        if ($search['school_progress_name'] != '') {
-            $pdostmt->bindValue(':school_progress_name', $search['school_progress_name'], PDO::PARAM_INT);
-        }
-        if ($search['visa_progress_name'] != '') {
-            $pdostmt->bindValue(':visa_progress_name', $search['visa_progress_name'], PDO::PARAM_INT);
-        }
+        // if ($search['employee_id'] != '') {
+        //     $pdostmt->bindValue(':employee_id', $search['employee_id'], PDO::PARAM_INT);
+        // }
+        // if ($search['employee_material_id'] != '') {
+        //     $pdostmt->bindValue(':employee_material_id', $search['employee_material_id'], PDO::PARAM_INT);
+        // }
         $pdostmt->execute();
         $students = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         return $students;

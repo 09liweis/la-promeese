@@ -27,7 +27,15 @@ if ($_GET['action'] == 'getSubServices') {
     echo json_encode($subServices);
 }
 
-if ($_GET['action'] == 'schoolServices') {
+if ($_GET['action'] == 'getPostGradServices') {
+    $postGradServices = $sRepo->postGradServices();
+    echo json_encode($postGradServices);
+}
+if ($_GET['action'] == 'getSchoolServices') {
     $schoolServices = $sRepo->schoolServices();
     echo json_encode($schoolServices);
+}
+if ($_GET['action'] == 'getVisaServices') {
+    $visaServices = $sRepo->visaServices();
+    echo json_encode($visaServices);
 }

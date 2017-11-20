@@ -85,4 +85,52 @@ class Business {
         $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
         $pdostmt->execute();
     }
+    public function lastestSchool($studentId) {
+        $sql = 'SELECT 
+                s.name as service_name,
+                b.service_id as service_id,
+                ps.name AS progress_name,
+                b.progress_id AS progress_id,
+                b.employee_id AS employee_id,
+                e.name AS employee_name,
+                b.employee_material_id AS employee_material_id,
+                em.name AS employee_material_name
+                FROM 
+                businesses b 
+                LEFT JOIN services s ON b.service_id = s.id
+                LEFT JOIN progresses ps ON b.progress_id = ps.id
+                LEFT JOIN employees e ON b.employee_id = e.id
+                LEFT JOIN employees_material em ON b.employee_material_id = em.id
+                WHERE b.student_id = :student_id AND b.service_id in (4, 10)
+                ORDER BY b.updated_at DESC LIMIT 1';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':student_id', $studentId);
+        $pdostmt->execute();
+        $business = $pdostmt->fetch(PDO::FETCH_ASSOC);
+        return $business;
+    }
+    public function lastestVisa($studentId) {
+        $sql = 'SELECT 
+                s.name as service_name,
+                b.service_id as service_id,
+                ps.name AS progress_name,
+                b.progress_id AS progress_id,
+                b.employee_id AS employee_id,
+                e.name AS employee_name,
+                b.employee_material_id AS employee_material_id,
+                em.name AS employee_material_name
+                FROM 
+                businesses b 
+                LEFT JOIN services s ON b.service_id = s.id
+                LEFT JOIN progresses ps ON b.progress_id = ps.id
+                LEFT JOIN employees e ON b.employee_id = e.id
+                LEFT JOIN employees_material em ON b.employee_material_id = em.id
+                WHERE b.student_id = :student_id AND b.service_id in (7,8,9)
+                ORDER BY b.updated_at DESC LIMIT 1';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':student_id', $studentId);
+        $pdostmt->execute();
+        $business = $pdostmt->fetch(PDO::FETCH_ASSOC);
+        return $business;
+    }
 }

@@ -92,7 +92,7 @@ class SchoolApplicationForm extends React.Component {
     getServices() {
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/service.php?action=schoolServices',
+            url: '/admin/controllers/service.php?action=getPostGradServices',
             success(res) {
                 _this.setState({
                     services: res

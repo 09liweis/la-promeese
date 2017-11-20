@@ -9,6 +9,9 @@ export default class Api {
         this.upsertEmployeeMaterial = 'employee.php?action=upsertEmployeeMaterial';
         
         this.services = 'service.php?action=getServices';
+        this.freeServices = 'service.php?action=getFreeServices';
+        this.schoolServices = 'service.php?action=getSchoolServices';
+        this.visaServices = 'service.php?action=getVisaServices';
         
         this.regions = 'location.php?action=getRegions';
         this.provinces = 'location.php?action=getProvinces';
@@ -56,6 +59,15 @@ export default class Api {
     }
     getServices() {
         return this.base + this.services;
+    }
+    getFreeServices() {
+        return this.base + this.freeServices;
+    }
+    getSchoolServices() {
+        return this.base + this.schoolServices;
+    }
+    getVisaServices() {
+        return this.base + this.visaServices;
     }
     getProgresses() {
         return this.base + this.progresses;

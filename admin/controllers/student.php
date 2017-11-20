@@ -12,9 +12,25 @@ header('Content-Type: application/json');
 $sRepo = new Student(Database::dbConnect());
 
 if ($_GET['action'] == 'getStudents') {
+    
     $_GET['name'] = urldecode($_GET['name']);
     $_GET['service'] = urldecode(($_GET['service']));
     $students = $sRepo->students($_GET, 25);
+    
+    $pRepo = new Performance(Database::dbConnect());
+    $bRepo = new Business(Database::dbConnect());
+    foreach ($students as &$student) {
+        $studentId = $student['id'];
+        $performance = $pRepo->lastest($studentId);
+        $business = $bRepo->lastestSchool($studentId);
+        $visa = $bRepo->lastestVisa($studentId);
+        $student['performance'] = $performance['service_name'];
+        $student['performance_progress_name'] = $performance['progress_name'];
+        $student['school'] = $business['service_name'];
+        $student['school_progress_name'] = $business['progress_name'];
+        $student['visa'] = $visa['service_name'];
+        $student['visa_progress_name'] = $visa['progress_name'];
+    }
     $total = count($sRepo->students($_GET));
     $result = array(
         'data' => $students,
@@ -24,9 +40,6 @@ if ($_GET['action'] == 'getStudents') {
             'name' => isset($_GET['name']) ? $_GET['name'] : '',
             'employee_id' => isset($_GET['employee_id']) ? $_GET['employee_id'] : '',
             'employee_material_id' => isset($_GET['employee_material_id']) ? $_GET['employee_material_id'] : '',
-            'service' => isset($_GET['service']) ? $_GET['service'] : '',
-            'school_progress_name' => isset($_GET['school_progress_name']) ? $_GET['school_progress_name'] : '',
-            'visa_progress_name' => isset($_GET['visa_progress_name']) ? $_GET['visa_progress_name'] : '',
             'color' => isset($_GET['color']) ? $_GET['color'] : ''
         )
     );
