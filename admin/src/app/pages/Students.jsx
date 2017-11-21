@@ -44,10 +44,10 @@ class Home extends React.Component {
                 performance_service_id: '',
                 performance_progress_id: '',
                 school_service_id: '',
-                school_progress_name: '',
+                school_progress_id: '',
                 color: '',
                 visa_service_id: '',
-                visa_progress_name: ''
+                visa_progress_id: ''
             }
         };
         this.addStudent = this.addStudent.bind(this);
@@ -158,8 +158,12 @@ class Home extends React.Component {
                         employee_id: res.search.employee_id,
                         employee_material_id: res.search.employee_material_id,
                         service: res.search.service,
-                        school_progress_name: res.search.school_progress_name,
-                        visa_progress_name: res.search.visa_progress_name,
+                        performance_service_id: res.search.performance_service_id,
+                        performance_progress_id: res.search.performance_progress_id,
+                        school_service_id: res.search.school_service_id,
+                        school_progress_id: res.search.school_progress_id,
+                        visa_service_id: res.search.visa_service_id,
+                        visa_progress_id: res.search.visa_progress_id,
                         color: res.search.color
                     }
                 });
@@ -186,7 +190,6 @@ class Home extends React.Component {
     render() {
         const searchQuery = getSearchLink(this.state.search);
         const currentPage = this.state.currentPage;
-        const _this = this;
         const employees = this.state.employees.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
         );
@@ -194,25 +197,25 @@ class Home extends React.Component {
             <option key={c.id} value={c.id}>{c.name}</option>
         );
         const services = this.state.services.map((s) =>
-            <option key={s.id} value={s.name}>{s.name}</option>
+            <option key={s.id} value={s.id}>{s.name}</option>
         );
         const performances = this.state.performances.map((p) =>
-            <option key={p.id} value={p.name}>{p.name}</option>
+            <option key={p.id} value={p.id}>{p.name}</option>
         );
         const schoolServices = this.state.schoolServices.map((p) =>
-            <option key={p.name} value={p.name}>{p.name}</option>
+            <option key={p.id} value={p.id}>{p.name}</option>
         );
         const schoolProgresses = this.state.schoolProgresses.map((p) =>
-            <option key={p.name} value={p.name}>{p.name}</option>
+            <option key={p.id} value={p.id}>{p.name}</option>
         );
         const colors = this.state.colors.map((c) => 
             <option key={c.key} value={c.key}>{c.value}</option>
         );
         const visas = this.state.visas.map((vi) =>
-            <option key={vi.name} value={vi.name}>{vi.name}</option>
+            <option key={vi.id} value={vi.id}>{vi.name}</option>
         );
         const visaProgresses = this.state.visaProgresses.map((vi) =>
-            <option key={vi.name} value={vi.name}>{vi.name}</option>
+            <option key={vi.id} value={vi.id}>{vi.name}</option>
         );
         const students = this.state.students;
         let passColor = '';
@@ -282,11 +285,11 @@ class Home extends React.Component {
                             <th>护照到期日</th>
                             <th><Dropdown title={'责任客服'} name={'employee_id'} value={this.state.search.employee_id} handleChange={this.handleSearchChange} options={employees} /></th>
                             <th><Dropdown title={'业绩'} name={'performance_service_id'} value={this.state.search.performance_service_id} handleChange={this.handleSearchChange} options={performances} /></th>
-                            <th>进度</th>
+                            <th><Dropdown title={'进度'} name={'performance_progress_id'} value={this.state.search.performance_progress_id} handleChange={this.handleSearchChange} options={schoolProgresses} /></th>
                             <th><Dropdown title={'学校申请'} name={'school_service_id'} value={this.state.search.school_service_id} handleChange={this.handleSearchChange} options={schoolServices} /></th>
-                            <th><Dropdown title={'进度'} name={'school_progress_name'} value={this.state.search.school_progress_name} handleChange={this.handleSearchChange} options={schoolProgresses} /></th>
+                            <th><Dropdown title={'进度'} name={'school_progress_id'} value={this.state.search.school_progress_id} handleChange={this.handleSearchChange} options={schoolProgresses} /></th>
                             <th><Dropdown title={'签证移民'} name={'visa_service_id'} value={this.state.search.visa_service_id} handleChange={this.handleSearchChange} options={visas} /></th>
-                            <th><Dropdown title={'进度'} name={'visa_progress_name'} value={this.state.search.visa_progress_name} handleChange={this.handleSearchChange} options={visaProgresses} /></th>
+                            <th><Dropdown title={'进度'} name={'visa_progress_id'} value={this.state.search.visa_progress_id} handleChange={this.handleSearchChange} options={visaProgresses} /></th>
                             <th>更新时间</th>
                             {(this.props.user.admin_level == 1) ?
                             <th>Actions</th>

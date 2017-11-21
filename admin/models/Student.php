@@ -26,21 +26,49 @@ class Student {
                 s.passport_date AS passport_date,
                 s.phone AS phone,
                 s.employee_id AS employee_id,
-                e.name AS employee_name,
                 s.updated_at AS updated_at,
-                s.agency_id AS agency_id,
-                a.name AS agency_name,
                 e.name AS employee_name,
-                em.name AS employee_material_name
+                em.name AS employee_material_name,
+                ser.name AS performance,
+                pro.name AS performance_progress_name,
+                ser2.name AS school,
+                pro2.name AS school_progress_name,
+                ser3.name AS visa,
+                pro3.name AS visa_progress_name
                 FROM 
                 students s
+                LEFT JOIN (
+                    SELECT student_id, service_id, progress_id
+                    FROM performances p JOIN students ON p.student_id = students.id
+                    GROUP BY p.student_id
+                    ORDER BY p.updated_at
+                ) per ON per.student_id = s.id
+                LEFT JOIN services ser ON per.service_id = ser.id
+                LEFT JOIN progresses pro ON per.progress_id = pro.id
+                LEFT JOIN (
+                    SELECT student_id, service_id, progress_id
+                    FROM businesses b JOIN students ON b.student_id = students.id
+                    WHERE b.service_id in (4, 10)
+                    GROUP BY b.student_id
+                    ORDER BY b.updated_at
+                ) school ON school.student_id = s.id
+                LEFT JOIN services ser2 ON school.service_id = ser2.id
+                LEFT JOIN progresses pro2 ON school.progress_id = pro2.id
+                LEFT JOIN (
+                    SELECT student_id, service_id, progress_id
+                    FROM businesses b JOIN students ON b.student_id = students.id
+                    WHERE b.service_id in (7,8,9)
+                    GROUP BY b.student_id
+                    ORDER BY b.updated_at
+                ) visa ON visa.student_id = s.id
+                LEFT JOIN services ser3 ON visa.service_id = ser3.id
+                LEFT JOIN progresses pro3 ON visa.progress_id = pro3.id
                 LEFT JOIN employees e ON s.employee_id = e.id
                 LEFT JOIN employees_material em ON s.employee_material_id = em.id
-                LEFT JOIN agencies a ON s.agency_id = a.id
                 LEFT JOIN cities c ON c.id = s.city_id
                 WHERE 1';
         if ($search['name'] != '') {
-            $sql .= ' AND (s.name LIKE :name OR c.name LIKE :name OR s.visa_info LIKE :name OR s.status LIKE :name OR s.progress LIKE :name)';
+            $sql .= ' AND (s.name LIKE :name OR c.name LIKE :name OR s.visa_info LIKE :name OR s.status LIKE :name)';
         }
         // if ($search['employee_id'] != '') {
         //     $sql .= ' AND s.employee_id = :employee_id';

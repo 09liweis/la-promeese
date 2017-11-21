@@ -36,14 +36,14 @@ class Progress {
     }
     
     public function getVisaImmiProgresses() {
-        $sql = 'SELECT DISTINCT(name) FROM progresses WHERE service_id in (7, 8)';
+        $sql = 'SELECT id, name FROM progresses WHERE service_id in (7, 8)';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->execute();
         $progresses = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         return $progresses;
     }
     public function getSchoolProgresses() {
-        $sql = 'SELECT DISTINCT(name) FROM progresses WHERE service_id = 4';
+        $sql = 'SELECT id, name FROM progresses WHERE service_id = 4';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->execute();
         $progresses = $pdostmt->fetchAll(PDO::FETCH_ASSOC);

@@ -15,22 +15,31 @@ if ($_GET['action'] == 'getStudents') {
     
     $_GET['name'] = urldecode($_GET['name']);
     $_GET['service'] = urldecode(($_GET['service']));
+    // if ($_GET['performance_service_id'] != '' || $_GET['performance_progress_id'] != '') {
+    //     $students = $sRepo->students($_GET);
+    // } else {
+    //     $students = $sRepo->students($_GET, 25);
+    // }
     $students = $sRepo->students($_GET, 25);
     
-    $pRepo = new Performance(Database::dbConnect());
-    $bRepo = new Business(Database::dbConnect());
-    foreach ($students as &$student) {
-        $studentId = $student['id'];
-        $performance = $pRepo->lastest($studentId);
-        $business = $bRepo->lastestSchool($studentId);
-        $visa = $bRepo->lastestVisa($studentId);
-        $student['performance'] = $performance['service_name'];
-        $student['performance_progress_name'] = $performance['progress_name'];
-        $student['school'] = $business['service_name'];
-        $student['school_progress_name'] = $business['progress_name'];
-        $student['visa'] = $visa['service_name'];
-        $student['visa_progress_name'] = $visa['progress_name'];
-    }
+    // $pRepo = new Performance(Database::dbConnect());
+    // $bRepo = new Business(Database::dbConnect());
+    // $results = array();
+    // foreach ($students as $student) {
+    //     $studentId = $student['id'];
+    //     $performance = $pRepo->lastest($studentId, $_GET);
+    //     $business = $bRepo->lastestSchool($studentId, $_GET);
+    //     $visa = $bRepo->lastestVisa($studentId, $_GET);
+        
+    //     $student['performance'] = $performance['service_name'];
+    //     $student['performance_progress_name'] = $performance['progress_name'];
+    //     $student['school'] = $business['service_name'];
+    //     $student['school_progress_name'] = $business['progress_name'];
+    //     $student['visa'] = $visa['service_name'];
+    //     $student['visa_progress_name'] = $visa['progress_name'];
+        
+    //     $results[] = $student;
+    // }
     $total = count($sRepo->students($_GET));
     $result = array(
         'data' => $students,
@@ -40,7 +49,14 @@ if ($_GET['action'] == 'getStudents') {
             'name' => isset($_GET['name']) ? $_GET['name'] : '',
             'employee_id' => isset($_GET['employee_id']) ? $_GET['employee_id'] : '',
             'employee_material_id' => isset($_GET['employee_material_id']) ? $_GET['employee_material_id'] : '',
+            'performance_service_id' => isset($_GET['performance_service_id']) ? $_GET['performance_service_id'] : '',
+            'performance_progress_id' => isset($_GET['performance_progress_id']) ? $_GET['performance_progress_id'] : '',
+            'school_service_id' => isset($_GET['school_service_id']) ? $_GET['school_service_id'] : '',
+            'school_progress_id' => isset($_GET['school_progress_id']) ? $_GET['school_progress_id'] : '',
+            'visa_service_id' => isset($_GET['visa_service_id']) ? $_GET['visa_service_id'] : '',
+            'visa_progress_id' => isset($_GET['visa_progress_id']) ? $_GET['visa_progress_id'] : '',
             'color' => isset($_GET['color']) ? $_GET['color'] : ''
+            
         )
     );
     echo json_encode($result);

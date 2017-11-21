@@ -85,7 +85,7 @@ class Performance {
         $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
         $pdostmt->execute();
     }
-    public function lastest($student_id) {
+    public function lastest($student_id, $search) {
         $sql = 'SELECT 
                 s.name as service_name,
                 p.service_id as service_id,
@@ -101,10 +101,22 @@ class Performance {
                 LEFT JOIN progresses ps ON p.progress_id = ps.id
                 LEFT JOIN employees e ON p.employee_id = e.id
                 LEFT JOIN employees_material em ON p.employee_material_id = em.id
-                WHERE p.student_id = :student_id
-                ORDER BY p.updated_at DESC LIMIT 1';
+                WHERE p.student_id = :student_id';
+        if ($search['performance_service_id'] != '') {
+            $sql .= ' AND p.service_id = :service_id';
+        }
+        if ($search['performance_progress_id'] != '') {
+            $sql .= ' AND p.progress_id = :progress_id';
+        }
+        $sql .= ' ORDER BY p.updated_at DESC LIMIT 1';
         $pdostmt = $this->db->prepare($sql);
-        $pdostmt->bindValue(':student_id', $student_id);
+        $pdostmt->bindValue(':student_id', $student_id, PDO::PARAM_INT);
+        if ($search['performance_service_id'] != '') {
+            $pdostmt->bindValue(':service_id', $search['performance_service_id'], PDO::PARAM_INT);
+        }
+        if ($search['performance_progress_id'] != '') {
+            $pdostmt->bindValue(':progress_id', $search['performance_progress_id'], PDO::PARAM_INT);
+        }
         $pdostmt->execute();
         $performance = $pdostmt->fetch(PDO::FETCH_ASSOC);
         return $performance;
