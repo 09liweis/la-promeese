@@ -36,29 +36,64 @@ class Student {
                 ser3.name AS visa,
                 pro3.name AS visa_progress_name
                 FROM 
-                students s
-                LEFT JOIN (
+                students s';
+        if ($search['performance_service_id'] != '' || $search['performance_progress_id'] != '') {
+            $sql .= ' JOIN';
+        } else {
+            $sql .= ' LEFT JOIN';   
+        }
+        $sql .=    '(
                     SELECT student_id, service_id, progress_id
                     FROM performances p JOIN students ON p.student_id = students.id
-                    GROUP BY p.student_id
+                    WHERE 1';
+        if ($search['performance_service_id'] != '') {
+            $sql .= ' AND p.service_id = :performance_service_id';
+        }
+        if ($search['performance_progress_id'] != '') {
+            $sql .= ' AND p.progress_id = :performance_progress_id';
+        }
+        $sql .=     ' GROUP BY p.student_id
                     ORDER BY p.updated_at
                 ) per ON per.student_id = s.id
                 LEFT JOIN services ser ON per.service_id = ser.id
-                LEFT JOIN progresses pro ON per.progress_id = pro.id
-                LEFT JOIN (
+                LEFT JOIN progresses pro ON per.progress_id = pro.id';
+        if ($search['school_service_id'] != '' || $search['school_progress_id'] != '') {
+            $sql .= ' JOIN';
+        } else {
+            $sql .= ' LEFT JOIN';   
+        }
+        $sql .= '(
                     SELECT student_id, service_id, progress_id
                     FROM businesses b JOIN students ON b.student_id = students.id
-                    WHERE b.service_id in (4, 10)
-                    GROUP BY b.student_id
+                    WHERE b.service_id in (4, 10)';
+        if ($search['school_service_id'] != '') {
+            $sql .= ' AND b.service_id = :school_service_id';
+        }
+        if ($search['school_progress_id'] != '') {
+            $sql .= ' AND b.progress_id = :school_progress_id';
+        }
+        $sql .=     ' GROUP BY b.student_id
                     ORDER BY b.updated_at
                 ) school ON school.student_id = s.id
                 LEFT JOIN services ser2 ON school.service_id = ser2.id
-                LEFT JOIN progresses pro2 ON school.progress_id = pro2.id
-                LEFT JOIN (
+                LEFT JOIN progresses pro2 ON school.progress_id = pro2.id';
+                
+        if ($search['visa_service_id'] != '' || $search['visa_progress_id'] != '') {
+            $sql .= ' JOIN';
+        } else {
+            $sql .= ' LEFT JOIN';   
+        }
+        $sql .=     '(
                     SELECT student_id, service_id, progress_id
                     FROM businesses b JOIN students ON b.student_id = students.id
-                    WHERE b.service_id in (7,8,9)
-                    GROUP BY b.student_id
+                    WHERE b.service_id in (7,8,9)';
+        if ($search['visa_service_id'] != '') {
+            $sql .= ' AND b.service_id = :visa_service_id';
+        }
+        if ($search['visa_progress_id'] != '') {
+            $sql .= ' AND b.progress_id = :visa_progress_id';
+        }
+        $sql .=     ' GROUP BY b.student_id
                     ORDER BY b.updated_at
                 ) visa ON visa.student_id = s.id
                 LEFT JOIN services ser3 ON visa.service_id = ser3.id
@@ -100,6 +135,24 @@ class Student {
         
         if ($search['name'] != '') {
             $pdostmt->bindValue(':name', '%'.$search['name'].'%', PDO::PARAM_STR);
+        }
+        if ($search['performance_service_id'] != '') {
+            $pdostmt->bindValue(':performance_service_id', $search['performance_service_id'], PDO::PARAM_INT);
+        }
+        if ($search['performance_progress_id'] != '') {
+            $pdostmt->bindValue(':performance_progress_id', $search['performance_progress_id'], PDO::PARAM_INT);
+        }
+        if ($search['school_service_id'] != '') {
+            $pdostmt->bindValue(':school_service_id', $search['school_service_id'], PDO::PARAM_INT);
+        }
+        if ($search['school_progress_id'] != '') {
+            $pdostmt->bindValue(':school_progress_id', $search['school_progress_id'], PDO::PARAM_INT);
+        }
+        if ($search['visa_service_id'] != '') {
+            $pdostmt->bindValue(':visa_service_id', $search['visa_service_id'], PDO::PARAM_INT);
+        }
+        if ($search['visa_progress_id'] != '') {
+            $pdostmt->bindValue(':visa_progress_id', $search['visa_progress_id'], PDO::PARAM_INT);
         }
         // if ($search['employee_id'] != '') {
         //     $pdostmt->bindValue(':employee_id', $search['employee_id'], PDO::PARAM_INT);
