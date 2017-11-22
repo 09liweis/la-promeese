@@ -4,6 +4,8 @@ import $ from 'jquery';
 import Datepicker from '../elements/Datepicker.jsx';
 import Dropdown from '../elements/Dropdown.jsx';
 
+import SemesterForm from '../forms/SemesterForm.jsx';
+
 class PerformanceForm extends React.Component {
     constructor(props) {
         super(props);
@@ -144,7 +146,8 @@ class PerformanceForm extends React.Component {
         );
         const performance = this.state.performance;
         return (
-            <form className="columns is-multiline" onSubmit={this.handleSubmit}>
+            <form className="" onSubmit={this.handleSubmit}>
+                <div className="columns is-multiline">
                 <div className="column is-2">
                     <Dropdown title={'服务'} name={'service_id'} value={performance.service_id} handleChange={this.handleChange} options={services} />
                 </div>
@@ -200,9 +203,11 @@ class PerformanceForm extends React.Component {
                         <input type="text" className="input" name="remark" value={performance.remark} onChange={this.handleChange}/>
                     </div>
                 </div>
-                <div className="column is-2">
-                    <button className="button is-primary">提交</button>
                 </div>
+                {performance.id ?
+                <SemesterForm performanceId={performance.id} employees={employees} progresses={progresses} commissionProgresses={commissionProgresses} employeesMaterial={employeesMaterial} />
+                :null}
+                <button className="button is-primary">Submit</button>
             </form>
         );
     }

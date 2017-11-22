@@ -23,6 +23,9 @@ export default class Api {
         this.progresses = 'progress.php?action=getProgresses';
         this.visaImmigrates = 'progress.php?action=getVisaImmiProgresses';
         this.schoolProgresses = 'progress.php?action=getSchoolProgresses';
+        
+        this.upsertSemester = 'performance.php?action=upsertSemester';
+        this.semesters = 'performance.php?action=semesters';
     }
     getStudents() {
         return this.base + this.students;
@@ -77,5 +80,11 @@ export default class Api {
     }
     getSchoolProgresses() {
         return this.base + this.schoolProgresses;
+    }
+    getUpsertSemester() {
+        return this.base + this.upsertSemester;
+    }
+    getSemesters() {
+        return this.base + this.semesters;
     }
 }

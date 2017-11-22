@@ -43,7 +43,7 @@ class Student {
             $sql .= ' LEFT JOIN';   
         }
         $sql .=    '(
-                    SELECT student_id, service_id, progress_id
+                    SELECT student_id, service_id, progress_id, p.employee_id, p.employee_material_id
                     FROM performances p JOIN students ON p.student_id = students.id
                     WHERE 1';
         if ($search['performance_service_id'] != '') {
@@ -63,7 +63,7 @@ class Student {
             $sql .= ' LEFT JOIN';   
         }
         $sql .= '(
-                    SELECT student_id, service_id, progress_id
+                    SELECT student_id, service_id, progress_id, b.employee_id, b.employee_material_id
                     FROM businesses b JOIN students ON b.student_id = students.id
                     WHERE b.service_id in (4, 10)';
         if ($search['school_service_id'] != '') {
@@ -84,7 +84,7 @@ class Student {
             $sql .= ' LEFT JOIN';   
         }
         $sql .=     '(
-                    SELECT student_id, service_id, progress_id
+                    SELECT student_id, service_id, progress_id, b.employee_id, b.employee_material_id
                     FROM businesses b JOIN students ON b.student_id = students.id
                     WHERE b.service_id in (7,8,9)';
         if ($search['visa_service_id'] != '') {
@@ -117,7 +117,7 @@ class Student {
                 case 'green':
                     $sql .= ' AND s.visa_date >= NOW() AND DATEDIFF(s.visa_date, NOW()) < 90';
                     break;
-                case 'yellow':
+                case 'brown':
                     $sql .= ' AND s.visa_date < NOW()';
                     break;
             }
@@ -154,12 +154,6 @@ class Student {
         if ($search['visa_progress_id'] != '') {
             $pdostmt->bindValue(':visa_progress_id', $search['visa_progress_id'], PDO::PARAM_INT);
         }
-        // if ($search['employee_id'] != '') {
-        //     $pdostmt->bindValue(':employee_id', $search['employee_id'], PDO::PARAM_INT);
-        // }
-        // if ($search['employee_material_id'] != '') {
-        //     $pdostmt->bindValue(':employee_material_id', $search['employee_material_id'], PDO::PARAM_INT);
-        // }
         $pdostmt->execute();
         $students = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         return $students;

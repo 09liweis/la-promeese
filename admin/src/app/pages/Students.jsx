@@ -27,7 +27,7 @@ class Home extends React.Component {
             schoolProgresses: [],
             performances: [],
             performancesProgresses: [],
-            colors: [{key: 'green', value: '绿色'}, {key: 'yellow', value: '黄色'}, {key: 'blue', value: '蓝色'}, {key: 'red', value: '红色'}],
+            colors: [{key: 'green', value: '绿色'}, {key: 'brown', value: '棕色'}, {key: 'blue', value: '蓝色'}, {key: 'red', value: '红色'}],
             visas: [],
             visaProgresses: [],
             modal: false,
@@ -40,7 +40,7 @@ class Home extends React.Component {
                 name: '',
                 employee_id: '',
                 employee_material_id: '',
-                service: '',
+                service_id: '',
                 performance_service_id: '',
                 performance_progress_id: '',
                 school_service_id: '',
@@ -157,7 +157,7 @@ class Home extends React.Component {
                         name: res.search.name,
                         employee_id: res.search.employee_id,
                         employee_material_id: res.search.employee_material_id,
-                        service: res.search.service,
+                        service_id: res.search.service_id,
                         performance_service_id: res.search.performance_service_id,
                         performance_progress_id: res.search.performance_progress_id,
                         school_service_id: res.search.school_service_id,
@@ -266,7 +266,7 @@ class Home extends React.Component {
                         <Dropdown title={'责任文案'} name={'employee_material_id'} value={this.state.search.employee_material_id} handleChange={this.handleSearchChange} options={employeesMaterial} />
                     </div>
                     <div className="column">
-                        <Dropdown title={'服务内容'} name={'service'} value={this.state.search.service} handleChange={this.handleSearchChange} options={services} />
+                        <Dropdown title={'服务内容'} name={'service_id'} value={this.state.search.service_id} handleChange={this.handleSearchChange} options={services} />
                     </div>
                     <div className="column">
                         <Link className="button is-primary" to={`/admin/students?page=${this.state.currentPage}${searchQuery}`}>搜素</Link>

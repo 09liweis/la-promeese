@@ -24,3 +24,13 @@ if ($_GET['action'] == 'removePerformance') {
     $pRepo->remove($_POST['id']);
     echo json_encode('ok');
 }
+
+if ($_GET['action'] == 'semesters') {
+    $semesters = $pRepo->semesters($_GET['id']);
+    echo json_encode($semesters);
+}
+
+if ($_GET['action'] == 'upsertSemester') {
+    $pRepo->upsertSemester($_POST);
+    echo json_encode('ok');
+}

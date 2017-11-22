@@ -85,40 +85,68 @@ class Performance {
         $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
         $pdostmt->execute();
     }
-    public function lastest($student_id, $search) {
+    public function semesters($performance_id) {
         $sql = 'SELECT 
-                s.name as service_name,
-                p.service_id as service_id,
+                se.id as id, 
+                se.performance_id AS performance_id,
+                se.semester AS semester,
+                se.school_start_date,
+                se.fee AS fee,
                 ps.name AS progress_name,
-                p.progress_id AS progress_id,
-                p.employee_id AS employee_id,
+                se.progress_id AS progress_id,
+                se.commission_progress_id AS commission_progress_id,
+                cp.name AS commission_progress_name,
+                se.employee_id AS employee_id,
                 e.name AS employee_name,
-                p.employee_material_id AS employee_material_id,
-                em.name AS employee_material_name
+                se.employee_material_id AS employee_material_id,
+                em.name AS employee_material_name,
+                se.remark AS remark,
+                se.last_modified_id AS last_modified_id,
+                ee.name AS last_modified_name,
+                se.updated_at AS updated_at
                 FROM 
-                performances p 
-                LEFT JOIN services s ON p.service_id = s.id
-                LEFT JOIN progresses ps ON p.progress_id = ps.id
-                LEFT JOIN employees e ON p.employee_id = e.id
-                LEFT JOIN employees_material em ON p.employee_material_id = em.id
-                WHERE p.student_id = :student_id';
-        if ($search['performance_service_id'] != '') {
-            $sql .= ' AND p.service_id = :service_id';
-        }
-        if ($search['performance_progress_id'] != '') {
-            $sql .= ' AND p.progress_id = :progress_id';
-        }
-        $sql .= ' ORDER BY p.updated_at DESC LIMIT 1';
+                semesters se 
+                LEFT JOIN progresses ps ON se.progress_id = ps.id
+                LEFT JOIN commission_progresses cp ON se.commission_progress_id = cp.id
+                LEFT JOIN employees e ON se.employee_id = e.id
+                LEFT JOIN employees_material em ON se.employee_material_id = em.id
+                LEFT JOIN employees ee ON se.last_modified_id = ee.id
+                WHERE se.performance_id = :performance_id
+                ORDER BY se.id ASC';
         $pdostmt = $this->db->prepare($sql);
-        $pdostmt->bindValue(':student_id', $student_id, PDO::PARAM_INT);
-        if ($search['performance_service_id'] != '') {
-            $pdostmt->bindValue(':service_id', $search['performance_service_id'], PDO::PARAM_INT);
+        $pdostmt->bindValue(':performance_id', $performance_id);
+        $pdostmt->execute();
+        $semesters = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
+        return $semesters;
+    }
+    public function upsertSemester($semester) {
+        session_start();
+        if ($semester['id'] == 0) {
+            $semester['created_at'] = date('Y-m-d H:i:s');
         }
-        if ($search['performance_progress_id'] != '') {
-            $pdostmt->bindValue(':progress_id', $search['performance_progress_id'], PDO::PARAM_INT);
+        $semester['updated_at'] = date('Y-m-d H:i:s');
+        $semester['last_modified_id'] = $_SESSION['id'];
+        if (($semester['school_start_date']) != '') {
+            $semester['school_start_date'] = substr($semester['school_start_date'], 0, 7);
+        }
+        $columns = '';
+        $values = '';
+        $updates = '';
+        foreach ($semester as $column => $value) {
+            $columns .= $column . ',';
+            $values .= ':' . $column . ',';
+            if ($column != 'id') {
+                $updates .= $column . '= VALUES(`' . $column . '`),';
+            }
+        }
+        $columns = rtrim($columns, ',');
+        $values = rtrim($values, ',');
+        $updates = rtrim($updates, ',');
+        $sql = 'INSERT INTO semesters (' . $columns . ') VALUES (' . $values . ') ON DUPLICATE KEY UPDATE ' . $updates . ';';
+        $pdostmt = $this->db->prepare($sql);
+        foreach ($semester as $c => $v) {
+            $pdostmt->bindValue(':' . $c, $v, PDO::PARAM_INT);
         }
         $pdostmt->execute();
-        $performance = $pdostmt->fetch(PDO::FETCH_ASSOC);
-        return $performance;
     }
 }
