@@ -37,10 +37,13 @@ export function getNewDateDes(id) {
             case '55':
             case '75': //过期签证
             case '47': //小签
+            case '76':
+            case 'LMIA+境外工签':
+            case '77':
+            case '父母探亲':
+            case '78':
+            case '旅游签':
                 newDateDes = '准签信出信时间';
-                break;
-            case '74': //调档
-                newDateDes = '调档下达日期';
                 break;
             case '76':
                 newDateDes = '获批时间至';
@@ -48,6 +51,14 @@ export function getNewDateDes(id) {
             case '79':
             case '80':
                 newDateDes = '获批时间';
+                break;
+            case '护照补办':
+            case '59':
+                newDateDes = '预约时间';
+                break;
+            case '调档':
+            case '74':
+                newDateDes = '掉档信出信时间';
                 break;
             default:
                 newDateDes = '获批时间至';
@@ -70,7 +81,8 @@ export function getExtraVisaDes(id) {
             des = '签证获批至';
             break;
         case '76':
-            des = '获批时间至';
+        case 'LMIA+境外工签':
+            des = 'LMIA获批时间至';
             break;
         default:
             des = '';

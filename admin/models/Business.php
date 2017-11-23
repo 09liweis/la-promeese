@@ -51,6 +51,10 @@ class Business {
     }
     public function upsert($business) {
         session_start();
+        if ($business['id'] == 0) {
+            $business['created_at'] = date('Y-m-d H:i:s');
+        }
+        $business['updated_at'] = date('Y-m-d H:i:s');
         $business['last_modified_id'] = $_SESSION['id'];
         $columns = '';
         $values = '';
@@ -84,77 +88,5 @@ class Business {
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
         $pdostmt->execute();
-    }
-    public function lastestSchool($studentId, $search) {
-        $sql = 'SELECT 
-                s.name as service_name,
-                b.service_id as service_id,
-                ps.name AS progress_name,
-                b.progress_id AS progress_id,
-                b.employee_id AS employee_id,
-                e.name AS employee_name,
-                b.employee_material_id AS employee_material_id,
-                em.name AS employee_material_name
-                FROM 
-                businesses b 
-                LEFT JOIN services s ON b.service_id = s.id
-                LEFT JOIN progresses ps ON b.progress_id = ps.id
-                LEFT JOIN employees e ON b.employee_id = e.id
-                LEFT JOIN employees_material em ON b.employee_material_id = em.id
-                WHERE b.student_id = :student_id AND b.service_id in (4, 10)';
-        if ($search['school_service_id'] != '') {
-            $sql .= ' AND b.service_id = :service_id';
-        }
-        if ($search['school_progress_id'] != '') {
-            $sql .= ' AND b.progress_id = :progress_id';
-        }
-        $sql .= ' ORDER BY b.updated_at DESC LIMIT 1';
-        $pdostmt = $this->db->prepare($sql);
-        $pdostmt->bindValue(':student_id', $studentId);
-        if ($search['school_service_id'] != '') {
-            $pdostmt->bindValue(':service_id', $search['school_service_id'], PDO::PARAM_INT);
-        }
-        if ($search['school_progress_id'] != '') {
-            $pdostmt->bindValue(':progress_id', $search['school_progress_id'], PDO::PARAM_INT);
-        }
-        $pdostmt->execute();
-        $business = $pdostmt->fetch(PDO::FETCH_ASSOC);
-        return $business;
-    }
-    public function lastestVisa($studentId) {
-        $sql = 'SELECT 
-                s.name as service_name,
-                b.service_id as service_id,
-                ps.name AS progress_name,
-                b.progress_id AS progress_id,
-                b.employee_id AS employee_id,
-                e.name AS employee_name,
-                b.employee_material_id AS employee_material_id,
-                em.name AS employee_material_name
-                FROM 
-                businesses b 
-                LEFT JOIN services s ON b.service_id = s.id
-                LEFT JOIN progresses ps ON b.progress_id = ps.id
-                LEFT JOIN employees e ON b.employee_id = e.id
-                LEFT JOIN employees_material em ON b.employee_material_id = em.id
-                WHERE b.student_id = :student_id AND b.service_id in (7,8,9)';
-        if ($search['visa_service_id'] != '') {
-            $sql .= ' AND b.service_id = :service_id';
-        }
-        if ($search['visa_progress_id'] != '') {
-            $sql .= ' AND b.progress_id = :progress_id';
-        }
-        $sql .= ' ORDER BY b.updated_at DESC LIMIT 1';
-        $pdostmt = $this->db->prepare($sql);
-        $pdostmt->bindValue(':student_id', $studentId);
-        if ($search['visa_service_id'] != '') {
-            $pdostmt->bindValue(':service_id', $search['visa_service_id'], PDO::PARAM_INT);
-        }
-        if ($search['visa_progress_id'] != '') {
-            $pdostmt->bindValue(':progress_id', $search['visa_progress_id'], PDO::PARAM_INT);
-        }
-        $pdostmt->execute();
-        $business = $pdostmt->fetch(PDO::FETCH_ASSOC);
-        return $business;
     }
 }
