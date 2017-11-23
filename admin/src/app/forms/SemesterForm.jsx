@@ -160,9 +160,11 @@ class SemesterForm extends Component {
                     <div className="column">
                         <Dropdown title={'进度'} name={'progress_id'} value={semester.progress_id} handleChange={this.handleChange} options={progresses}  />
                     </div>
+                    {semester.progress_id == '32' ?
                     <div className="column">
                         <Dropdown title={'佣金申报'} name={'commission_progress_id'} value={semester.commission_progress_id} handleChange={this.handleChange} options={commissionProgresses}  />
                     </div>
+                    :null}
                     <div className="column">
                         <TextInput title={"备注"} name={"remark"} value={semester.remark} handleChange={this.handleChange} />
                     </div>
