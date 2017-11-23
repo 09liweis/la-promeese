@@ -119,6 +119,12 @@ class Performance {
         $semesters = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         return $semesters;
     }
+    public function removeSemesters($performance_id) {
+        $sql = 'DELETE FROM semesters WHERE performance_id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $performance_id, PDO::PARAM_INT);
+        $pdostmt->execute();
+    }
     public function upsertSemester($semester) {
         session_start();
         if ($semester['id'] == 0) {

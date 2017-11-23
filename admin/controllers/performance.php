@@ -25,6 +25,7 @@ if ($_GET['action'] == 'upsertPerformance') {
 
 if ($_GET['action'] == 'removePerformance') {
     $pRepo->remove($_POST['id']);
+    $pRepo->removeSemesters($_POST['id']);
     echo json_encode('ok');
 }
 
