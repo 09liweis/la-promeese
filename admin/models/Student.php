@@ -18,6 +18,8 @@ class Student {
             }
             $offset = $page * $limit;
         }
+        $schoolServiceId = $search['school_service_id'];
+        $schoolProgressId = $search['school_progress_id'];
         
         $sql = 'SELECT 
                 s.id as id,
@@ -29,15 +31,13 @@ class Student {
                 s.updated_at AS updated_at,
                 e.name AS employee_name,
                 em.name AS employee_material_name,
-                ser.name AS performance,
-                pro.name AS performance_progress_name,
-                ser2.name AS school,
-                pro2.name AS school_progress_name,
+                ser.name AS school,
+                pro.name AS school_progress_name,
                 ser3.name AS visa,
                 pro3.name AS visa_progress_name
                 FROM 
                 students s';
-        if ($search['performance_service_id'] != '' || $search['performance_progress_id'] != '') {
+        if (in_array($schoolServiceId, array(1,2,3)) && ($schoolServiceId != '' || $schoolProgressId != '')) {
             $sql .= ' JOIN';
         } else {
             $sql .= ' LEFT JOIN';   
@@ -46,18 +46,18 @@ class Student {
                     SELECT student_id, service_id, progress_id, p.employee_id, p.employee_material_id
                     FROM performances p JOIN students ON p.student_id = students.id
                     WHERE 1';
-        if ($search['performance_service_id'] != '') {
-            $sql .= ' AND p.service_id = :performance_service_id';
+        if (in_array($schoolServiceId, array(1,2,3)) && $schoolServiceId != '') {
+            $sql .= ' AND p.service_id = :school_service_id';
         }
-        if ($search['performance_progress_id'] != '') {
-            $sql .= ' AND p.progress_id = :performance_progress_id';
+        if ($schoolProgressId != '') {
+            $sql .= ' AND p.progress_id = :school_progress_id';
         }
         $sql .=     ' GROUP BY p.student_id
                     ORDER BY p.updated_at
                 ) per ON per.student_id = s.id
                 LEFT JOIN services ser ON per.service_id = ser.id
                 LEFT JOIN progresses pro ON per.progress_id = pro.id';
-        if ($search['school_service_id'] != '' || $search['school_progress_id'] != '') {
+        if (in_array($schoolServiceId, array(4,10)) && ($schoolServiceId != '' || $schoolProgressId != '')) {
             $sql .= ' JOIN';
         } else {
             $sql .= ' LEFT JOIN';   
@@ -66,10 +66,10 @@ class Student {
                     SELECT student_id, service_id, progress_id, b.employee_id, b.employee_material_id
                     FROM businesses b JOIN students ON b.student_id = students.id
                     WHERE b.service_id in (4, 10)';
-        if ($search['school_service_id'] != '') {
+        if (in_array($schoolServiceId, array(4,10)) && $schoolServiceId != '') {
             $sql .= ' AND b.service_id = :school_service_id';
         }
-        if ($search['school_progress_id'] != '') {
+        if ($schoolProgressId != '') {
             $sql .= ' AND b.progress_id = :school_progress_id';
         }
         $sql .=     ' GROUP BY b.student_id
@@ -136,17 +136,11 @@ class Student {
         if ($search['name'] != '') {
             $pdostmt->bindValue(':name', '%'.$search['name'].'%', PDO::PARAM_STR);
         }
-        if ($search['performance_service_id'] != '') {
-            $pdostmt->bindValue(':performance_service_id', $search['performance_service_id'], PDO::PARAM_INT);
+        if ($schoolServiceId != '') {
+            $pdostmt->bindValue(':school_service_id', $schoolServiceId, PDO::PARAM_INT);
         }
-        if ($search['performance_progress_id'] != '') {
-            $pdostmt->bindValue(':performance_progress_id', $search['performance_progress_id'], PDO::PARAM_INT);
-        }
-        if ($search['school_service_id'] != '') {
-            $pdostmt->bindValue(':school_service_id', $search['school_service_id'], PDO::PARAM_INT);
-        }
-        if ($search['school_progress_id'] != '') {
-            $pdostmt->bindValue(':school_progress_id', $search['school_progress_id'], PDO::PARAM_INT);
+        if ($schoolProgressId != '') {
+            $pdostmt->bindValue(':school_progress_id', $schoolProgressId, PDO::PARAM_INT);
         }
         if ($search['visa_service_id'] != '') {
             $pdostmt->bindValue(':visa_service_id', $search['visa_service_id'], PDO::PARAM_INT);

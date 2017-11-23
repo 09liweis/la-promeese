@@ -25,8 +25,6 @@ class Home extends React.Component {
             employeesMaterial: [],
             schoolServices: [],
             schoolProgresses: [],
-            performances: [],
-            performancesProgresses: [],
             colors: [{key: 'green', value: '绿色'}, {key: 'brown', value: '棕色'}, {key: 'blue', value: '蓝色'}, {key: 'red', value: '红色'}],
             visas: [],
             visaProgresses: [],
@@ -41,8 +39,6 @@ class Home extends React.Component {
                 employee_id: '',
                 employee_material_id: '',
                 service_id: '',
-                performance_service_id: '',
-                performance_progress_id: '',
                 school_service_id: '',
                 school_progress_id: '',
                 color: '',
@@ -101,14 +97,6 @@ class Home extends React.Component {
             }
         });
         $.ajax({
-            url: api.getFreeServices(),
-            success(res) {
-                _this.setState({
-                    performances: res
-                });
-            }
-        });
-        $.ajax({
             url: api.getSchoolServices(),
             success(res) {
                 _this.setState({
@@ -158,8 +146,6 @@ class Home extends React.Component {
                         employee_id: res.search.employee_id,
                         employee_material_id: res.search.employee_material_id,
                         service_id: res.search.service_id,
-                        performance_service_id: res.search.performance_service_id,
-                        performance_progress_id: res.search.performance_progress_id,
                         school_service_id: res.search.school_service_id,
                         school_progress_id: res.search.school_progress_id,
                         visa_service_id: res.search.visa_service_id,
@@ -199,9 +185,6 @@ class Home extends React.Component {
         const services = this.state.services.map((s) =>
             <option key={s.id} value={s.id}>{s.name}</option>
         );
-        const performances = this.state.performances.map((p) =>
-            <option key={p.id} value={p.id}>{p.name}</option>
-        );
         const schoolServices = this.state.schoolServices.map((p) =>
             <option key={p.id} value={p.id}>{p.name}</option>
         );
@@ -229,8 +212,6 @@ class Home extends React.Component {
                     <th className={visaColor}>{s.visa_date}</th>
                     <th className={passColor}>{s.passport_date}</th>
                     <th>{s.employee_name}</th>
-                    <th>{s.performance}</th>
-                    <th><span className={getColor(s.performance_progress_name)}>{s.performance_progress_name}</span></th>
                     <th>{s.school}</th>
                     <th><span className={getColor(s.school_progress_name)}>{s.school_progress_name}</span></th>
                     <th>{s.visa}</th>
@@ -284,8 +265,6 @@ class Home extends React.Component {
                             <th>签证到期日</th>
                             <th>护照到期日</th>
                             <th><Dropdown title={'责任客服'} name={'employee_id'} value={this.state.search.employee_id} handleChange={this.handleSearchChange} options={employees} /></th>
-                            <th><Dropdown title={'业绩'} name={'performance_service_id'} value={this.state.search.performance_service_id} handleChange={this.handleSearchChange} options={performances} /></th>
-                            <th><Dropdown title={'进度'} name={'performance_progress_id'} value={this.state.search.performance_progress_id} handleChange={this.handleSearchChange} options={schoolProgresses} /></th>
                             <th><Dropdown title={'学校申请'} name={'school_service_id'} value={this.state.search.school_service_id} handleChange={this.handleSearchChange} options={schoolServices} /></th>
                             <th><Dropdown title={'进度'} name={'school_progress_id'} value={this.state.search.school_progress_id} handleChange={this.handleSearchChange} options={schoolProgresses} /></th>
                             <th><Dropdown title={'签证移民'} name={'visa_service_id'} value={this.state.search.visa_service_id} handleChange={this.handleSearchChange} options={visas} /></th>

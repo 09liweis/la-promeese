@@ -46,7 +46,7 @@ class Service {
         return $schoolServices;
     }
     public function schoolServices() {
-        $sql = 'SELECT * FROM services WHERE id in (4,5,6,10)';
+        $sql = 'SELECT * FROM services WHERE type = "school"';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->execute();
         $schoolServices = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
