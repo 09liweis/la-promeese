@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 
 import Modal from './Modal.jsx';
+import Semesters from './Semesters.jsx';
 import PerformanceForm from './PerformanceForm.jsx';
 
 import {getColor} from '../services/functions.js';
@@ -106,33 +107,38 @@ class Performances extends React.Component {
     render() {
         const _this = this;
         const performances = this.state.performances.map((p) =>
-            <div key={p.id} className="columns card">
-                <div className="column">
-                <p>服务: {p.service_name}</p>
-                <p>学校: {p.sub_service_name}</p>
+            <div key={p.id} className="card">
+                <div className="columns">
+                    <div className="column">
+                    <p>服务: {p.service_name}</p>
+                    <p>学校: {p.sub_service_name}</p>
+                    </div>
+                    <div className="column">
+                    <p>Semester: {p.semester}</p>
+                    <p>开学日期: {p.school_start_date}</p>
+                    <p>申请费: ${p.fee}</p>
+                    <p>学费: ${p.tuition}</p>
+                    </div>
+                    <div className="column">
+                    <p>进度: <span className={getColor(p.progress_id)}>{p.progress_name}</span></p>
+                    <p>佣金申报: {p.commission_progress_name}</p>
+                    <p>责任客服: {p.employee_name}</p>
+                    <p>责任文案: {p.employee_material_name}</p>
+                    <p>备注: {p.remark}</p>
+                    </div>
+                    <div className="column">
+                    <p>最后修改: {p.last_modified_name}</p>
+                    <p>最后修改时间: {p.updated_at}</p>
+                    </div>
+                    {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
+                    <div className="column">
+                        <a className="button is-warning" onClick={_this.addPerformanceForm.bind(_this, p)}>Edit</a>
+                        <a className="button is-danger" onClick={_this.remove.bind(_this, p)}>Delete</a>
+                    </div>
+                    :null}
                 </div>
-                <div className="column">
-                <p>Semester: {p.semester}</p>
-                <p>开学日期: {p.school_start_date}</p>
-                <p>申请费: ${p.fee}</p>
-                <p>学费: ${p.tuition}</p>
-                </div>
-                <div className="column">
-                <p>进度: <span className={getColor(p.progress_id)}>{p.progress_name}</span></p>
-                <p>佣金申报: {p.commission_progress_name}</p>
-                <p>责任客服: {p.employee_name}</p>
-                <p>责任文案: {p.employee_material_name}</p>
-                <p>备注: {p.remark}</p>
-                </div>
-                <div className="column">
-                <p>最后修改: {p.last_modified_name}</p>
-                <p>最后修改时间: {p.updated_at}</p>
-                </div>
-                {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
-                <div className="column">
-                    <a className="button is-warning" onClick={_this.addPerformanceForm.bind(_this, p)}>Edit</a>
-                    <a className="button is-danger" onClick={_this.remove.bind(_this, p)}>Delete</a>
-                </div>
+                {p.semesters.length != 0 ?
+                <Semesters semesters={p.semesters} />
                 :null}
             </div>
         );

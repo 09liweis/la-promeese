@@ -10,6 +10,9 @@ $pRepo = new Performance(Database::dbConnect());
 
 if ($_GET['action'] == 'getPerformances') {
     $performances = $pRepo->performances($_GET['id']);
+    foreach ($performances as &$p) {
+        $p['semesters'] = $pRepo->semesters($p['id']);
+    }
     echo json_encode($performances);
 }
 

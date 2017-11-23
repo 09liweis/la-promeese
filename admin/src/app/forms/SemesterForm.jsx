@@ -31,6 +31,7 @@ class SemesterForm extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.upsert = this.upsert.bind(this);
         this.getSemesters = this.getSemesters.bind(this);
+        this.edit = this.edit.bind(this);
     }
     componentWillMount() {
         this.setState({
@@ -82,6 +83,15 @@ class SemesterForm extends Component {
             remark: ''
         };
     }
+    edit(semester) {
+        var s = this.getNewSemester();
+        Object.keys(s).map((key) =>
+            s[key] = semester[key]
+        );
+        this.setState({
+            semester: s
+        });
+    }
     upsert() {
         const _this = this;
         $.ajax({
@@ -97,16 +107,41 @@ class SemesterForm extends Component {
         });
     }
     render() {
+        const _this = this;
         const {semester, semesterOptions, semesters} = this.state;
         const {progresses, commissionProgresses, employees, employeesMaterial} = this.props;
         const options = semesterOptions.map((s) => 
             <option key={s} value={s}>{s}</option>
         );
         const list = semesters.map((s) => 
-            <div key={s.id}>{s.semester}</div>
+            <div key={s.id} className="columns">
+                <div className="column">
+                    <p>学期: {s.semester}</p>
+                    <p>开学日期: {s.school_start_date}</p>
+                </div>
+                <div className="column">
+                    学费: {s.fee}<br/>
+                    进度: {s.progress_name}<br/>
+                    佣金申报: {s.commission_progress_name}
+                </div>
+                <div className="column">
+                    备注: {s.remark}
+                </div>
+                <div className="column">
+                    责任客服: {s.employee_name}<br/>
+                    责任文案: {s.employee_material_name}
+                </div>
+                <div className="column">
+                    修改日期: {s.updated_at}<br/>
+                    最后修改: {s.last_modified_name}
+                </div>
+                <div className="column">
+                    <a className="button is-warning" onClick={_this.edit.bind(_this, s)}>修改</a>
+                </div>
+            </div>
         );
         return (
-            <div className="">
+            <div className="card">
                 {list}
                 <a className="button is-primary" onClick={this.upsert}>添加学期</a>
                 <div className="columns">
