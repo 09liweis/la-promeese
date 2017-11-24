@@ -46,3 +46,6 @@ body {
 .has-text-brown {
     color: #c1a227 !important;
 }
+.hidden {
+    display: none;
+}

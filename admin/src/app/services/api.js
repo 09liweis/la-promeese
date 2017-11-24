@@ -26,6 +26,7 @@ export default class Api {
         
         this.upsertSemester = 'performance.php?action=upsertSemester';
         this.semesters = 'performance.php?action=semesters';
+        this.removeSemester = 'performance.php?action=removeSemester';
     }
     getStudents() {
         return this.base + this.students;
@@ -86,5 +87,8 @@ export default class Api {
     }
     getSemesters() {
         return this.base + this.semesters;
+    }
+    getRemoveSemester() {
+        return this.base + this.removeSemester;
     }
 }

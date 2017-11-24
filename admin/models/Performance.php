@@ -159,4 +159,10 @@ class Performance {
         }
         $pdostmt->execute();
     }
+    public function removeSemester($id) {
+        $sql = 'DELETE FROM semesters WHERE id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $pdostmt->execute();
+    }
 }

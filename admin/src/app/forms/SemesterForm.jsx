@@ -25,13 +25,15 @@ class SemesterForm extends Component {
                 '2nd semester',
                 '3rd semester'
             ],
-            semesters: []
+            semesters: [],
+            commissionProgresses: null
         };
         this.getNewSemester = this.getNewSemester.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.upsert = this.upsert.bind(this);
         this.getSemesters = this.getSemesters.bind(this);
         this.edit = this.edit.bind(this);
+        this.remove = this.remove.bind(this);
     }
     componentWillMount() {
         this.setState({
@@ -56,7 +58,8 @@ class SemesterForm extends Component {
     }
     componentWillReceiveProps(nextProps) {
         this.setState({
-            performanceId: nextProps.performanceId
+            performanceId: nextProps.performanceId,
+            commissionProgresses: nextProps.commissionProgresses
         });
         this.getSemesters();
     }
@@ -92,6 +95,17 @@ class SemesterForm extends Component {
             semester: s
         });
     }
+    remove(semester) {
+        const _this = this;
+        $.ajax({
+            url: api.getRemoveSemester(),
+            method: 'POST',
+            data: {id: semester.id},
+            success(res) {
+                _this.getSemesters();
+            }
+        });
+    }
     upsert() {
         const _this = this;
         $.ajax({
@@ -108,11 +122,12 @@ class SemesterForm extends Component {
     }
     render() {
         const _this = this;
-        const {semester, semesterOptions, semesters} = this.state;
-        const {progresses, commissionProgresses, employees, employeesMaterial} = this.props;
+        const {semester, semesterOptions, semesters, commissionProgresses} = this.state;
+        const {progresses, employees, employeesMaterial} = this.props;
         const options = semesterOptions.map((s) => 
             <option key={s} value={s}>{s}</option>
         );
+        const show = semester.progress_id == '32' ? 'column' : 'column hidden';
         const list = semesters.map((s) => 
             <div key={s.id} className="columns">
                 <div className="column">
@@ -137,6 +152,7 @@ class SemesterForm extends Component {
                 </div>
                 <div className="column">
                     <a className="button is-warning" onClick={_this.edit.bind(_this, s)}>修改</a>
+                    <a className="button is-danger" onClick={_this.remove.bind(_this, s)}>删除</a>
                 </div>
             </div>
         );
@@ -160,11 +176,9 @@ class SemesterForm extends Component {
                     <div className="column">
                         <Dropdown title={'进度'} name={'progress_id'} value={semester.progress_id} handleChange={this.handleChange} options={progresses}  />
                     </div>
-                    {semester.progress_id == '32' ?
-                    <div className="column">
+                    <div className={show}>
                         <Dropdown title={'佣金申报'} name={'commission_progress_id'} value={semester.commission_progress_id} handleChange={this.handleChange} options={commissionProgresses}  />
                     </div>
-                    :null}
                     <div className="column">
                         <TextInput title={"备注"} name={"remark"} value={semester.remark} handleChange={this.handleChange} />
                     </div>

@@ -38,3 +38,7 @@ if ($_GET['action'] == 'upsertSemester') {
     $pRepo->upsertSemester($_POST);
     echo json_encode('ok');
 }
+if ($_GET['action'] == 'removeSemester') {
+    $pRepo->removeSemester($_POST['id']);
+    echo json_encode('ok');
+}
