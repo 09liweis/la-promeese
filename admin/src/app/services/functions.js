@@ -43,6 +43,11 @@ export function getNewDateDes(id) {
             case '父母探亲':
             case '78':
             case '旅游签':
+            case '61':
+            case '快速通道+CEC':
+            case '62':
+            case '63':
+            case '64':
                 newDateDes = '准签信出信时间';
                 break;
             case '76':
@@ -68,12 +73,12 @@ export function getNewDateDes(id) {
 }
 
 export function checkNeedExtraVisa(id) {
-    const subServices = ['53', '54', '55', '76'];
+    const subServices = ['53', '54', '55', '76', '61'];
     return subServices.indexOf(id) != -1;
 }
 
 export function getExtraVisaDes(id) {
-    let des = '';
+    let des = '获批时间';
     switch (id) {
         case '53':
         case '54':
@@ -84,8 +89,12 @@ export function getExtraVisaDes(id) {
         case 'LMIA+境外工签':
             des = 'LMIA获批时间至';
             break;
+        case '61':
+        case '快速通道+CEC':
+            des = '收到邀请时间';
+            break;
         default:
-            des = '';
+            des = '获批时间';
     }
     return des;
 }
