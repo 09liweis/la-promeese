@@ -114,17 +114,12 @@ class Performances extends React.Component {
                     <p>学校: {p.sub_service_name}</p>
                     </div>
                     <div className="column">
-                    <p>Semester: {p.semester}</p>
-                    <p>开学日期: {p.school_start_date}</p>
                     <p>申请费: ${p.fee}</p>
-                    <p>学费: ${p.tuition}</p>
+                    <p>备注: {p.remark}</p>
                     </div>
                     <div className="column">
-                    <p>进度: <span className={getColor(p.progress_id)}>{p.progress_name}</span></p>
-                    <p>佣金申报: {p.commission_progress_name}</p>
                     <p>责任客服: {p.employee_name}</p>
                     <p>责任文案: {p.employee_material_name}</p>
-                    <p>备注: {p.remark}</p>
                     </div>
                     <div className="column">
                     <p>最后修改: {p.last_modified_name}</p>

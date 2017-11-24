@@ -155,41 +155,10 @@ class PerformanceForm extends React.Component {
                     <Dropdown title={'学校'} name={'sub_service_id'} value={performance.sub_service_id} handleChange={this.handleChange} options={subServices} />
                 </div>
                 <div className="field column is-2">
-                    <label className="label">Semester</label>
-                    <div className="control">
-                        <div className="select">
-                            <select name="semester" value={performance.semester} onChange={this.handleChange}>
-                                <option>Please Select</option>
-                                <option value="ESL">ESL</option>
-                                <option value="1st Semester">1st Semester</option>
-                                <option value="2nd Semester">2nd Semester</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div className="field column is-2">
-                    <label className="label">开学日期</label>
-                    <div className="control">
-                        <Datepicker name={"school_start_date"} value={performance.school_start_date} handleChange={this.handleChange} />
-                    </div>
-                </div>
-                <div className="field column is-2">
                     <label className="label">申请费</label>
                     <div className="control">
                         <input className="input" type="text" name="fee" value={performance.fee} onChange={this.handleChange} />
                     </div>
-                </div>
-                <div className="field column is-2">
-                    <label className="label">学费</label>
-                    <div className="control">
-                        <input className="input" type="text" name="tuition" value={performance.tuition} onChange={this.handleChange} />
-                    </div>
-                </div>
-                <div className="column is-2">
-                    <Dropdown title={'进度'} name={'progress_id'} value={performance.progress_id} handleChange={this.handleChange} options={progresses} />
-                </div>
-                <div className="column is-2">
-                    <Dropdown title={'佣金申报'} name={'commission_progress_id'} value={performance.commission_progress_id} handleChange={this.handleChange} options={commissionProgresses} />
                 </div>
                 <div className="column is-2">
                     <Dropdown title={'责任服务'} name={'employee_id'} value={performance.employee_id} handleChange={this.handleChange} options={employees} />

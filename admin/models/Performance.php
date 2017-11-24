@@ -47,6 +47,10 @@ class Performance {
         return $performances;
     }
     public function upsert($performance) {
+        if ($performance['id'] == 0) {
+            $performance['created_at'] = date('Y-m-d H:i:s');
+        }
+        $performance['updated_at'] = date('Y-m-d H:i:s');
         session_start();
         $performance['last_modified_id'] = $_SESSION['id'];
         if (($performance['school_start_date']) != '') {
