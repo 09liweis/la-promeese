@@ -14,7 +14,6 @@ class PerformanceForm extends React.Component {
             services: [],
             subServices: [],
             progresses: [],
-            commissionProgresses: [],
             employees: [],
             employeesMaterial: []
         };
@@ -42,15 +41,6 @@ class PerformanceForm extends React.Component {
             success(res) {
                 _this.setState({
                     services: res
-                });
-            }
-        });
-        $.ajax({
-            url: '/admin/controllers/commissionProgress.php?action=getCommissionProgress',
-            data: {type: 'free'},
-            success(res) {
-                _this.setState({
-                    commissionProgresses: res
                 });
             }
         });
@@ -135,9 +125,6 @@ class PerformanceForm extends React.Component {
         const progresses = this.state.progresses.map((p) =>
             <option key={p.id} value={p.id}>{p.name}</option>
         );
-        const commissionProgresses = this.state.commissionProgresses.map((c) =>
-            <option key={c.id} value={c.id}>{c.name}</option>
-        );
         const employees = this.state.employees.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
         );
@@ -174,7 +161,7 @@ class PerformanceForm extends React.Component {
                 </div>
                 </div>
                 {performance.id ?
-                <SemesterForm performanceId={performance.id} employees={employees} progresses={progresses} commissionProgresses={commissionProgresses} employeesMaterial={employeesMaterial} />
+                <SemesterForm performanceId={performance.id} serviceId={performance.service_id} employees={employees} progresses={progresses} employeesMaterial={employeesMaterial} />
                 :null}
                 <button className="button is-primary">Submit</button>
             </form>

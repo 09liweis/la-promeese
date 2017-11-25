@@ -11,3 +11,8 @@ if ($_GET['action'] == 'getCommissionProgress') {
     $result = $cpRepo->commissionProgresses($_GET['type']);
     echo json_encode($result);
 }
+
+if ($_GET['action'] == 'getCommissionProgressId') {
+    $result = $cpRepo->commissionProgressesId($_GET['id']);
+    echo json_encode($result);
+}

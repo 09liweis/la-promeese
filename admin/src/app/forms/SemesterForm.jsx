@@ -27,7 +27,8 @@ class SemesterForm extends Component {
                 '3rd semester'
             ],
             semesters: [],
-            commissionProgresses: null
+            commissionProgresses: [],
+            serviceId: props.serviceId
         };
         this.getNewSemester = this.getNewSemester.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -35,6 +36,7 @@ class SemesterForm extends Component {
         this.getSemesters = this.getSemesters.bind(this);
         this.edit = this.edit.bind(this);
         this.remove = this.remove.bind(this);
+        this.getCommissionProgress = this.getCommissionProgress.bind(this);
     }
     componentWillMount() {
         this.setState({
@@ -54,15 +56,29 @@ class SemesterForm extends Component {
             }
         });
     }
-    componentDidMount() {
-        this.getSemesters();
-    }
     componentWillReceiveProps(nextProps) {
         this.setState({
             performanceId: nextProps.performanceId,
-            commissionProgresses: nextProps.commissionProgresses
+            serviceId: nextProps.serviceId
         });
         this.getSemesters();
+        this.getCommissionProgress();
+    }
+    componentDidMount() {
+        this.getSemesters();
+        this.getCommissionProgress();
+    }
+    getCommissionProgress() {
+        const _this = this;
+        $.ajax({
+            url: '/admin/controllers/commissionProgress.php?action=getCommissionProgressId',
+            data: {id: _this.state.serviceId},
+            success(res) {
+                _this.setState({
+                    commissionProgresses: res
+                });
+            }
+        });
     }
     handleChange(e) {
         const p = e.target.name;
@@ -121,12 +137,15 @@ class SemesterForm extends Component {
     }
     render() {
         const _this = this;
-        const {semester, semesterOptions, semesters, commissionProgresses} = this.state;
+        const {semester, semesterOptions, semesters} = this.state;
         const {progresses} = this.props;
         const options = semesterOptions.map((s) => 
             <option key={s} value={s}>{s}</option>
         );
-        const show = semester.progress_id == '32' ? 'column' : 'column hidden';
+        const show = (semester.progress_id == '32' || semester.progress_id == '30') ? 'column' : 'column hidden';
+        const commissionProgresses = this.state.commissionProgresses.map((c) =>
+            <option key={c.id} value={c.id}>{c.name}</option>
+        );
         const list = semesters.map((s) => 
             <div key={s.id} className="columns">
                 <div className="column">
