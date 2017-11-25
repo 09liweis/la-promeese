@@ -8,7 +8,7 @@ class Progress {
 
     public function progresses($service_id = null) {
         if (isset($service_id)) {
-            $schoolServiceId = array('1', '2', '3', '4', '5', '6');
+            $schoolServiceId = array('3', '4', '5', '6');
             //all school application have same progress
             if (in_array($service_id, $schoolServiceId)) {
                 $service_id = 4;
