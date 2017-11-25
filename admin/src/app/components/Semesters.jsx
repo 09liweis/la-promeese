@@ -1,4 +1,5 @@
 import React from 'react';
+import {getDateWithoutTime} from '../services/functions.js';
 
 class Semesters extends React.Component {
     render() {
@@ -17,11 +18,7 @@ class Semesters extends React.Component {
                     备注: {s.remark}
                 </div>
                 <div className="column">
-                    责任客服: {s.employee_name}<br/>
-                    责任文案: {s.employee_material_name}
-                </div>
-                <div className="column">
-                    修改日期: {s.updated_at}<br/>
+                    修改日期: {getDateWithoutTime(s.updated_at)}<br/>
                     最后修改: {s.last_modified_name}
                 </div>
             </div>

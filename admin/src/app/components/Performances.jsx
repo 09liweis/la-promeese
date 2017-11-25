@@ -5,7 +5,7 @@ import Modal from './Modal.jsx';
 import Semesters from './Semesters.jsx';
 import PerformanceForm from './PerformanceForm.jsx';
 
-import {getColor} from '../services/functions.js';
+import {getColor, getDateWithoutTime } from '../services/functions.js';
 
 class Performances extends React.Component {
     constructor(props) {
@@ -123,7 +123,7 @@ class Performances extends React.Component {
                     </div>
                     <div className="column">
                     <p>最后修改: {p.last_modified_name}</p>
-                    <p>最后修改时间: {p.updated_at}</p>
+                    <p>最后修改时间: {getDateWithoutTime(p.updated_at)}</p>
                     </div>
                     {(this.props.user.admin_level == 1 || this.props.user.admin_level == 2) ?
                     <div className="column">

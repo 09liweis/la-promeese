@@ -19,6 +19,14 @@ export function getDateDifferent(date) {
     return diffDays;
 }
 
+export function getDateWithoutTime(date) {
+    try {
+        return date.substring(0, 10);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 export function getNewDateDes(id) {
     var newDateDes = '获批时间至';
     if (id != '') {

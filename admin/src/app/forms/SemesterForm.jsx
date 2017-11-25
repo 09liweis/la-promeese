@@ -4,6 +4,7 @@ import $ from 'jquery';
 import Dropdown from '../elements/Dropdown.jsx';
 import Datepicker from '../elements/Datepicker.jsx';
 import TextInput from '../elements/TextInput.jsx';
+import {getDateWithoutTime} from '../services/functions.js';
 
 import Api from '../services/api.js';
 const api = new Api();
@@ -81,8 +82,6 @@ class SemesterForm extends Component {
             fee: '',
             progress_id: '',
             commission_progress_id: '',
-            employee_id: '',
-            employee_material_id: '',
             remark: ''
         };
     }
@@ -123,7 +122,7 @@ class SemesterForm extends Component {
     render() {
         const _this = this;
         const {semester, semesterOptions, semesters, commissionProgresses} = this.state;
-        const {progresses, employees, employeesMaterial} = this.props;
+        const {progresses} = this.props;
         const options = semesterOptions.map((s) => 
             <option key={s} value={s}>{s}</option>
         );
@@ -143,11 +142,7 @@ class SemesterForm extends Component {
                     备注: {s.remark}
                 </div>
                 <div className="column">
-                    责任客服: {s.employee_name}<br/>
-                    责任文案: {s.employee_material_name}
-                </div>
-                <div className="column">
-                    修改日期: {s.updated_at}<br/>
+                    修改日期: {getDateWithoutTime(s.updated_at)}<br/>
                     最后修改: {s.last_modified_name}
                 </div>
                 <div className="column">
@@ -181,12 +176,6 @@ class SemesterForm extends Component {
                     </div>
                     <div className="column">
                         <TextInput title={"备注"} name={"remark"} value={semester.remark} handleChange={this.handleChange} />
-                    </div>
-                    <div className="column">
-                        <Dropdown title={'责任客服'} name={'employee_id'} value={semester.employee_id} handleChange={this.handleChange} options={employees}  />
-                    </div>
-                    <div className="column">
-                        <Dropdown title={'责任文案'} name={'employee_material_id'} value={semester.employee_material_id} handleChange={this.handleChange} options={employeesMaterial}  />
                     </div>
                 </div>
             </div>
