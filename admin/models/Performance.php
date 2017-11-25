@@ -22,6 +22,10 @@ class Performance {
                 p.commission_progress_id AS commission_progress_id,
                 cp.name AS commission_progress_name,
                 p.remark AS remark,
+                p.employee_id AS employee_id,
+                e.name AS employee_name,
+                p.employee_material_id AS employee_material_id,
+                em.name AS employee_material_name,
                 p.last_modified_id AS last_modified_id,
                 ee.name AS last_modified_name,
                 p.updated_at AS updated_at
@@ -31,6 +35,8 @@ class Performance {
                 LEFT JOIN sub_services ss ON p.sub_service_id = ss.id
                 LEFT JOIN progresses ps ON p.progress_id = ps.id
                 LEFT JOIN commission_progresses cp ON p.commission_progress_id = cp.id
+                LEFT JOIN employees e ON p.employee_id = e.id
+                LEFT JOIN employees_material em ON p.employee_material_id = em.id
                 LEFT JOIN employees ee ON p.last_modified_id = ee.id
                 WHERE p.student_id = :student_id
                 ORDER BY p.id ASC';
@@ -94,10 +100,6 @@ class Performance {
                 se.progress_id AS progress_id,
                 se.commission_progress_id AS commission_progress_id,
                 cp.name AS commission_progress_name,
-                se.employee_id AS employee_id,
-                e.name AS employee_name,
-                se.employee_material_id AS employee_material_id,
-                em.name AS employee_material_name,
                 se.remark AS remark,
                 se.last_modified_id AS last_modified_id,
                 ee.name AS last_modified_name,
@@ -106,8 +108,6 @@ class Performance {
                 semesters se 
                 LEFT JOIN progresses ps ON se.progress_id = ps.id
                 LEFT JOIN commission_progresses cp ON se.commission_progress_id = cp.id
-                LEFT JOIN employees e ON se.employee_id = e.id
-                LEFT JOIN employees_material em ON se.employee_material_id = em.id
                 LEFT JOIN employees ee ON se.last_modified_id = ee.id
                 WHERE se.performance_id = :performance_id
                 ORDER BY se.id ASC';
