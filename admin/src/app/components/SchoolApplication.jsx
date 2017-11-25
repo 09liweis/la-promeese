@@ -16,14 +16,21 @@ class SchoolApplication extends React.Component {
     }
     render() {
         const a = this.state.application;
-        const schools = JSON.parse(this.state.application.schools);
+        const schools = (this.state.application.schools);
         const list = schools.map((s, i)=>
             <tr key={i}>
                 <td>{s.sub_service_name}</td>
+                <td>{s.program}</td>
                 <td>${s.application_fee}</td>
                 <td>{s.student_number}</td>
                 <td>{s.password}</td>
                 <td>{s.progress_name}</td>
+                {a.service_id == '6' ?
+                <td>{s.trace_number}</td>
+                : null}
+                {a.service_id == '6' ?
+                <td>{s.submit_date}</td>
+                : null}
             </tr>
         );
         return (
@@ -57,10 +64,17 @@ class SchoolApplication extends React.Component {
                     <thead>
                         <tr>
                             <th>学校</th>
+                            <th>专业</th>
                             <th>申请费</th>
                             <th>学号</th>
                             <th>密码</th>
                             <th>进度</th>
+                            {a.service_id == '6' ?
+                            <th>追踪号码</th>
+                            : null}
+                            {a.service_id == '6' ?
+                            <th>提交日期</th>
+                            : null}
                         </tr>
                     </thead>
                     <tbody>

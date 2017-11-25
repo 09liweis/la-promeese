@@ -1,6 +1,10 @@
 import React from 'react';
 import $ from 'jquery';
 
+import TextInput from '../elements/TextInput.jsx';
+import Dropdown from '../elements/Dropdown.jsx';
+import Datepicker from '../elements/Datepicker.jsx';
+
 class SchoolApplicationForm extends React.Component {
     constructor(props) {
         super(props);
@@ -32,7 +36,7 @@ class SchoolApplicationForm extends React.Component {
         this.getSubServices(application.service_id);
         this.getProgresses(application.service_id);
         if (typeof schools != 'undefined' && schools != '') {
-            const applications = JSON.parse(schools);
+            const applications = schools;
             this.setState({
                 applications: applications
             });
@@ -127,13 +131,12 @@ class SchoolApplicationForm extends React.Component {
     getNewSchoolApplication() {
         return  {
             sub_service_id: '',
-            sub_service_name: '',
             application_fee: '',
+            program: '',
             student_number: '',
             account: '',
             password: '',
             progress_id: '',
-            progress_name: '',
             trace_number: '',
             submit_date: ''
         };
@@ -150,12 +153,6 @@ class SchoolApplicationForm extends React.Component {
         const v = e.target.value;
         var applications = this.state.applications;
         applications[i][p] = v;
-        if (p == 'sub_service_id') {
-            applications[i].sub_service_name = this.getSubServiceName(v);
-        }
-        if (p == 'progress_id') {
-            applications[i].progress_name = this.getProgressName(v);
-        }
         this.setState({
             applications: applications
         });
@@ -185,8 +182,8 @@ class SchoolApplicationForm extends React.Component {
     }
     handleSubmit(e) {
         e.preventDefault();
-        var application = this.state.application;
-        application.schools = JSON.stringify(this.state.applications);
+        let {application, applications} = this.state;
+        application.schools = JSON.stringify(applications);
         const _this = this;
         $.ajax({
             url: '/admin/controllers/schoolApplication.php?action=upsertApplication',
@@ -221,73 +218,32 @@ class SchoolApplicationForm extends React.Component {
         const employeesMaterial = this.state.employeesMaterial.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
         );
-        const applications = this.state.applications.map((a, i) =>
+        const apps = (typeof this.state.applications == 'string') ? [] : this.state.applications;
+        const applications = apps.map((a, i) =>
             <div key={i} className="columns card is-multiline">
                 <div className="column">
-                <div className="field">
-                    <label className="label">学校</label>
-                    <div className="control">
-                        <div className="select">
-                            <select name="sub_service_id" value={a.sub_service_id} onChange={_this.handleSchoolChange.bind(_this, a, i)}>
-                                <option>Please Select</option>
-                                {subServices}
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div className="field">
-                    <label className="label">申请费</label>
-                    <div className="control">
-                        <input className="input" type="text" name="application_fee" value={a.application_fee} onChange={_this.handleSchoolChange.bind(_this, a, i)} />
-                    </div>
-                </div>
+                    <Dropdown title={"学校"} name={"sub_service_id"} value={a.sub_service_id} handleChange={_this.handleSchoolChange.bind(_this, a, i)} options={subServices} />
+                    <TextInput title={"专业"} name={"program"} value={a.program} handleChange={_this.handleSchoolChange.bind(_this, a, i)} />
+                    <TextInput title={"申请费"} name={"application_fee"} value={a.application_fee} handleChange={_this.handleSchoolChange.bind(_this, a, i)} />
                 </div>
                 {(application.service_id != '5') ?
                 <div className="column">
-                <div className="field">
-                    <label className="label">跟踪号码</label>
-                    <div className="control">
-                        <input className="input" type="text" name="trace_number" value={a.trace_number} onChange={_this.handleSchoolChange.bind(_this, a, i)} />
+                    <TextInput title={"追踪号码"} name={"trace_number"} value={a.trace_number} handleChange={_this.handleSchoolChange.bind(_this, a, i)} />
+                    <div className="field">
+                        <label className="label">递交时间</label>
+                        <div className="control">
+                            <Datepicker title={"递交时间"} name={"submit_date"} value={a.submit_date} handleChange={_this.handleSchoolChange.bind(_this, a, i)} />
+                        </div>
                     </div>
-                </div>
-                <div className="field">
-                    <label className="label">递交时间</label>
-                    <div className="control">
-                        <input className="input" type="date" name="submit_date" value={a.submit_date} onChange={_this.handleSchoolChange.bind(_this, a, i)} />
-                    </div>
-                </div>
                 </div>
                 :null}
                 <div className="column">
-                <div className="field">
-                    <label className="label">学号</label>
-                    <div className="control">
-                        <input className="input" type="text" name="student_number" value={a.student_number} onChange={_this.handleSchoolChange.bind(_this, a, i)} />
-                    </div>
+                    <TextInput title={"学号"} name={"student_number"} value={a.student_number} handleChange={_this.handleSchoolChange.bind(_this, a, i)} />
+                    <TextInput title={"账号"} name={"account"} value={a.account} handleChange={_this.handleSchoolChange.bind(_this, a, i)} />
+                    <TextInput title={"密码"} name={"password"} value={a.password} handleChange={_this.handleSchoolChange.bind(_this, a, i)} />
                 </div>
-                <div className="field">
-                    <label className="label">账号</label>
-                    <div className="control">
-                        <input className="input" type="text" name="account" value={a.account} onChange={_this.handleSchoolChange.bind(_this, a, i)} />
-                    </div>
-                </div>
-                <div className="field">
-                    <label className="label">密码</label>
-                    <div className="control">
-                        <input className="input" type="text" name="password" value={a.password} onChange={_this.handleSchoolChange.bind(_this, a, i)} />
-                    </div>
-                </div>
-                </div>
-                <div className="field column">
-                    <label className="label">进度</label>
-                    <div className="control">
-                        <div className="select">
-                            <select name="progress_id" value={a.progress_id} onChange={_this.handleSchoolChange.bind(_this, a, i)}>
-                                <option>Please Select</option>
-                                {progresses}
-                            </select>
-                        </div>
-                    </div>
+                <div className="column">
+                    <Dropdown title={"进度"} name={"progress_id"} value={a.progress_id} handleChange={_this.handleSchoolChange.bind(_this, a, i)} options={progresses} />
                 </div>
                 <div className="column">
                     <a className="button is-primary" onClick={_this.handleSchoolRemove.bind(_this, a, i)}>Remove</a>

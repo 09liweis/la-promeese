@@ -1,4 +1,5 @@
 <?php
+require 'Model.php';
 
 class SchoolApplication {
     private $db;
@@ -18,7 +19,6 @@ class SchoolApplication {
                 pga.service_fee AS service_fee,
                 pga.commission_progress_id AS commission_progress_id,
                 cp.name AS commission_progress_name,
-                pga.schools AS schools,
                 pga.student_id AS student_id,
                 pga.employee_id AS employee_id,
                 e.name AS employee_name,
@@ -42,28 +42,25 @@ class SchoolApplication {
         $schools = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         return $schools;
     }
-    public function upsert($school) {
+    public function upsert($application, $schools) {
         session_start();
-        $school['last_modified_id'] = $_SESSION['id'];
-        $columns = '';
-        $values = '';
-        $updates = '';
-        foreach ($school as $column => $value) {
-            $columns .= $column . ',';
-            $values .= ':' . $column . ',';
-            if ($column != 'id') {
-                $updates .= $column . '= VALUES(`' . $column . '`),';
+        $application['last_modified_id'] = $_SESSION['id'];
+        $application['updated_at'] = date('Y-m-d H:i:s');
+        $application['created_at'] = date('Y-m-d H:i:s');
+        $model = new Model($this->db);
+        $id = $model->upsert('post_graduate_applications', $application);
+        if ($application['id']) {
+            $this->removeSchoolApplication($application['id']);
+        }
+        $post_graduate_id = $application['id'] ? $application['id'] : $id;
+        if (count($schools) > 0) {
+            foreach ($schools as $school) {
+                $school['post_graduate_application_id'] = $post_graduate_id;
+                unset($school['sub_service_name']);
+                unset($school['progress_name']);
+                $this->upsertSchoolApplication($school);
             }
         }
-        $columns = rtrim($columns, ',');
-        $values = rtrim($values, ',');
-        $updates = rtrim($updates, ',');
-        $sql = 'INSERT INTO post_graduate_applications (' . $columns . ') VALUES (' . $values . ') ON DUPLICATE KEY UPDATE ' . $updates . ';';
-        $pdostmt = $this->db->prepare($sql);
-        foreach ($school as $c => $v) {
-            $pdostmt->bindValue(':' . $c, $v, PDO::PARAM_INT);
-        }
-        $pdostmt->execute();
     }
     
     public function remove($id) {
@@ -71,9 +68,47 @@ class SchoolApplication {
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
         $pdostmt->execute();
+        $this->removeSchoolApplication($id);
     }
     public function removeByStudent($id) {
         $sql = 'DELETE FROM post_graduate_applications WHERE student_id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $pdostmt->execute();
+    }
+    public function getSchoolApplications($id) {
+        $sql = 'SELECT 
+                sa.post_graduate_application_id AS post_graduate_application_id,
+                sa.sub_service_id AS sub_service_id,
+                ss.name AS sub_service_name,
+                sa.program AS program,
+                sa.application_fee AS application_fee,
+                sa.student_number AS student_number,
+                sa.account AS account,
+                sa.password AS password,
+                sa.progress_id AS progress_id,
+                p.name AS progress_name,
+                sa.trace_number AS trace_number,
+                sa.submit_date AS submit_date,
+                sa.trace_number AS trace_number,
+                sa.submit_date AS submit_date
+                FROM 
+                school_applications sa
+                LEFT JOIN sub_services ss ON sa.sub_service_id = ss.id
+                LEFT JOIN progresses p ON sa.progress_id = p.id
+                WHERE sa.post_graduate_application_id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $id);
+        $pdostmt->execute();
+        $schoolApps = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
+        return $schoolApps;
+    }
+    public function upsertSchoolApplication($app) {
+        $model = new Model($this->db);
+        $model->upsert('school_applications', $app);
+    }
+    public function removeSchoolApplication($id) {
+        $sql = 'DELETE FROM school_applications WHERE post_graduate_application_id = :id';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
         $pdostmt->execute();
