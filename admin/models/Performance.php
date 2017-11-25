@@ -21,10 +21,6 @@ class Performance {
                 p.progress_id AS progress_id,
                 p.commission_progress_id AS commission_progress_id,
                 cp.name AS commission_progress_name,
-                p.employee_id AS employee_id,
-                e.name AS employee_name,
-                p.employee_material_id AS employee_material_id,
-                em.name AS employee_material_name,
                 p.remark AS remark,
                 p.last_modified_id AS last_modified_id,
                 ee.name AS last_modified_name,
@@ -35,8 +31,6 @@ class Performance {
                 LEFT JOIN sub_services ss ON p.sub_service_id = ss.id
                 LEFT JOIN progresses ps ON p.progress_id = ps.id
                 LEFT JOIN commission_progresses cp ON p.commission_progress_id = cp.id
-                LEFT JOIN employees e ON p.employee_id = e.id
-                LEFT JOIN employees_material em ON p.employee_material_id = em.id
                 LEFT JOIN employees ee ON p.last_modified_id = ee.id
                 WHERE p.student_id = :student_id
                 ORDER BY p.id ASC';
