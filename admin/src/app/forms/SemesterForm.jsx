@@ -137,12 +137,12 @@ class SemesterForm extends Component {
     }
     render() {
         const _this = this;
-        const {semester, semesterOptions, semesters} = this.state;
+        const {semester, semesterOptions, semesters, serviceId} = this.state;
         const {progresses} = this.props;
         const options = semesterOptions.map((s) => 
             <option key={s} value={s}>{s}</option>
         );
-        const show = (semester.progress_id == '32' || semester.progress_id == '30') ? 'column' : 'column hidden';
+        const show = (semester.progress_id == '46' || semester.progress_id == '48') ? 'column' : 'column hidden';
         const commissionProgresses = this.state.commissionProgresses.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
         );
@@ -155,7 +155,9 @@ class SemesterForm extends Component {
                 <div className="column">
                     学费: {s.fee}<br/>
                     进度: {s.progress_name}<br/>
-                    佣金申报: {s.commission_progress_name}
+                    {serviceId == '2' ? 
+                    <span>佣金申报: {s.commission_progress_name}</span>
+                    : null}
                 </div>
                 <div className="column">
                     备注: {s.remark}
@@ -173,7 +175,6 @@ class SemesterForm extends Component {
         return (
             <div className="card">
                 {list}
-                <a className="button is-primary" onClick={this.upsert}>添加学期</a>
                 <div className="columns">
                     <div className="column">
                         <Dropdown title={'Semester'} name={'semester'} value={semester.semester} handleChange={this.handleChange} options={options}  />
@@ -197,6 +198,7 @@ class SemesterForm extends Component {
                         <TextInput title={"备注"} name={"remark"} value={semester.remark} handleChange={this.handleChange} />
                     </div>
                 </div>
+                <a className="button is-primary" onClick={this.upsert}>添加学期</a>
             </div>
         );
     }

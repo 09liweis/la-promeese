@@ -133,7 +133,7 @@ class Performances extends React.Component {
                     :null}
                 </div>
                 {p.semesters.length != 0 ?
-                <Semesters semesters={p.semesters} />
+                <Semesters semesters={p.semesters} serviceId={p.service_id} />
                 :null}
             </div>
         );

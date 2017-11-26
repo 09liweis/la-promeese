@@ -3,6 +3,7 @@ import {getDateWithoutTime} from '../services/functions.js';
 
 class Semesters extends React.Component {
     render() {
+        const {serviceId} = this.props;
         const semesters = this.props.semesters.map((s) => 
             <div key={s.id} className="columns">
                 <div className="column">
@@ -12,7 +13,9 @@ class Semesters extends React.Component {
                 <div className="column">
                     学费: {s.fee}<br/>
                     进度: {s.progress_name}<br/>
-                    佣金申报: {s.commission_progress_name}
+                    {serviceId == '2' ? 
+                    <span>佣金申报: {s.commission_progress_name}</span>
+                    : null}
                 </div>
                 <div className="column">
                     备注: {s.remark}
