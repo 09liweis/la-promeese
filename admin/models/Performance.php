@@ -159,4 +159,14 @@ class Performance {
         $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
         $pdostmt->execute();
     }
+    public function getLatestSemester($id) {
+        $sql = 'SELECT s.progress_id AS progress_id, p.name AS progress_name 
+                FROM semesters s LEFT JOIN progresses p ON s.progress_id = p.id
+                WHERE performance_id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $pdostmt->execute();
+        $semester = $pdostmt->fetch(PDO::FETCH_ASSOC);
+        return $semester;
+    }
 }

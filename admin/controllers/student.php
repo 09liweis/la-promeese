@@ -17,6 +17,14 @@ if ($_GET['action'] == 'getStudents') {
     $_GET['service'] = urldecode(($_GET['service']));
     $students = $sRepo->students($_GET, 25);
     
+    $pRepo = new Performance(Database::dbConnect());
+    foreach($students as &$student) {
+        $latestSemester = $pRepo->getLatestSemester($student['performance_id']);
+        if ($latestSemester) {
+            $student['school_progress_name'] = $latestSemester['progress_name'];
+        }
+    }
+    
     $total = count($sRepo->students($_GET));
     $result = array(
         'data' => $students,

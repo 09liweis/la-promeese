@@ -31,6 +31,7 @@ class Student {
                 s.updated_at AS updated_at,
                 e.name AS employee_name,
                 em.name AS employee_material_name,
+                per.performance_id AS performance_id,
                 ser.name AS school,
                 pro.name AS school_progress_name,
                 ser3.name AS visa,
@@ -43,7 +44,7 @@ class Student {
             $sql .= ' LEFT JOIN';   
         }
         $sql .=    '(
-                    SELECT student_id, service_id, progress_id, p.employee_id, p.employee_material_id
+                    SELECT p.id AS performance_id, student_id, service_id, progress_id, p.employee_id, p.employee_material_id
                     FROM performances p JOIN students ON p.student_id = students.id
                     WHERE 1';
         if (in_array($schoolServiceId, array(1,2,3)) && $schoolServiceId != '') {
