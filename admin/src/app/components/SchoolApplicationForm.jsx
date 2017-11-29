@@ -132,6 +132,7 @@ class SchoolApplicationForm extends React.Component {
         return  {
             sub_service_id: '',
             application_fee: '',
+            campus: '',
             program: '',
             student_number: '',
             account: '',
@@ -223,6 +224,7 @@ class SchoolApplicationForm extends React.Component {
             <div key={i} className="columns card is-multiline">
                 <div className="column">
                     <Dropdown title={"学校"} name={"sub_service_id"} value={a.sub_service_id} handleChange={_this.handleSchoolChange.bind(_this, a, i)} options={subServices} />
+                    <TextInput title={"校区"} name={"campus"} value={a.campus} handleChange={_this.handleSchoolChange.bind(_this, a, i)} />
                     <TextInput title={"专业"} name={"program"} value={a.program} handleChange={_this.handleSchoolChange.bind(_this, a, i)} />
                     <TextInput title={"申请费"} name={"application_fee"} value={a.application_fee} handleChange={_this.handleSchoolChange.bind(_this, a, i)} />
                 </div>

@@ -81,6 +81,7 @@ class SchoolApplication {
                 sa.post_graduate_application_id AS post_graduate_application_id,
                 sa.sub_service_id AS sub_service_id,
                 ss.name AS sub_service_name,
+                sa.campus AS campus,
                 sa.program AS program,
                 sa.application_fee AS application_fee,
                 sa.student_number AS student_number,
