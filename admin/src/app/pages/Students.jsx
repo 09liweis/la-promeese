@@ -203,8 +203,8 @@ class Home extends React.Component {
         const students = this.state.students;
         let passColor = '';
         const list = students.map((s) => {
-            const visaColor = getDateColor(s.visa_date, 'visa');
-            const passColor = getDateColor(s.passport_date, 'passport');
+            const visaColor = getDateColor(s.visa_date, 'visa', s.visa_progress_name);
+            const passColor = getDateColor(s.passport_date, 'passport', s.visa_progress_name);
             const _this = this;
             return (
                 <tr key={s.id}>

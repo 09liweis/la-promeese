@@ -46,6 +46,9 @@ body {
 .has-text-brown {
     color: #c1a227 !important;
 }
+.has-text-purple {
+    color: purple !important;
+}
 .hidden {
     display: none;
 }

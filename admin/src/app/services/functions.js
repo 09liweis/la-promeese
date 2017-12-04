@@ -151,32 +151,28 @@ export function getSearchLink(search) {
     return query;
 }
 
-export function getDateColor(date, type) {
+export function getDateColor(date, type, progress) {
+    if (date == '0000-00-00') {
+        return 'has-text-black';
+    }
+    let color = '';
     if (type == 'visa') {
-        let visaColor = '';
         let visaDiffDate = getDateDifferent(date);
         if (date > getCurrentDate()) {
-            visaColor = (visaDiffDate < 90) ? 'has-text-success' : '';
+            color = (visaDiffDate < 90) ? 'has-text-brown' : '';
         } else {
-            visaColor = 'has-text-brown';
+            color = (visaDiffDate < 90) ? 'has-text-purple' : '';
         }
-        return visaColor;   
     } else {
-        let passColor = '';
         let passDiffDate = getDateDifferent(date);
         if (date > getCurrentDate()) {
-            if (passDiffDate <= 180) {
-                passColor = 'has-text-brown';
-            }
-            if (passDiffDate <=  30) {
-                passColor = 'has-text-danger';
-            }
-            if (passDiffDate > 180) {
-                passColor = '';
-            }
+            color = (passDiffDate < 90) ? 'has-text-brown' : '';
         } else {
-            passColor = 'has-text-danger';
+            color = (passDiffDate < 90) ? 'has-text-purple' : '';
         }
-        return passColor;
     }
+    if (progress == '申请递交') {
+        color = 'has-text-success';
+    }
+    return color;
 }
