@@ -34,7 +34,7 @@ export default class Api {
     getEmployees() {
         return this.base + this.employees;
     }
-    upsertEmployee() {
+    getUpsertEmployee() {
         return this.base + this.upsertEmployee;
     }
     removeEmployee() {

@@ -77,7 +77,7 @@ class Employees extends React.Component {
         e.preventDefault();
         const _this = this;
         $.ajax({
-            url: api.upserEmployee(),
+            url: api.getUpsertEmployee(),
             data: _this.state.employee,
             method: 'POST',
             success(res) {
@@ -102,7 +102,7 @@ class Employees extends React.Component {
                     level = '三级';
                     break;
                 default:
-                    // code
+                    level = '合作方';
             }
             return (
                 <tr key={i}>
