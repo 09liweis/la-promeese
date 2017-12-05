@@ -54,7 +54,7 @@ class Employees extends React.Component {
     remove(em) {
         const _this = this;
         $.ajax({
-            url: api.removeEmployee(),
+            url: api.getRemoveEmployee(),
             data: {id: em.id},
             method: 'POST',
             success(res) {
