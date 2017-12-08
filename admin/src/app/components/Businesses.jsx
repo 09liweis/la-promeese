@@ -105,10 +105,6 @@ class Businesses extends React.Component {
     render() {
         const _this = this;
         const businesses = this.state.businesses.map((b) => {
-            let date = getNewDateDes(b.service_id);
-            if (b.sub_service_id != 0) {
-                date = getNewDateDes(b.sub_service_id);
-            }
             return (
                 <div key={b.id} className="columns is-multiline card">
                     <div className="column">
@@ -132,7 +128,7 @@ class Businesses extends React.Component {
                     <div className="column">
                         <p>递交时间: {b.submit_date}</p>
                         <p>进度: {b.progress_name}</p>
-                        <p>{date}: {b.new_date}</p>
+                        <p>{b.sub_service_id != '0' ? getNewDateDes(b.sub_service_id) : getNewDateDes(b.service_id)}: {b.new_date}</p>
                     </div>
                     <div className="column">
                         <p>责任客服: {b.employee_name}</p>

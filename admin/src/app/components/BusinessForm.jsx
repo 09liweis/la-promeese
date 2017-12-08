@@ -138,10 +138,6 @@ class BusinessForm extends React.Component {
         const employeesMaterial = this.state.employeesMaterial.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
         );
-        var newDateDes = getNewDateDes(business.service_id);
-        if (business.sub_service_id != '0') {
-            newDateDes = getNewDateDes(business.sub_service_id);   
-        }
         return (
             <form className="columns is-multiline" autoComplete="off" onSubmit={this.handleSubmit}>
                 <div className="column is-2">
@@ -206,7 +202,7 @@ class BusinessForm extends React.Component {
                     </div>
                     <Dropdown title={'进度'} name={'progress_id'} value={business.progress_id} handleChange={this.handleChange} options={progresses} />
                     <div className="field">
-                        <label className="label">{getNewDateDes(business.service_id)}</label>
+                        <label className="label">{business.sub_service_id != '0' ? getNewDateDes(business.sub_service_id) : getNewDateDes(business.service_id)}</label>
                         <div className="control">
                             <Datepicker name={"new_date"} value={business.new_date} handleChange={this.handleChange} />
                         </div>
