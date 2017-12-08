@@ -73,6 +73,10 @@ export function getNewDateDes(id) {
             case '74':
                 newDateDes = '掉档信出信时间';
                 break;
+            case '10':
+            case '11':
+                newDateDes = 'Offer获得日期';
+                break;
             default:
                 newDateDes = '获批时间至';
         }

@@ -170,12 +170,14 @@ class BusinessForm extends React.Component {
                             <input className="input" type="text" name="service_fee" value={business.service_fee} onChange={this.handleChange} />
                         </div>
                     </div>
+                    {(business.service_id != '10' || business.service_id != '11') ?
                     <div className="field">
                         <label className="label">邮寄费</label>
                         <div className="control">
                             <input className="input" type="text" name="post_fee" value={business.post_fee} onChange={this.handleChange} />
                         </div>
                     </div>
+                    :null}
                 </div>
                 {checkNeedExtraVisa(business.sub_service_id) ?
                 <div className="column is-2">
@@ -204,7 +206,7 @@ class BusinessForm extends React.Component {
                     </div>
                     <Dropdown title={'进度'} name={'progress_id'} value={business.progress_id} handleChange={this.handleChange} options={progresses} />
                     <div className="field">
-                        <label className="label">{newDateDes}</label>
+                        <label className="label">{getNewDateDes(business.service_id)}</label>
                         <div className="control">
                             <Datepicker name={"new_date"} value={business.new_date} handleChange={this.handleChange} />
                         </div>
