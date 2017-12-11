@@ -78,7 +78,7 @@ export function getNewDateDes(id) {
                 break;
             case '调档':
             case '74':
-                newDateDes = '掉档信出信时间';
+                newDateDes = '调档信出信时间';
                 break;
             case '10':
             case '11':
