@@ -54,9 +54,15 @@ export function getNewDateDes(id) {
             case '旅游签':
             case '61':
             case '快速通道+CEC':
+            case '86':
+            case '快速通道+联邦技术移民':
             case '62':
             case '63':
             case '64':
+            case '66':
+            case '安省省提名(硕士博士)':
+            case '68':
+            case '安省省提名(快速通道加分)':
                 newDateDes = '准签信出信时间';
                 break;
             case '76':
@@ -86,8 +92,8 @@ export function getNewDateDes(id) {
 }
 
 export function checkNeedExtraVisa(id) {
-    const subServices = ['53', '54', '55', '76', '61'];
-    return subServices.indexOf(id) != -1;
+    const subServices = ['53', '54', '55', '76', '61', '66', '67', '68', '86'];
+    return subServices.indexOf(id) != -1 ? 'column is-2' : 'hidden column is-2';
 }
 
 export function getExtraVisaDes(id) {
@@ -104,7 +110,15 @@ export function getExtraVisaDes(id) {
             break;
         case '61':
         case '快速通道+CEC':
+        case '86':
+        case '快速通道+联邦技术移民':
             des = '收到邀请时间';
+            break;
+        case '66':
+        case '67':
+        case '68':
+        case '安省省提名(硕士博士)':
+            des = '省提名通过时间';
             break;
         default:
             des = '获批时间';
@@ -168,6 +182,9 @@ export function getDateColor(date, type, progress) {
         } else {
             color = (visaDiffDate < 90) ? 'has-text-purple' : '';
         }
+        if (progress == '申请递交') {
+            color = 'has-text-success';
+        }
     } else {
         let passDiffDate = getDateDifferent(date);
         if (date > getCurrentDate()) {
@@ -175,9 +192,6 @@ export function getDateColor(date, type, progress) {
         } else {
             color = (passDiffDate < 90) ? 'has-text-purple' : '';
         }
-    }
-    if (progress == '申请递交') {
-        color = 'has-text-success';
     }
     return color;
 }

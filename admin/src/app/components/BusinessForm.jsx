@@ -175,8 +175,7 @@ class BusinessForm extends React.Component {
                     </div>
                     :null}
                 </div>
-                {checkNeedExtraVisa(business.sub_service_id) ?
-                <div className="column is-2">
+                <div className={checkNeedExtraVisa(business.sub_service_id)}>
                     <div className="field">
                         <label className="label">递交时间</label>
                         <div className="control">
@@ -192,7 +191,6 @@ class BusinessForm extends React.Component {
                         </div>
                     </div>
                 </div>
-                :null}
                 <div className="column is-2">
                     <div className="field">
                         <label className="label">递交时间</label>
