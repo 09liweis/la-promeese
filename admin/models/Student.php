@@ -120,6 +120,7 @@ class Student {
                 c.name AS city_name,
                 s.office_id AS office_id,
                 o.name AS office_name,
+                s.employee_id AS employee_id,
                 e.name AS employee_name,
                 s.remark AS remark
                 FROM 
