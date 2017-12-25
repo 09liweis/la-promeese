@@ -31,7 +31,7 @@ class App extends React.Component {
           _this.setState({
             loading: false
           });
-        }, 2000);
+        }, 500);
       }
     });
   }

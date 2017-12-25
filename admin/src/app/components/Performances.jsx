@@ -55,7 +55,6 @@ class Performances extends React.Component {
             school_start_date: '',
             fee: '',
             tuition: '',
-            progress_id: '',
             commission_progress_id: '',
             employee_id: '',
             employee_material_id: '',

@@ -18,6 +18,7 @@ class Student {
             }
             $offset = $page * $limit;
         }
+        $schoolServiceId = $search['school_service_id'];
         $schoolProgressId = $search['school_progress_id'];
         
         $sql = 'SELECT 
@@ -30,20 +31,78 @@ class Student {
                 s.updated_at AS updated_at,
                 e.name AS employee_name,
                 em.name AS employee_material_name,
-                s.service_id AS service_id,
-                ss.name AS service_name,
-                s.service_fee AS service_fee,
-                s.schools AS schools,
-                s.school_progress_id AS school_progress_id,
-                p.name AS school_progress_name,
-                p2.name AS visa_progress_name
+                per.performance_id AS performance_id,
+                ser.name AS school,
+                pro.name AS school_progress_name,
+                ser3.name AS visa,
+                pro3.name AS visa_progress_name
                 FROM 
-                students s
+                students s';
+        if (in_array($schoolServiceId, array(1,2,3)) && ($schoolServiceId != '' || $schoolProgressId != '')) {
+            $sql .= ' JOIN';
+        } else {
+            $sql .= ' LEFT JOIN';   
+        }
+        $sql .=    '(
+                    SELECT p.id AS performance_id, student_id, service_id, progress_id, p.employee_id, p.employee_material_id
+                    FROM performances p JOIN students ON p.student_id = students.id
+                    WHERE 1';
+        if (in_array($schoolServiceId, array(1,2,3)) && $schoolServiceId != '') {
+            $sql .= ' AND p.service_id = :school_service_id';
+        }
+        if ($schoolProgressId != '') {
+            $sql .= ' AND p.progress_id = :school_progress_id';
+        }
+        $sql .=     ' GROUP BY p.student_id
+                    ORDER BY p.updated_at
+                ) per ON per.student_id = s.id
+                LEFT JOIN services ser ON per.service_id = ser.id
+                LEFT JOIN progresses pro ON per.progress_id = pro.id';
+        if (in_array($schoolServiceId, array(4,10)) && ($schoolServiceId != '' || $schoolProgressId != '')) {
+            $sql .= ' JOIN';
+        } else {
+            $sql .= ' LEFT JOIN';   
+        }
+        $sql .= '(
+                    SELECT student_id, service_id, progress_id, b.employee_id, b.employee_material_id
+                    FROM businesses b JOIN students ON b.student_id = students.id
+                    WHERE b.service_id in (4, 10)';
+        if (in_array($schoolServiceId, array(4,10)) && $schoolServiceId != '') {
+            $sql .= ' AND b.service_id = :school_service_id';
+        }
+        if ($schoolProgressId != '') {
+            $sql .= ' AND b.progress_id = :school_progress_id';
+        }
+        $sql .=     ' GROUP BY b.student_id
+                    ORDER BY b.updated_at
+                ) school ON school.student_id = s.id
+                LEFT JOIN services ser2 ON school.service_id = ser2.id
+                LEFT JOIN progresses pro2 ON school.progress_id = pro2.id';
+                
+        if ($search['visa_service_id'] != '' || $search['visa_progress_id'] != '') {
+            $sql .= ' JOIN';
+        } else {
+            $sql .= ' LEFT JOIN';   
+        }
+        $sql .=     '(
+                    SELECT student_id, service_id, progress_id, b.employee_id, b.employee_material_id
+                    FROM businesses b JOIN students ON b.student_id = students.id
+                    WHERE b.service_id in (7,8,9)';
+        if ($search['visa_service_id'] != '') {
+            $sql .= ' AND b.service_id = :visa_service_id';
+        }
+        if ($search['visa_progress_id'] != '') {
+            $sql .= ' AND b.progress_id = :visa_progress_id';
+        }
+        $sql .=     ' GROUP BY b.student_id
+                    ORDER BY b.updated_at
+                ) visa ON visa.student_id = s.id
+                LEFT JOIN services ser3 ON visa.service_id = ser3.id
+                LEFT JOIN progresses pro3 ON visa.progress_id = pro3.id
                 LEFT JOIN employees e ON s.employee_id = e.id
                 LEFT JOIN employees_material em ON s.employee_material_id = em.id
-                LEFT JOIN services ss ON s.service_id = ss.id
-                LEFT JOIN progresses p ON s.school_progress_id = p.id
-                LEFT JOIN progresses p2 ON s.visa_progress_id = p2.id';
+                LEFT JOIN cities c ON c.id = s.city_id
+                WHERE 1';
         if ($search['name'] != '') {
             $sql .= ' AND (s.name LIKE :name OR c.name LIKE :name OR s.visa_info LIKE :name OR s.status LIKE :name)';
         }
@@ -78,7 +137,9 @@ class Student {
         if ($search['name'] != '') {
             $pdostmt->bindValue(':name', '%'.$search['name'].'%', PDO::PARAM_STR);
         }
-
+        if ($schoolServiceId != '') {
+            $pdostmt->bindValue(':school_service_id', $schoolServiceId, PDO::PARAM_INT);
+        }
         if ($schoolProgressId != '') {
             $pdostmt->bindValue(':school_progress_id', $schoolProgressId, PDO::PARAM_INT);
         }
@@ -156,54 +217,43 @@ class Student {
         $pdostmt->execute();
     }
     public function updateStudent($student) {
-        // $employee_id = $student['employee_id'];
-        // $employee_material_id = $student['employee_material_id'];
+        $employee_id = $student['employee_id'];
+        $employee_material_id = $student['employee_material_id'];
         $student_id = $student['student_id'];
         $service_id = $student['service_id'];
         $progress_id = $student['progress_id'];
-        $schools = $student['schools'];
-        $service_fee = $student['service_fee'];
         
-        // $sRepo = new Service(Database::dbConnect());
-        // $service = $sRepo->getService($service_id);
+        $sRepo = new Service(Database::dbConnect());
+        $service = $sRepo->getService($service_id);
         
-        // $pRepo = new Progress(Database::dbConnect());
-        // $progress = $pRepo->getProgress($progress_id);
+        $pRepo = new Progress(Database::dbConnect());
+        $progress = $pRepo->getProgress($progress_id);
 
         $sql = 'UPDATE students SET ';
-        if (in_array($service_id, array('1', '2', '3'))) {
-            $sql .= 'school_progress_id = :progress_id,';    
+        if (in_array($service_id, array('1', '2', '3', '4', '5', '6', '10', '11'))) {
+            $sql .= 'school_service_id = :service_id,
+                     school_progress_id = :progress_id,';    
         }
         if (in_array($service_id, array('7', '8', '9'))) {
-            $sql .= 'visa_progress_id = :progress_id,';
-        }
-        if ($service_fee) {
-            $sql .= 'service_fee = :service_fee,';
+            $sql .= 'visa_service_id = :service_id,
+                     visa_progress_id = :progress_id,';
         }
         
-        // if ($service_id == '7' && $progress_id == '11') {
-        //     $sql .= 'visa_date = :visa_date,';
-        // }
-        
-        if ($schools) {
-            $sql .= 'schools = :schools,';
+        if ($service_id == '7' && $progress_id == '11') {
+            $sql .= 'visa_date = :visa_date,';
         }
-        $sql .= 'service_id = :service_id WHERE id = :id';
+        $sql .= 'employee_id = :employee_id,
+                employee_material_id = :employee_material_id
+                WHERE id = :id';
         $pdostmt = $this->db->prepare($sql);
-        // $pdostmt->bindValue(':employee_id', $employee_id, PDO::PARAM_INT);
-        // $pdostmt->bindValue(':employee_material_id', $employee_material_id, PDO::PARAM_INT);
+        $pdostmt->bindValue(':employee_id', $employee_id, PDO::PARAM_INT);
+        $pdostmt->bindValue(':employee_material_id', $employee_material_id, PDO::PARAM_INT);
         
         $pdostmt->bindValue(':service_id', $service_id, PDO::PARAM_INT);
         $pdostmt->bindValue(':progress_id', $progress_id, PDO::PARAM_INT);
         
-        // if ($service_id == '7' && $progress_id == '11') {
-        //     $pdostmt->bindValue(':visa_date', $student['new_date'], PDO::PARAM_STR);
-        // }
-        if ($schools) {
-            $pdostmt->bindValue(':schools', $schools, PDO::PARAM_INT);
-        }
-        if ($service_fee) {
-            $pdostmt->bindValue(':service_fee', $service_fee, PDO::PARAM_INT);
+        if ($service_id == '7' && $progress_id == '11') {
+            $pdostmt->bindValue(':visa_date', $student['new_date'], PDO::PARAM_STR);
         }
         $pdostmt->bindValue(':id', $student_id, PDO::PARAM_INT);
         $pdostmt->execute();
@@ -242,21 +292,33 @@ class Student {
         $p = $pdostmt->fetch(PDO::FETCH_ASSOC);
         return $p;
     }
-    
-    public function allPerformances($id) {
-        $sql = 'SELECT ss.name
-                FROM performances p
-                LEFT JOIN sub_services ss ON p.sub_service_id = ss.id
-                WHERE p.student_id = :id';
+    public function lastestSchool($id) {
+        $sql = 'SELECT p.service_id, s.progress_id, p.updated_at, p.employee_id, p.employee_material_id
+                FROM post_graduate_applications p
+                LEFT JOIN school_applications s ON p.id = s.post_graduate_application_id
+                WHERE p.student_id = :id
+                ORDER BY p.updated_at DESC
+                LIMIT 1';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
         $pdostmt->execute();
-        $ps = $pdostmt->fetchAll(PDO::FETCH_COLUMN);
-        return $ps;
+        $s = $pdostmt->fetch(PDO::FETCH_ASSOC);
+        return $s;
     }
-
+    public function lastestSchoolBusiness($id) {
+        $sql = 'SELECT b.service_id, b.progress_id, b.updated_at, b.employee_id, b.employee_material_id
+                FROM businesses b
+                WHERE b.student_id = :id AND b.service_id in (10, 11)
+                ORDER BY b.updated_at DESC
+                LIMIT 1';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $pdostmt->execute();
+        $b = $pdostmt->fetch(PDO::FETCH_ASSOC);
+        return $b;
+    }
     public function lastestVisa($id) {
-        $sql = 'SELECT service_id, progress_id, employee_id, employee_material_id, new_date, updated_at, service_fee
+        $sql = 'SELECT service_id, progress_id, employee_id, employee_material_id, new_date
                 FROM businesses
                 WHERE student_id = :id AND service_id NOT IN (10, 11)
                 ORDER BY updated_at DESC

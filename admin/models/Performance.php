@@ -17,8 +17,6 @@ class Performance {
                 p.school_start_date,
                 p.fee AS fee,
                 p.tuition AS tuition,
-                ps.name AS progress_name,
-                p.progress_id AS progress_id,
                 p.commission_progress_id AS commission_progress_id,
                 cp.name AS commission_progress_name,
                 p.remark AS remark,
@@ -33,7 +31,6 @@ class Performance {
                 performances p 
                 LEFT JOIN services s ON p.service_id = s.id
                 LEFT JOIN sub_services ss ON p.sub_service_id = ss.id
-                LEFT JOIN progresses ps ON p.progress_id = ps.id
                 LEFT JOIN commission_progresses cp ON p.commission_progress_id = cp.id
                 LEFT JOIN employees e ON p.employee_id = e.id
                 LEFT JOIN employees_material em ON p.employee_material_id = em.id
@@ -162,11 +159,22 @@ class Performance {
     public function getLatestSemester($id) {
         $sql = 'SELECT s.progress_id AS progress_id, p.name AS progress_name 
                 FROM semesters s LEFT JOIN progresses p ON s.progress_id = p.id
-                WHERE performance_id = :id';
+                WHERE performance_id = :id
+                ORDER BY s.updated_at DESC';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
         $pdostmt->execute();
         $semester = $pdostmt->fetch(PDO::FETCH_ASSOC);
         return $semester;
+    }
+    public function performance($id) {
+        $sql = 'SELECT *
+                FROM performances
+                WHERE id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $pdostmt->execute();
+        $p = $pdostmt->fetch(PDO::FETCH_ASSOC);
+        return $p;
     }
 }

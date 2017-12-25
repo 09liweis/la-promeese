@@ -30,8 +30,6 @@ class StudentForm extends React.Component {
                 status: '',
                 phone: '',
                 email: '',
-                service: '',
-                service_fee: '',
                 office_id: '',
                 agency_id: '',
                 remark: ''

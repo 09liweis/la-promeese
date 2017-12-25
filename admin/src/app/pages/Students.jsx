@@ -211,10 +211,11 @@ class Home extends React.Component {
                     <th><Link to={`/admin/student/${s.id}?returnURL=/admin/students?page=${currentPage}${searchQuery}`}>{s.name}</Link></th>
                     <th className={visaColor}>{s.visa_date}</th>
                     <th className={passColor}>{s.passport_date}</th>
+                    <th>{s.service_name}</th>
+                    <th>{s.service_fee}</th>
                     <th>{s.employee_name}</th>
-                    <th>{s.school}</th>
+                    <th>{s.schools}</th>
                     <th><span className={getColor(s.school_progress_name)}>{s.school_progress_name}</span></th>
-                    <th>{s.visa}</th>
                     <th><span className={getColor(s.visa_progress_name)}>{s.visa_progress_name}</span></th>
                     <th>{s.updated_at.substring(0, 10)}</th>
                     {(this.props.user.admin_level == 1) ?
@@ -264,11 +265,12 @@ class Home extends React.Component {
                             <th>姓名</th>
                             <th>签证到期日</th>
                             <th>护照到期日</th>
+                            <th>服务内容</th>
+                            <th>服务金额</th>
                             <th><Dropdown title={'责任客服'} name={'employee_id'} value={this.state.search.employee_id} handleChange={this.handleSearchChange} options={employees} /></th>
-                            <th><Dropdown title={'学校申请'} name={'school_service_id'} value={this.state.search.school_service_id} handleChange={this.handleSearchChange} options={schoolServices} /></th>
-                            <th><Dropdown title={'进度'} name={'school_progress_id'} value={this.state.search.school_progress_id} handleChange={this.handleSearchChange} options={schoolProgresses} /></th>
-                            <th><Dropdown title={'签证移民'} name={'visa_service_id'} value={this.state.search.visa_service_id} handleChange={this.handleSearchChange} options={visas} /></th>
-                            <th><Dropdown title={'进度'} name={'visa_progress_id'} value={this.state.search.visa_progress_id} handleChange={this.handleSearchChange} options={visaProgresses} /></th>
+                            <th>院校申请</th>
+                            <th><Dropdown title={'学校申请进度'} name={'school_progress_id'} value={this.state.search.school_progress_id} handleChange={this.handleSearchChange} options={schoolProgresses} /></th>
+                            <th><Dropdown title={'签证移民进度'} name={'visa_progress_id'} value={this.state.search.visa_progress_id} handleChange={this.handleSearchChange} options={visaProgresses} /></th>
                             <th>更新时间</th>
                             {(this.props.user.admin_level == 1) ?
                             <th>Actions</th>

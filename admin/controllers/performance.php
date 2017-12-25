@@ -7,6 +7,7 @@ require '../models/Student.php';
 header('Content-Type: application/json');
 
 $pRepo = new Performance(Database::dbConnect());
+$sRepo = new Student(Database::dbConnect());
 
 if ($_GET['action'] == 'getPerformances') {
     $performances = $pRepo->performances($_GET['id']);
@@ -18,7 +19,16 @@ if ($_GET['action'] == 'getPerformances') {
 
 if ($_GET['action'] == 'upsertPerformance') {
     $pRepo->upsert($_POST);
-    $sRepo = new Student(Database::dbConnect());
+    
+    $semester = $pRepo->getLatestSemester($_POST['id']);
+    $_POST['progress_id'] = $semester['progress_id'];
+    
+    $allPerformances = $sRepo->allPerformances($_POST['student_id']);
+    if (count($allPerformances)) {
+        $schools = implode(', ', $allPerformances);   
+        $_POST['schools'] = $schools;
+    }
+    
     $sRepo->updateStudent($_POST);
     echo json_encode('ok');
 }
@@ -36,6 +46,14 @@ if ($_GET['action'] == 'semesters') {
 
 if ($_GET['action'] == 'upsertSemester') {
     $pRepo->upsertSemester($_POST);
+    $p = $pRepo->performance($_POST['performance_id']);
+    $_POST['service_id'] = $p['service_id'];
+    $_POST['employee_id'] = $p['employee_id'];
+    $_POST['employee_material_id'] = $p['employee_material_id'];
+    $_POST['student_id'] = $p['student_id'];
+    
+    $sRepo = new Student(Database::dbConnect());
+    $sRepo->updateStudent($_POST);
     echo json_encode('ok');
 }
 if ($_GET['action'] == 'removeSemester') {

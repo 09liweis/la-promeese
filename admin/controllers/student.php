@@ -17,14 +17,6 @@ if ($_GET['action'] == 'getStudents') {
     $_GET['service'] = urldecode(($_GET['service']));
     $students = $sRepo->students($_GET, 25);
     
-    $pRepo = new Performance(Database::dbConnect());
-    foreach($students as &$student) {
-        $latestSemester = $pRepo->getLatestSemester($student['performance_id']);
-        if ($latestSemester) {
-            $student['school_progress_name'] = $latestSemester['progress_name'];
-        }
-    }
-    
     $total = count($sRepo->students($_GET));
     $result = array(
         'data' => $students,
@@ -35,8 +27,6 @@ if ($_GET['action'] == 'getStudents') {
             'employee_id' => isset($_GET['employee_id']) ? $_GET['employee_id'] : '',
             'employee_material_id' => isset($_GET['employee_material_id']) ? $_GET['employee_material_id'] : '',
             'service_id' => isset($_GET['service_id']) ? $_GET['service_id'] : '',
-            'performance_service_id' => isset($_GET['performance_service_id']) ? $_GET['performance_service_id'] : '',
-            'performance_progress_id' => isset($_GET['performance_progress_id']) ? $_GET['performance_progress_id'] : '',
             'school_service_id' => isset($_GET['school_service_id']) ? $_GET['school_service_id'] : '',
             'school_progress_id' => isset($_GET['school_progress_id']) ? $_GET['school_progress_id'] : '',
             'visa_service_id' => isset($_GET['visa_service_id']) ? $_GET['visa_service_id'] : '',
@@ -87,5 +77,35 @@ if ($_GET['action'] == 'deleteStudent') {
         echo json_encode('ok');
     } else {
         echo json_encode('fail');
+    }
+}
+
+//controllers/student.php?action=setLastestToStudent
+if ($_GET['action'] == 'setLastestToStudent') {
+    $students = $sRepo->all();
+    foreach($students as $s) {
+        $sId = $s['id'];
+        $p = $sRepo->lastestPerformance($sId);
+        $school = $p;
+        
+        $allPerformances = $sRepo->allPerformances($sId);
+        if (count($allPerformances)) {
+            $schools = implode(', ', $allPerformances);   
+        }
+        
+        $v = $sRepo->lastestVisa($sId);
+        if ($school) {
+            $school['schools'] = $schools;
+            $school['student_id'] = $sId;
+            $sRepo->updateStudent($school);
+        }
+        if ($v) {
+            if ($v['updated_at'] < $school['updated_at']) {
+                $v['service_id'] = $school['service_id'];
+            }
+            $v['student_id'] = $sId;
+            $sRepo->updateStudent($v);   
+        }
+
     }
 }
