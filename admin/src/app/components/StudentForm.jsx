@@ -15,6 +15,7 @@ class StudentForm extends React.Component {
             cities: [],
             offices: [],
             agencies: [],
+            employees: [],
             student: {
                 id: 0,
                 name: '',
@@ -32,7 +33,8 @@ class StudentForm extends React.Component {
                 email: '',
                 office_id: '',
                 agency_id: '',
-                remark: ''
+                remark: '',
+                employee_id: ''
             }
         };
         this.getProvinces = this.getProvinces.bind(this);
@@ -60,6 +62,15 @@ class StudentForm extends React.Component {
     }
     componentDidMount() {
         const _this = this;
+        $.ajax({
+            url: '/admin/controllers/employee.php?action=getEmployees',
+            data: {type: 'free'},
+            success(res) {
+                _this.setState({
+                    employees: res
+                });
+            }
+        });
         $.ajax({
             url: api.getRegions(),
             success(res) {
@@ -161,6 +172,9 @@ class StudentForm extends React.Component {
         const agencies = this.state.agencies.map((a) =>
             <option key={a.id} value={a.id}>{a.name}</option>
         );
+        const employees = this.state.employees.map((a) =>
+            <option key={a.id} value={a.id}>{a.name}</option>
+        );
         return(
             <form onSubmit={this.handleSubmit}>
                 <div className="columns">
@@ -201,12 +215,6 @@ class StudentForm extends React.Component {
                                 <input className="input" type="text" name="email" value={student.email} onChange={this.handleChange} />
                             </div>
                         </div>
-                    </div>
-                    <div className="column is-2">
-                        <Dropdown title={'客人归属地'} name={'office_id'} value={student.office_id} handleChange={this.handleChange} options={offices} />
-                        <Dropdown title={'地区'} name={'region_id'} value={student.region_id} handleChange={this.handleChange} options={regions} />
-                        <Dropdown title={'省份'} name={'province_id'} value={student.province_id} handleChange={this.handleChange} options={provinces} />
-                        <Dropdown title={'城市'} name={'city_id'} value={student.city_id} handleChange={this.handleChange} options={cities} />
                     </div>
                     <div className="column is-2">
                         <div className="field">
@@ -256,7 +264,14 @@ class StudentForm extends React.Component {
                         </div>
                     </div>
                     <div className="column is-2">
+                        <Dropdown title={'客人归属地'} name={'office_id'} value={student.office_id} handleChange={this.handleChange} options={offices} />
+                        <Dropdown title={'地区'} name={'region_id'} value={student.region_id} handleChange={this.handleChange} options={regions} />
+                        <Dropdown title={'省份'} name={'province_id'} value={student.province_id} handleChange={this.handleChange} options={provinces} />
+                        <Dropdown title={'城市'} name={'city_id'} value={student.city_id} handleChange={this.handleChange} options={cities} />
+                    </div>
+                    <div className="column is-2">
                         <Dropdown title={'代理公司'} name={'agency_id'} value={student.agency_id} handleChange={this.handleChange} options={agencies} />
+                        <Dropdown title={'责任客服'} name={'employee_id'} value={student.employee_id} handleChange={this.handleChange} options={employees} />
                         <div className="field">
                             <label className="label">备注</label>
                             <div className="control">

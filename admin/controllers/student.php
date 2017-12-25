@@ -27,9 +27,7 @@ if ($_GET['action'] == 'getStudents') {
             'employee_id' => isset($_GET['employee_id']) ? $_GET['employee_id'] : '',
             'employee_material_id' => isset($_GET['employee_material_id']) ? $_GET['employee_material_id'] : '',
             'service_id' => isset($_GET['service_id']) ? $_GET['service_id'] : '',
-            'school_service_id' => isset($_GET['school_service_id']) ? $_GET['school_service_id'] : '',
             'school_progress_id' => isset($_GET['school_progress_id']) ? $_GET['school_progress_id'] : '',
-            'visa_service_id' => isset($_GET['visa_service_id']) ? $_GET['visa_service_id'] : '',
             'visa_progress_id' => isset($_GET['visa_progress_id']) ? $_GET['visa_progress_id'] : '',
             'color' => isset($_GET['color']) ? $_GET['color'] : ''
             

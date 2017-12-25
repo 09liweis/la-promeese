@@ -39,10 +39,8 @@ class Home extends React.Component {
                 employee_id: '',
                 employee_material_id: '',
                 service_id: '',
-                school_service_id: '',
                 school_progress_id: '',
                 color: '',
-                visa_service_id: '',
                 visa_progress_id: ''
             }
         };
@@ -146,9 +144,7 @@ class Home extends React.Component {
                         employee_id: res.search.employee_id,
                         employee_material_id: res.search.employee_material_id,
                         service_id: res.search.service_id,
-                        school_service_id: res.search.school_service_id,
                         school_progress_id: res.search.school_progress_id,
-                        visa_service_id: res.search.visa_service_id,
                         visa_progress_id: res.search.visa_progress_id,
                         color: res.search.color
                     }

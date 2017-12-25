@@ -111,6 +111,7 @@ class StudentDetail extends React.Component {
                     <div className="column">
                         <p>客人归属地: {s.office_name}</p>
                         <p>代理公司: {s.agency_name}</p>
+                        <p>责任客服: {s.employee_name}</p>
                         <p>备注: {s.remark}</p>
                     </div>
                     </div>

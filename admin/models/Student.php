@@ -42,10 +42,11 @@ class Student {
                 LEFT JOIN employees e ON s.employee_id = e.id
                 LEFT JOIN employees_material em ON s.employee_material_id = em.id
                 LEFT JOIN services ss ON s.service_id = ss.id
+                LEFT JOIN cities c ON s.city_id = c.id
                 LEFT JOIN progresses p ON s.school_progress_id = p.id
                 LEFT JOIN progresses p2 ON s.visa_progress_id = p2.id';
         if ($search['name'] != '') {
-            $sql .= ' AND (s.name LIKE :name OR c.name LIKE :name OR s.visa_info LIKE :name OR s.status LIKE :name)';
+            $sql .= ' AND (s.name LIKE :name OR s.schools LIKE :name)';
         }
         // if ($search['employee_id'] != '') {
         //     $sql .= ' AND s.employee_id = :employee_id';
@@ -68,6 +69,7 @@ class Student {
         if (isset($limit)) {
             $sql .= ' LIMIT :limit OFFSET :offset';
         }
+        
         $pdostmt = $this->db->prepare($sql);
         
         if (isset($limit)) {
@@ -76,7 +78,8 @@ class Student {
         }
         
         if ($search['name'] != '') {
-            $pdostmt->bindValue(':name', '%'.$search['name'].'%', PDO::PARAM_STR);
+            $name = '%'.$search['name'].'%';
+            $pdostmt->bindValue(':name', $name, PDO::PARAM_STR);
         }
 
         if ($schoolProgressId != '') {
@@ -88,6 +91,7 @@ class Student {
         if ($search['visa_progress_id'] != '') {
             $pdostmt->bindValue(':visa_progress_id', $search['visa_progress_id'], PDO::PARAM_INT);
         }
+        
         $pdostmt->execute();
         $students = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
         return $students;
@@ -116,6 +120,7 @@ class Student {
                 c.name AS city_name,
                 s.office_id AS office_id,
                 o.name AS office_name,
+                e.name AS employee_name,
                 s.remark AS remark
                 FROM 
                 students s
@@ -124,6 +129,7 @@ class Student {
                 LEFT JOIN regions r ON s.region_id = r.id
                 LEFT JOIN provinces p ON s.province_id = p.id
                 LEFT JOIN cities c ON s.city_id = c.id
+                LEFT JOIN employees e ON s.employee_id = e.id
                 WHERE s.id = :student_id';
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':student_id', $student_id, PDO::PARAM_INT);
