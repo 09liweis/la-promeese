@@ -92,8 +92,8 @@ if ($_GET['action'] == 'setLastestToStudent') {
         if (count($allPerformances)) {
             $schools = implode(', ', $allPerformances);   
         }
-        
         $v = $sRepo->lastestVisa($sId);
+        
         if ($school) {
             $school['schools'] = $schools;
             $school['student_id'] = $sId;

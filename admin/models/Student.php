@@ -160,6 +160,7 @@ class Student {
         // $employee_material_id = $student['employee_material_id'];
         $student_id = $student['student_id'];
         $service_id = $student['service_id'];
+        if ($service_id == 0) return;
         $progress_id = $student['progress_id'];
         $schools = $student['schools'];
         $service_fee = $student['service_fee'];
@@ -190,6 +191,7 @@ class Student {
         }
         $sql .= 'service_id = :service_id WHERE id = :id';
         $pdostmt = $this->db->prepare($sql);
+
         // $pdostmt->bindValue(':employee_id', $employee_id, PDO::PARAM_INT);
         // $pdostmt->bindValue(':employee_material_id', $employee_material_id, PDO::PARAM_INT);
         
