@@ -36,6 +36,7 @@ class Student {
                 s.schools AS schools,
                 s.school_progress_id AS school_progress_id,
                 p.name AS school_progress_name,
+                s.visa_progress_id AS visa_progress_id,
                 p2.name AS visa_progress_name
                 FROM 
                 students s
@@ -85,9 +86,9 @@ class Student {
         if ($schoolProgressId != '') {
             $pdostmt->bindValue(':school_progress_id', $schoolProgressId, PDO::PARAM_INT);
         }
-        if ($search['visa_service_id'] != '') {
-            $pdostmt->bindValue(':visa_service_id', $search['visa_service_id'], PDO::PARAM_INT);
-        }
+        // if ($search['visa_service_id'] != '') {
+        //     $pdostmt->bindValue(':visa_service_id', $search['visa_service_id'], PDO::PARAM_INT);
+        // }
         if ($search['visa_progress_id'] != '') {
             $pdostmt->bindValue(':visa_progress_id', $search['visa_progress_id'], PDO::PARAM_INT);
         }

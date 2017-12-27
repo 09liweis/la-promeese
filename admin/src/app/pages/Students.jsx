@@ -263,10 +263,10 @@ class Home extends React.Component {
                             <th>护照到期日</th>
                             <th>服务内容</th>
                             <th>服务金额</th>
-                            <th><Dropdown title={'责任客服'} name={'employee_id'} value={this.state.search.employee_id} handleChange={this.handleSearchChange} options={employees} /></th>
+                            <th>责任客服</th>
                             <th>院校申请</th>
-                            <th><Dropdown title={'学校申请进度'} name={'school_progress_id'} value={this.state.search.school_progress_id} handleChange={this.handleSearchChange} options={schoolProgresses} /></th>
-                            <th><Dropdown title={'签证移民进度'} name={'visa_progress_id'} value={this.state.search.visa_progress_id} handleChange={this.handleSearchChange} options={visaProgresses} /></th>
+                            <th>学校申请进度</th>
+                            <th>签证移民进度</th>
                             <th>更新时间</th>
                             {(this.props.user.admin_level == 1) ?
                             <th>Actions</th>
