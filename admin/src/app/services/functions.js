@@ -15,7 +15,7 @@ export function getDateDifferent(date) {
     var date1 = new Date(date);
     var currentDate = new Date();
     var timeDiff = Math.abs(date1.getTime() - currentDate.getTime());
-    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+    var diffDays = Math.floor(timeDiff / (1000 * 3600 * 24)); 
     return diffDays;
 }
 
@@ -171,7 +171,7 @@ export function getSearchLink(search) {
 
 export function getDateColor(date, type, progress) {
     if (date == '0000-00-00') {
-        return 'has-text-black';
+        return 'has-text-purple';
     }
     let color = '';
     if (type == 'visa') {
@@ -179,7 +179,7 @@ export function getDateColor(date, type, progress) {
         if (date > getCurrentDate()) {
             color = (visaDiffDate < 90) ? 'has-text-brown' : '';
         } else {
-            color = (visaDiffDate < 90) ? 'has-text-purple' : '';
+            color = (visaDiffDate < 90) ? 'has-text-purple' : 'has-text-danger';
         }
         if (progress == '申请递交') {
             color = 'has-text-success';
@@ -189,7 +189,7 @@ export function getDateColor(date, type, progress) {
         if (date > getCurrentDate()) {
             color = (passDiffDate < 90) ? 'has-text-brown' : '';
         } else {
-            color = (passDiffDate < 90) ? 'has-text-purple' : '';
+            color = (passDiffDate < 90) ? 'has-text-purple' : 'has-text-danger';
         }
     }
     return color;

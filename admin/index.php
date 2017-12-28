@@ -12,6 +12,6 @@
     </head>
     <body>
         <div id="app"></div>
-        <script type="text/javascript" src="/admin/src/public/bundle.js?v=5.9.4.6"></script>
+        <script type="text/javascript" src="/admin/src/public/bundle.js?v=5.9.4.7"></script>
     </body>
 </html>
