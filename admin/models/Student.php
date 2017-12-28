@@ -123,9 +123,12 @@ class Student {
                 o.name AS office_name,
                 s.employee_id AS employee_id,
                 e.name AS employee_name,
+                s.service_id AS service_id,
+                ss.name AS service_name,
                 s.remark AS remark
                 FROM 
                 students s
+                LEFT JOIN services ss ON s.service_id = ss.id
                 LEFT JOIN agencies a ON s.agency_id = a.id
                 LEFT JOIN offices o ON s.office_id = o.id
                 LEFT JOIN regions r ON s.region_id = r.id

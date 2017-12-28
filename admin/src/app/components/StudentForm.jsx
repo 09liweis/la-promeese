@@ -17,6 +17,7 @@ class StudentForm extends React.Component {
             offices: [],
             agencies: [],
             employees: [],
+            services: [],
             student: {
                 id: 0,
                 name: '',
@@ -35,7 +36,8 @@ class StudentForm extends React.Component {
                 office_id: '',
                 agency_id: '',
                 remark: '',
-                employee_id: ''
+                employee_id: '',
+                service_id: ''
             }
         };
         this.getProvinces = this.getProvinces.bind(this);
@@ -69,6 +71,14 @@ class StudentForm extends React.Component {
             success(res) {
                 _this.setState({
                     employees: res
+                });
+            }
+        });
+        $.ajax({
+            url: api.getServices(),
+            success(res) {
+                _this.setState({
+                    services: res
                 });
             }
         });
@@ -176,6 +186,9 @@ class StudentForm extends React.Component {
         const employees = this.state.employees.map((a) =>
             <option key={a.id} value={a.id}>{a.name}</option>
         );
+        const services = this.state.services.map((a) =>
+            <option key={a.id} value={a.id}>{a.name}</option>
+        );
         return(
             <form onSubmit={this.handleSubmit}>
                 <div className="columns">
@@ -259,6 +272,7 @@ class StudentForm extends React.Component {
                     <div className="column is-2">
                         <Dropdown title={'代理公司'} name={'agency_id'} value={student.agency_id} handleChange={this.handleChange} options={agencies} />
                         <Dropdown title={'责任客服'} name={'employee_id'} value={student.employee_id} handleChange={this.handleChange} options={employees} />
+                        <Dropdown title={'服务内容'} name={'service_id'} value={student.service_id} handleChange={this.handleChange} options={services} />
                         <div className="field">
                             <label className="label">备注</label>
                             <div className="control">
