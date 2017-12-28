@@ -3,6 +3,7 @@ import $ from 'jquery';
 
 import Datepicker from '../elements/Datepicker.jsx';
 import Dropdown from '../elements/Dropdown.jsx';
+import TextInput from '../elements/TextInput.jsx';
 import Api from '../services/api.js';
 const api = new Api();
 
@@ -179,12 +180,7 @@ class StudentForm extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <div className="columns">
                     <div className="column is-2">
-                        <div className="field">
-                            <label className="label">姓名</label>
-                            <div className="control">
-                                <input className="input" type="text" name="name" value={student.name} onChange={this.handleChange} />
-                            </div>
-                        </div>
+                        <TextInput title={'姓名'} name={'name'} value={student.name} handleChange={this.handleChange} />
                         <div className="field">
                             <label className="label">性别</label>
                             <div className="control">
@@ -203,18 +199,9 @@ class StudentForm extends React.Component {
                                 <Datepicker name={"dob"} value={student.dob} handleChange={this.handleChange}/>
                             </div>
                         </div>
-                        <div className="field">
-                            <label className="label">电话</label>
-                            <div className="control">
-                                <input className="input" type="text" name="phone" value={student.phone} onChange={this.handleChange} />
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label className="label">Email</label>
-                            <div className="control">
-                                <input className="input" type="text" name="email" value={student.email} onChange={this.handleChange} />
-                            </div>
-                        </div>
+                        <TextInput title={'电话'} name={'phone'} value={student.phone} handleChange={this.handleChange} />
+                        <TextInput title={'Email'} name={'email'} value={student.email} handleChange={this.handleChange} />
+
                     </div>
                     <div className="column is-2">
                         <div className="field">

@@ -208,7 +208,7 @@ class Home extends React.Component {
                     <th className={visaColor}>{s.visa_date}</th>
                     <th className={passColor}>{s.passport_date}</th>
                     <th>{s.service_name}</th>
-                    <th>{s.service_fee}</th>
+                    <th>${s.service_fee}</th>
                     <th>{s.employee_name}</th>
                     <th>{s.schools}</th>
                     <th><span className={getColor(s.school_progress_name)}>{s.school_progress_name}</span></th>
