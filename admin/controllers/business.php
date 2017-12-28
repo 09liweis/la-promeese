@@ -16,6 +16,7 @@ if ($_GET['action'] == 'getBusinesses') {
 if ($_GET['action'] == 'upsertBusiness') {
     $bRepo->upsert($_POST);
     $sRepo = new Student(Database::dbConnect());
+    
     $sRepo->updateStudent($_POST);
     echo json_encode('ok');
 }

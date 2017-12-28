@@ -45,7 +45,6 @@ export function getNewDateDes(id) {
             case '55':
             case '75': //过期签证
             case '47': //小签
-            case '49':
             case '76':
             case 'LMIA+境外工签':
             case '77':
