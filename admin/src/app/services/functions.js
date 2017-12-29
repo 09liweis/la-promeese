@@ -133,6 +133,7 @@ export function getColor(id) {
             color = 'has-text-info';
             break;
         case '放弃申请':
+        case '未读丢失':
             color = 'has-text-danger';
             break;
         case '申请递交':

@@ -213,10 +213,18 @@ class StudentForm extends React.Component {
                             </div>
                         </div>
                         <TextInput title={'电话'} name={'phone'} value={student.phone} handleChange={this.handleChange} />
-                        <TextInput title={'Email'} name={'email'} value={student.email} handleChange={this.handleChange} />
+                        <TextInput title={'邮箱'} name={'email'} value={student.email} handleChange={this.handleChange} />
 
                     </div>
                     <div className="column is-2">
+                        <TextInput title={'护照号码'} name={'passport_number'} value={student.email} handleChange={this.handleChange} />
+
+                        <div className="field">
+                            <label className="label">护照到期日</label>
+                            <div className="control">
+                                <Datepicker name={"passport_date"} value={student.passport_date} handleChange={this.handleChange} />
+                            </div>
+                        </div>
                         <div className="field">
                             <label className="label">签证信息</label>
                             <div className="control">
@@ -238,18 +246,6 @@ class StudentForm extends React.Component {
                             </div>
                         </div>
                         <div className="field">
-                            <label className="label">护照号码</label>
-                            <div className="control">
-                                <input className="input" type="text" name="passport_number" value={student.passport_number} onChange={this.handleChange} />
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label className="label">护照到期日</label>
-                            <div className="control">
-                                <Datepicker name={"passport_date"} value={student.passport_date} handleChange={this.handleChange} />
-                            </div>
-                        </div>
-                        <div className="field">
                             <label className="label">身份</label>
                             <div className="control">
                                 <div className="select">
@@ -264,13 +260,14 @@ class StudentForm extends React.Component {
                         </div>
                     </div>
                     <div className="column is-2">
-                        <Dropdown title={'客人归属地'} name={'office_id'} value={student.office_id} handleChange={this.handleChange} options={offices} />
+                        
                         <Dropdown title={'地区'} name={'region_id'} value={student.region_id} handleChange={this.handleChange} options={regions} />
                         <Dropdown title={'省份'} name={'province_id'} value={student.province_id} handleChange={this.handleChange} options={provinces} />
                         <Dropdown title={'城市'} name={'city_id'} value={student.city_id} handleChange={this.handleChange} options={cities} />
+                        <Dropdown title={'代理公司'} name={'agency_id'} value={student.agency_id} handleChange={this.handleChange} options={agencies} />
                     </div>
                     <div className="column is-2">
-                        <Dropdown title={'代理公司'} name={'agency_id'} value={student.agency_id} handleChange={this.handleChange} options={agencies} />
+                        <Dropdown title={'客人归属地'} name={'office_id'} value={student.office_id} handleChange={this.handleChange} options={offices} />
                         <Dropdown title={'责任客服'} name={'employee_id'} value={student.employee_id} handleChange={this.handleChange} options={employees} />
                         <Dropdown title={'服务内容'} name={'service_id'} value={student.service_id} handleChange={this.handleChange} options={services} />
                         <div className="field">
