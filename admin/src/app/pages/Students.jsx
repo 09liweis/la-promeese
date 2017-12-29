@@ -8,6 +8,7 @@ import StudentForm from '../components/StudentForm.jsx';
 import DeleteConfirmForm from '../components/DeleteConfirmForm.jsx';
 import Pagination from '../components/Pagination.jsx';
 import Dropdown from '../elements/Dropdown.jsx';
+import TextInput from '../elements/TextInput.jsx';
 import { getDateColor, getColor, parseSearchParams, getSearchLink } from '../services/functions.js';
 
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -21,13 +22,8 @@ class Home extends React.Component {
         this.state = {
             students: [],
             services: [],
-            employees: [],
             employeesMaterial: [],
-            schoolServices: [],
-            schoolProgresses: [],
             colors: [{key: 'green', value: '绿色'}, {key: 'brown', value: '棕色'}, {key: 'blue', value: '蓝色'}, {key: 'red', value: '红色'}],
-            visas: [],
-            visaProgresses: [],
             modal: false,
             deleteStudent: false,
             studentToDelete: {},
@@ -172,32 +168,19 @@ class Home extends React.Component {
     render() {
         const searchQuery = getSearchLink(this.state.search);
         const currentPage = this.state.currentPage;
-        const employees = this.state.employees.map((c) =>
-            <option key={c.id} value={c.id}>{c.name}</option>
-        );
+
         const employeesMaterial = this.state.employeesMaterial.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
         );
         const services = this.state.services.map((s) =>
             <option key={s.id} value={s.id}>{s.name}</option>
         );
-        const schoolServices = this.state.schoolServices.map((p) =>
-            <option key={p.id} value={p.id}>{p.name}</option>
-        );
-        const schoolProgresses = this.state.schoolProgresses.map((p) =>
-            <option key={p.id} value={p.id}>{p.name}</option>
-        );
+        
         const colors = this.state.colors.map((c) => 
             <option key={c.key} value={c.key}>{c.value}</option>
         );
-        const visas = this.state.visas.map((vi) =>
-            <option key={vi.id} value={vi.id}>{vi.name}</option>
-        );
-        const visaProgresses = this.state.visaProgresses.map((vi) =>
-            <option key={vi.id} value={vi.id}>{vi.name}</option>
-        );
+
         const students = this.state.students;
-        let passColor = '';
         const list = students.map((s) => {
             const visaColor = getDateColor(s.visa_date, 'visa', s.visa_progress_name);
             const passColor = getDateColor(s.passport_date, 'passport', s.visa_progress_name);
@@ -230,12 +213,7 @@ class Home extends React.Component {
                 :null}
                 <div className="columns">
                     <div className="column">
-                        <div className="field">
-                            <label className="label">关键词</label>
-                            <div className="control">
-                                <input className="input" type="text" name="name" value={this.state.search.name} onChange={this.handleSearchChange} />
-                            </div>
-                        </div>
+                        <TextInput title={'关键词'} name={'name'} value={this.state.search.name} handleChange={this.handleSearchChange} />
                     </div>
                     <div className="column">
                         <Dropdown title={'颜色'} name={'color'} value={this.state.search.color} handleChange={this.handleSearchChange} options={colors} />

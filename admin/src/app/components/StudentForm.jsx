@@ -217,7 +217,7 @@ class StudentForm extends React.Component {
 
                     </div>
                     <div className="column is-2">
-                        <TextInput title={'护照号码'} name={'passport_number'} value={student.email} handleChange={this.handleChange} />
+                        <TextInput title={'护照号码'} name={'passport_number'} value={student.passport_number} handleChange={this.handleChange} />
 
                         <div className="field">
                             <label className="label">护照到期日</label>
