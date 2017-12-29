@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
         <link rel="stylesheet" href="/admin/src/public/animate.min.css" type="text/css" />
-        <link rel="stylesheet" href="/admin/src/public/style.css?v=1.4">
+        <link rel="stylesheet" href="/admin/src/public/style.css?v=1.5">
         <link rel="stylesheet" href="/admin/src/public/datepicker.css" type="text/css" />
     </head>
     <body>

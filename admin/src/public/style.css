@@ -3,6 +3,9 @@ body {
     height: 100%;
     background: #eef2f3;
 }
+.table.is-narrow td, .table.is-narrow th {
+    padding: .25em 0;
+}
 .wrapper {
     background: #eef2f3;
     padding-bottom: 40px;
@@ -51,4 +54,7 @@ body {
 }
 .hidden {
     display: none;
+}
+.col-name {
+    width: 120px;
 }

@@ -204,7 +204,7 @@ class Home extends React.Component {
             const _this = this;
             return (
                 <tr key={s.id}>
-                    <th><Link to={`/admin/student/${s.id}?returnURL=/admin/students?page=${currentPage}${searchQuery}`}>{s.name}</Link></th>
+                    <th className="col-name"><Link to={`/admin/student/${s.id}?returnURL=/admin/students?page=${currentPage}${searchQuery}`}>{s.name}</Link></th>
                     <th className={visaColor}>{s.visa_date}</th>
                     <th className={passColor}>{s.passport_date}</th>
                     <th>{s.service_name}</th>
@@ -258,7 +258,7 @@ class Home extends React.Component {
                 <table id="students" className="table is-fullwidth is-striped is-narrow">
                     <thead>
                         <tr>
-                            <th>姓名</th>
+                            <th className="col-name">姓名</th>
                             <th>签证到期日</th>
                             <th>护照到期日</th>
                             <th>服务内容</th>
