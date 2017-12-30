@@ -3,6 +3,7 @@ import $ from 'jquery';
 
 import Datepicker from '../elements/Datepicker.jsx';
 import Dropdown from '../elements/Dropdown.jsx';
+import TextInput from '../elements/TextInput.jsx';
 
 import SemesterForm from '../forms/SemesterForm.jsx';
 
@@ -141,11 +142,8 @@ class PerformanceForm extends React.Component {
                 <div className="column is-2">
                     <Dropdown title={'学校'} name={'sub_service_id'} value={performance.sub_service_id} handleChange={this.handleChange} options={subServices} />
                 </div>
-                <div className="field column is-2">
-                    <label className="label">申请费</label>
-                    <div className="control">
-                        <input className="input" type="text" name="fee" value={performance.fee} onChange={this.handleChange} />
-                    </div>
+                <div className="column is-2">
+                    <TextInput title={'申请费'} name={'fee'} value={performance.fee} handleChange={this.handleChange} />
                 </div>
                 <div className="column is-2">
                     <Dropdown title={'责任服务'} name={'employee_id'} value={performance.employee_id} handleChange={this.handleChange} options={employees} />
@@ -153,11 +151,8 @@ class PerformanceForm extends React.Component {
                 <div className="field column is-2">
                     <Dropdown title={'责任文案'} name={'employee_material_id'} value={performance.employee_material_id} handleChange={this.handleChange} options={employeesMaterial} />
                 </div>
-                <div className="field column is-2">
-                    <label className="label">备注</label>
-                    <div className="control">
-                        <input type="text" className="input" name="remark" value={performance.remark} onChange={this.handleChange}/>
-                    </div>
+                <div className="column is-2">
+                    <TextInput title={'备注'} name={'remark'} value={performance.remark} handleChange={this.handleChange} />
                 </div>
                 </div>
                 {performance.id ?

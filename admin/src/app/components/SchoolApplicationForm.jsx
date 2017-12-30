@@ -255,99 +255,32 @@ class SchoolApplicationForm extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <div className="columns">
-                    <div className="field column">
-                        <label className="label">Service</label>
-                        <div className="control">
-                            <div className="select">
-                                <select name="service_id" value={application.service_id} onChange={this.handleChange}>
-                                    <option>Please Select</option>
-                                    {services}
-                                </select>
-                            </div>
-                        </div>
+                    <div className="column">
+                        <Dropdown title={"服务"} name={"service_id"} value={application.service_id} handleChange={this.handleChange} options={services} />
                     </div>
                     {(application.service_id == '5') ?
                     <div className="column">
-                    <div className="field">
-                        <label className="label">OUAC Confirmation Number</label>
-                        <div className="control">
-                            <input className="input" type="text" name="ouac_confirmation_number" value={application.ouac_confirmation_number} onChange={this.handleChange} />
-                        </div>
-                    </div>
-                    <div className="field">
-                        <label className="label">OUAC account</label>
-                        <div className="control">
-                            <input className="input" type="text" name="ouac_account" value={application.ouac_account} onChange={this.handleChange} />
-                        </div>
-                    </div>
-                    <div className="field">
-                        <label className="label">OUAC password</label>
-                        <div className="control">
-                            <input className="input" type="text" name="ouac_password" value={application.ouac_password} onChange={this.handleChange} />
-                        </div>
-                    </div>
+                        <TextInput title={"OUAC Confirmation Number"} name={"ouac_confirmation_number"} value={application.ouac_confirmation_number} handleChange={this.handleChange} />
+                        <TextInput title={"OUAC Account"} name={"ouac_account"} value={application.ouac_account} handleChange={this.handleChange} />
+                        <TextInput title={"OUAC Password"} name={"ouac_password"} value={application.ouac_password} handleChange={this.handleChange} />
                     </div>
                     : null }
                     <div className="column">
-                        <div className="field">
-                            <label className="label">Email</label>
-                            <div className="control">
-                                <input className="input" type="text" name="email" value={application.email} onChange={this.handleChange} />
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label className="label">Email password</label>
-                            <div className="control">
-                                <input className="input" type="text" name="email_password" value={application.email_password} onChange={this.handleChange} />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="field column">
-                        <label className="label">服务费</label>
-                        <div className="control">
-                            <input className="input" type="text" name="service_fee" value={application.service_fee} onChange={this.handleChange} />
-                        </div>
-                    </div>
-                    <div className="field column">
-                        <label className="label">佣金申报</label>
-                        <div className="control">
-                            <div className="select">
-                                <select name="commission_progress_id" value={application.commission_progress_id} onChange={this.handleChange}>
-                                    <option>Please Select</option>
-                                    {commissionProgresses}
-                                </select>
-                            </div>
-                        </div>
+                        <TextInput title={"Email"} name={"email"} value={application.email} handleChange={this.handleChange} />
+                        <TextInput title={"Email Password"} name={"email_password"} value={application.email_password} handleChange={this.handleChange} />
                     </div>
                     <div className="column">
-                        <div className="field">
-                            <label className="label">责任服务</label>
-                            <div className="control">
-                                <div className="select">
-                                    <select name="employee_id" value={application.employee_id} onChange={this.handleChange}>
-                                        <option>Please Select</option>
-                                        {employees}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="field">
-                            <label className="label">责任文案</label>
-                            <div className="control">
-                                <div className="select">
-                                    <select name="employee_material_id" value={application.employee_material_id} onChange={this.handleChange}>
-                                        <option>Please Select</option>
-                                        {employeesMaterial}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                        <TextInput title={"服务费"} name={"service_fee"} value={application.service_fee} handleChange={this.handleChange} />
                     </div>
-                    <div className="field column">
-                        <label className="label">备注</label>
-                        <div className="control">
-                            <input className="input" type="text" name="remark" value={application.remark} onChange={this.handleChange} />
-                        </div>
+                    <div className="column">
+                        <Dropdown title={"佣金申报"} name={"commission_progress_id"} value={application.commission_progress_id} handleChange={this.handleChange} options={commissionProgresses} />
+                    </div>
+                    <div className="column">
+                        <Dropdown title={"责任服务"} name={"employee_id"} value={application.employee_id} handleChange={this.handleChange} options={employees} />
+                        <Dropdown title={"责任文案"} name={"employee_material_id"} value={application.employee_material_id} handleChange={this.handleChange} options={employeesMaterial} />
+                    </div>
+                    <div className="column">
+                        <TextInput title={'备注'} name={'remark'} value={application.remark} handleChange={this.handleChange} />
                     </div>
                 </div>
                 <a className="button is-primary" onClick={this.addSchool}>添加学校</a>

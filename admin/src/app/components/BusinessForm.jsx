@@ -3,6 +3,7 @@ import $ from 'jquery';
 
 import Datepicker from '../elements/Datepicker.jsx';
 import Dropdown from '../elements/Dropdown.jsx';
+import TextInput from '../elements/TextInput.jsx';
 import {getNewDateDes, checkNeedExtraVisa, getExtraVisaDes} from '../services/functions.js';
 
 class BusinessForm extends React.Component {
@@ -146,33 +147,13 @@ class BusinessForm extends React.Component {
                 </div>
                 <div className="column is-2">
                     {(business.service_id == '7') ?
-                    <div className="field">
-                        <label className="label">政府费</label>
-                        <div className="control">
-                            <input className="input" type="text" name="government_fee" value={business.government_fee} onChange={this.handleChange} />
-                        </div>
-                    </div>
+                    <TextInput title={'政府费'} name={'government_fee'} value={business.government_fee} handleChange={this.handleChange} />
                     :
-                    <div className="field">
-                        <label className="label">申请费</label>
-                        <div className="control">
-                            <input className="input" type="text" name="application_fee" value={business.application_fee} onChange={this.handleChange} />
-                        </div>
-                    </div>
+                    <TextInput title={'申请费'} name={'application_fee'} value={business.application_fee} handleChange={this.handleChange} />
                     }
-                    <div className="field">
-                        <label className="label">服务费</label>
-                        <div className="control">
-                            <input className="input" type="text" name="service_fee" value={business.service_fee} onChange={this.handleChange} />
-                        </div>
-                    </div>
-                    {(business.service_id != '10' || business.service_id != '11') ?
-                    <div className="field">
-                        <label className="label">邮寄费</label>
-                        <div className="control">
-                            <input className="input" type="text" name="post_fee" value={business.post_fee} onChange={this.handleChange} />
-                        </div>
-                    </div>
+                    <TextInput title={'服务费'} name={'service_fee'} value={business.service_fee} handleChange={this.handleChange} />
+                    {['10', '11'].indexOf(business.service_id) == -1 ?
+                    <TextInput title={'邮寄费'} name={'post_fee'} value={business.post_fee} handleChange={this.handleChange} />
                     :null}
                 </div>
                 <div className={checkNeedExtraVisa(business.sub_service_id)}>
@@ -210,13 +191,8 @@ class BusinessForm extends React.Component {
                     <Dropdown title={'责任服务'} name={'employee_id'} value={business.employee_id} handleChange={this.handleChange} options={employees} />
                     <Dropdown title={'责任文案'} name={'employee_material_id'} value={business.employee_material_id} handleChange={this.handleChange} options={employeesMaterial} />
                 </div>
-                <div className="field column">
-                    <div className="field">
-                        <label className="label">备注</label>
-                        <div className="control">
-                            <input className="input" type="text" name="remark" value={business.remark} onChange={this.handleChange} />
-                        </div>
-                    </div>
+                <div className="column">
+                    <TextInput title={'备注'} name={'remark'} value={business.remark} handleChange={this.handleChange} />
                 </div>
                 <div className="field column">
                     <button className="button is-primary">Submit</button>

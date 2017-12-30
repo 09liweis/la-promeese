@@ -50,7 +50,7 @@ class Businesses extends React.Component {
             id: 0,
             student_id: this.props.id,
             service_id: '',
-            sub_service_id: '',
+            sub_service_id: '0',
             progress_id: '',
             submit_date: '',
             government_fee: '',

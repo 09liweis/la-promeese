@@ -211,7 +211,9 @@ class Student {
         // $pdostmt->bindValue(':employee_material_id', $employee_material_id, PDO::PARAM_INT);
         
         $pdostmt->bindValue(':service_id', $service_id, PDO::PARAM_INT);
-        $pdostmt->bindValue(':progress_id', $progress_id, PDO::PARAM_INT);
+        if (in_array($service_id, array('1', '2', '3', '7', '8', '9'))) {
+            $pdostmt->bindValue(':progress_id', $progress_id, PDO::PARAM_INT);
+        }
         
         if ($willUpdateVisaDate) {
             $pdostmt->bindValue(':visa_date', $student['new_date'], PDO::PARAM_STR);
