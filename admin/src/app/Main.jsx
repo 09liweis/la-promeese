@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Home from './pages/Home.jsx';
 import Students from './pages/Students.jsx';
-import StudentDetail from './components/StudentDetail.jsx';
+import StudentDetail from './pages/StudentDetail.jsx';
 import CMS from './pages/CMS.jsx';
 
 class Main extends React.Component {

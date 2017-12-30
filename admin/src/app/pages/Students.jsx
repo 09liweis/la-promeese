@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { browserHistory } from 'react-router';
 import $ from 'jquery';
 
 import Api from '../services/api.js';
 import Modal from '../components/Modal.jsx';
-import StudentForm from '../components/StudentForm.jsx';
+import StudentForm from '../forms/StudentForm.jsx';
 import DeleteConfirmForm from '../components/DeleteConfirmForm.jsx';
 import Pagination from '../components/Pagination.jsx';
 import Dropdown from '../elements/Dropdown.jsx';
