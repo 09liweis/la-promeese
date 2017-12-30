@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { browserHistory } from 'react-router';
 import $ from 'jquery';
 
 import Api from '../services/api.js';
@@ -64,7 +65,11 @@ class Home extends React.Component {
         this.refreshStudents(params);
     }
     componentDidMount() {
-        this.refreshStudents();
+        const params = parseSearchParams(window.location.search);
+        this.setState({
+            currentPage: params.page
+        });
+        this.refreshStudents(params);
         const _this = this;
         $.ajax({
             url: api.getEmployees(),
