@@ -245,19 +245,6 @@ class StudentForm extends React.Component {
                                 <Datepicker name={"visa_date"} value={student.visa_date} handleChange={this.handleChange} />
                             </div>
                         </div>
-                        <div className="field">
-                            <label className="label">身份</label>
-                            <div className="control">
-                                <div className="select">
-                                    <select name="status" value={student.status} onChange={this.handleChange}>
-                                        <option>Please Select</option>
-                                        <option value="留学生">留学生</option>
-                                        <option value="移民">移民</option>
-                                        <option value="公民">公民</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div className="column is-2">
                         
