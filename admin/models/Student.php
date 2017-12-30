@@ -45,7 +45,8 @@ class Student {
                 LEFT JOIN services ss ON s.service_id = ss.id
                 LEFT JOIN cities c ON s.city_id = c.id
                 LEFT JOIN progresses p ON s.school_progress_id = p.id
-                LEFT JOIN progresses p2 ON s.visa_progress_id = p2.id';
+                LEFT JOIN progresses p2 ON s.visa_progress_id = p2.id
+                WHERE 1';
         if ($search['name'] != '') {
             $sql .= ' AND (s.name LIKE :name OR s.schools LIKE :name)';
         }
@@ -70,7 +71,7 @@ class Student {
         if (isset($limit)) {
             $sql .= ' LIMIT :limit OFFSET :offset';
         }
-        
+
         $pdostmt = $this->db->prepare($sql);
         
         if (isset($limit)) {
