@@ -134,6 +134,9 @@ export function getColor(id) {
             break;
         case '放弃申请':
         case '未读丢失':
+        case '签证被拒':
+        case '移民被拒':
+        case '补交材料':
             color = 'has-text-danger';
             break;
         case '申请递交':
