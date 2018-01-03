@@ -73,6 +73,9 @@ export function getNewDateDes(id) {
                 break;
             case '护照补办':
             case '59':
+            case '56':
+            case '57':
+            case '58':
                 newDateDes = '预约时间';
                 break;
             case '调档':
