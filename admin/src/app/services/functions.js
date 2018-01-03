@@ -142,6 +142,9 @@ export function getColor(id) {
         case '申请递交':
             color = 'has-text-success';
             break;
+        case '等待申报':
+            color = 'has-text-pink';
+            break;
         default:
             color = '';
             break;

@@ -52,6 +52,9 @@ body {
 .has-text-purple {
     color: purple !important;
 }
+.has-text-pink {
+    color: #e897a7 !important;
+}
 .hidden {
     display: none;
 }
