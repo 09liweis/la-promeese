@@ -41,6 +41,9 @@ class Header extends React.Component {
                     {this.state.user.admin_level == 1 ?
                     <Link to="/admin/cms" className="navbar-item">Admin</Link>
                     : null}
+                    {this.state.user.admin_level == 1 ?
+                    <Link to="/admin/free_schools" className="navbar-item">业绩学校管理</Link>
+                    : null}
                 </div>
                 { this.state.user.id != 0 ?
                 <div className="navbar-end">

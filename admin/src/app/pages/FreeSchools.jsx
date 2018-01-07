@@ -23,6 +23,7 @@ class FreeSchools extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.getSchools = this.getSchools.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
+        this.add = this.add.bind(this);
     }
     componentDidMount() {
         axios.get(api.getFreeServices()).then((res) => {
@@ -57,6 +58,13 @@ class FreeSchools extends React.Component {
         if (name == 'service_id') {
             this.getSchools(value);
         }
+    }
+    add() {
+        this.setState({
+            id: 0,
+            name: '',
+            application_fee: 0
+        });
     }
     handleEdit(school) {
         this.setState({
@@ -114,6 +122,8 @@ class FreeSchools extends React.Component {
                         </table>
                     </div>
                     <div className="column">
+                        <a className="button is-primary" onClick={this.add}>创建新学校</a>
+                        <p className="is-italic">注意: 更改学校名字会同时更改业绩里面的学校名字，但不会同时修改首先名字，需要update才会修改首先显示</p>
                         <form className="" onSubmit={this.handleSubmit}>
                             <TextInput title={'学校名字'} name={'name'} value={school.name} handleChange={this.handleChange} />
                             <TextInput title={'申请费'} name={'application_fee'} value={school.application_fee} handleChange={this.handleChange} />
