@@ -14,7 +14,7 @@ export default class Api {
         this.visaServices = 'service.php?action=getVisaServices';
         
         this.subServices = 'service.php?action=getSubServices';
-        this.upsertSubService = 'service.php?action="upsertSubService';
+        this.upsertSubService = 'service.php?action=upsertSubService';
         
         this.regions = 'location.php?action=getRegions';
         this.provinces = 'location.php?action=getProvinces';

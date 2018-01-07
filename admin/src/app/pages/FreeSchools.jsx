@@ -66,12 +66,10 @@ class FreeSchools extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         const school = this.state.school;
-        const params = {
-            params: {
-                school: school
-            }
-        };
-        axios.post(api.getUpsertSubService, params).then((res) => {
+        const params = Object.keys(school).map((k) => 
+            k + '=' + school[k]
+        ).join('&');
+        axios.post(api.getUpsertSubService(), params).then((res) => {
             this.setState({
                 school: {
                     id: 0,
@@ -79,6 +77,7 @@ class FreeSchools extends React.Component {
                     application_fee: 0
                 }
             });
+            this.getSchools(school.service_id);
         });
     }
     render() {

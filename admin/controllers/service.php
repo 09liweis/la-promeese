@@ -39,3 +39,8 @@ if ($_GET['action'] == 'getVisaServices') {
     $visaServices = $sRepo->visaServices();
     echo json_encode($visaServices);
 }
+if ($_GET['action'] == 'upsertSubService') {
+    $school = $_POST;
+    $id = $sRepo->upsertSubService($school);
+    echo json_encode($id);
+}

@@ -1,5 +1,7 @@
 <?php
 
+include '../functions/db.php';
+
 class Service {
     private $db;
     public function __construct($db) {
@@ -74,5 +76,9 @@ class Service {
         $pdostmt->execute();
         $subService = $pdostmt->fetch(PDO::FETCH_ASSOC);
         return $subService;
+    }
+    public function upsertSubService($subService) {
+        $id = upsert($this->db, 'sub_services', $subService);
+        return $id;
     }
 }
