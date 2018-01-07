@@ -13,6 +13,9 @@ export default class Api {
         this.schoolServices = 'service.php?action=getSchoolServices';
         this.visaServices = 'service.php?action=getVisaServices';
         
+        this.subServices = 'service.php?action=getSubServices';
+        this.upsertSubService = 'service.php?action="upsertSubService';
+        
         this.regions = 'location.php?action=getRegions';
         this.provinces = 'location.php?action=getProvinces';
         this.cities = 'location.php?action=getCities';
@@ -72,6 +75,12 @@ export default class Api {
     }
     getVisaServices() {
         return this.base + this.visaServices;
+    }
+    getSubServices() {
+        return this.base + this.subServices;
+    }
+    getUpsertSubService() {
+        return this.base + this.upsertSubService;
     }
     getProgresses() {
         return this.base + this.progresses;
