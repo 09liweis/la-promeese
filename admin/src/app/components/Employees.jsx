@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 
+import TextInput from '../elements/TextInput.jsx';
 import Api from '../services/api.js';
 const api = new Api();
 
@@ -139,18 +140,8 @@ class Employees extends React.Component {
                 </div>
                 <form className="column card" onSubmit={this.handleSubmit}>
                     <h2 className="is-size-2 has-text-centered">责任客服</h2>
-                    <div className="field">
-                        <label className="label">姓名</label>
-                        <div className="control">
-                            <input className="input" type="text" name="name" value={employee.name} onChange={this.handleChange} />
-                        </div>
-                    </div>
-                    <div className="field">
-                        <label className="label">Email</label>
-                        <div className="control">
-                            <input className="input" type="text" name="email" value={employee.email} onChange={this.handleChange} />
-                        </div>
-                    </div>
+                    <TextInput title={'姓名'} name={'name'} value={employee.name} handleChange={this.handleChange} />
+                    <TextInput title={'Email'} name={'email'} value={employee.email} handleChange={this.handleChange} />
                     <div className="field">
                         <label className="label">密码</label>
                         <div className="control">
