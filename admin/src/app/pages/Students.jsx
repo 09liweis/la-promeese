@@ -191,7 +191,7 @@ class Home extends React.Component {
             const _this = this;
             return (
                 <tr key={s.id}>
-                    <th className="col-name"><Link to={`/admin/student/${s.id}?returnURL=/admin/students?page=${currentPage}${searchQuery}`}>{s.name}</Link></th>
+                    <th className="col-name"><Link to={`/admin/student/${s.id}`}>{s.name}</Link></th>
                     <th className={visaColor}>{s.visa_date}</th>
                     <th className={passColor}>{s.passport_date}</th>
                     <th>{s.service_name}</th>
