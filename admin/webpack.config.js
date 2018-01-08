@@ -18,9 +18,14 @@ var APP_DIR = path.resolve(__dirname, 'src/app');
                     loader : 'babel-loader'
                 },
                 {
+                    test: /\.css$/,
+                    loaders: ['style-loader', 'css-loader']
+                },
+                {
                     test: /\.scss$/,
                     loaders: ['style', 'css', 'sass']
-                }
+                },
+                
             ]
         }
     };

@@ -8,10 +8,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.3/css/bulma.min.css">
         <link rel="stylesheet" href="/admin/src/public/animate.min.css" type="text/css" />
         <link rel="stylesheet" href="/admin/src/public/style.css?v=1.6">
-        <link rel="stylesheet" href="/admin/src/public/datepicker.css" type="text/css" />
     </head>
     <body>
         <div id="app"></div>
-        <script type="text/javascript" src="/admin/src/public/bundle.js?v=5.9.5.2"></script>
+        <script type="text/javascript" src="/admin/src/public/bundle.js?v=5.9.5.3"></script>
     </body>
 </html>

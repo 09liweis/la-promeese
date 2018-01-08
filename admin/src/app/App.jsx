@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import 'flatpickr/dist/themes/material_green.css'
 
 import Header from './Header.jsx';
 import Main from './Main.jsx';

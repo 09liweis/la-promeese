@@ -137,6 +137,11 @@ class StudentForm extends React.Component {
         const p = e.target.name;
         const v = e.target.value;
         var student = this.state.student;
+        
+        if (p == 'phone') {
+            
+        }
+        
         student[p] = v;
         this.setState({
             student: student
