@@ -177,7 +177,12 @@ class Student {
         $progress_id = $student['progress_id'];
         $schools = $student['schools'];
         $service_fee = $student['service_fee'];
+        $new_date = $student['new_date'];
         
+        if ($service_id == '7' && in_array($sub_service_id, array('53', '54', '55'))) {
+            $progress_id = $student['extra_progress_id'];
+            $new_date = $student['extra_new_date'];
+        }
         $willUpdateVisaDate = $service_id == '7' && in_array($sub_service_id, array('48', '49', '50', '51', '52', '83', '84', '85')) && $progress_id == '11';
         
         // $sRepo = new Service(Database::dbConnect());
@@ -216,7 +221,7 @@ class Student {
         }
         
         if ($willUpdateVisaDate) {
-            $pdostmt->bindValue(':visa_date', $student['new_date'], PDO::PARAM_STR);
+            $pdostmt->bindValue(':visa_date', $new_date, PDO::PARAM_STR);
         }
         if ($schools) {
             $pdostmt->bindValue(':schools', $schools, PDO::PARAM_INT);
