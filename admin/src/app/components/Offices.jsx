@@ -1,6 +1,8 @@
 import React from 'react';
 import $ from 'jquery';
 
+import TextInput from '../elements/TextInput.jsx';
+
 class Offices extends React.Component {
     constructor(props) {
         super(props);
@@ -110,12 +112,7 @@ class Offices extends React.Component {
                 </div>
                 <form className="column card is-6" onSubmit={this.handleSubmit}>
                     <h2 className="is-size-2 has-text-centered">客人归属</h2>
-                    <div className="field">
-                        <label className="label">名字</label>
-                        <div className="control">
-                            <input className="input" type="text" name="name" value={office.name} onChange={this.handleChange} />
-                        </div>
-                    </div>
+                    <TextInput title={'名字'} name={'name'} value={office.name} handleChange={this.handleChange} />
                     <button className="button is-primary">Submit</button>
                 </form>
             </div>
