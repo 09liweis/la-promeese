@@ -86,7 +86,7 @@ class PerformanceForm extends React.Component {
     getSubServices(id) {
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/service.php?action=getSubServices',
+            url: api.getSubServices(),
             data: {id: id},
             success(res) {
                 _this.setState({
