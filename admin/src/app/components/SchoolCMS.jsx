@@ -24,7 +24,10 @@ class SchoolCMS extends React.Component {
         this.add = this.add.bind(this);
     }
     componentDidMount() {
-        axios.get(this.props.servicesURL).then((res) => {
+        const params = {
+            params: this.props.params
+        };
+        axios.get(this.props.servicesURL, params).then((res) => {
             this.setState({
                 services: res.data
             });

@@ -12,6 +12,11 @@ if ($_GET['action'] == 'getServices') {
     echo json_encode($services);
 }
 
+if ($_GET['action'] == 'services') {
+    $services = $sRepo->getServicesBy($_GET);
+    echo json_encode($services);
+}
+
 if ($_GET['action'] == 'getFreeServices') {
     $services = $sRepo->services(1);
     echo json_encode($services);

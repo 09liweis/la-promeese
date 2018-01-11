@@ -25,6 +25,28 @@ class Service {
         return $services;
     }
     
+    public function getServicesBy($param) {
+        $id = $param['id'];
+        $free = $param['is_free'];
+        $sql = 'SELECT * FROM services WHERE 1';
+        if ($id) {
+            $sql .= ' AND id = :id';
+        }
+        if ($free) {
+            $sql .= ' AND is_free = :free';
+        }
+        $pdostmt = $this->db->prepare($sql);
+        if (isset($id)) {
+            $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
+        }
+        if (isset($free)) {
+            $pdostmt->bindValue(':free', $free, PDO::PARAM_INT);
+        }
+        $pdostmt->execute();
+        $services = $pdostmt->fetchAll(PDO::FETCH_ASSOC);
+        return $services;
+    }
+    
     public function subServices($service_id) {
         if (in_array($service_id, array('5', '6'))) {
             $service_id = 5;

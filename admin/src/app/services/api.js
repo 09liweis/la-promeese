@@ -13,6 +13,8 @@ export default class Api {
         this.schoolServices = 'service.php?action=getSchoolServices';
         this.visaServices = 'service.php?action=getVisaServices';
         
+        this.servicesBy = 'service.php?action=services';
+        
         this.subServices = 'service.php?action=getSubServices';
         this.upsertSubService = 'service.php?action=upsertSubService';
         
@@ -66,6 +68,9 @@ export default class Api {
     }
     getServices() {
         return this.base + this.services;
+    }
+    getServicesBy() {
+        return this.base + this.servicesBy;
     }
     getFreeServices() {
         return this.base + this.freeServices;
