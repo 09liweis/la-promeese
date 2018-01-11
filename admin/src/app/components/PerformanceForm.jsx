@@ -7,6 +7,9 @@ import TextInput from '../elements/TextInput.jsx';
 
 import SemesterForm from '../forms/SemesterForm.jsx';
 
+import Api from '../services/api.js';
+const api = new Api();
+
 class PerformanceForm extends React.Component {
     constructor(props) {
         super(props);
@@ -38,7 +41,8 @@ class PerformanceForm extends React.Component {
         
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/service.php?action=getFreeServices',
+            url: api.getServicesBy(),
+            data: {is_free: '1'},
             success(res) {
                 _this.setState({
                     services: res

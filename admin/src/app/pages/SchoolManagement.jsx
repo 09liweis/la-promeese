@@ -11,10 +11,6 @@ class SchoolManagement extends React.Component {
     componentDidMount() {
         
     }
-    getSchools(service_id) {
-        
-    }
-    
     render() {
         const freeServicesParams = {
             is_free: '1'
