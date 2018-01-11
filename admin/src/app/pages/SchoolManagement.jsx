@@ -6,7 +6,7 @@ import TextInput from '../elements/TextInput.jsx';
 import Api from '../services/api.js';
 const api = new Api();
 
-class FreeSchools extends React.Component {
+class SchoolManagement extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -137,4 +137,4 @@ class FreeSchools extends React.Component {
     }
 }
 
-export default FreeSchools;
+export default SchoolManagement;

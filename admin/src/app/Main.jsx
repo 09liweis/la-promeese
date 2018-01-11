@@ -4,7 +4,7 @@ import Home from './pages/Home.jsx';
 import Students from './pages/Students.jsx';
 import StudentDetail from './pages/StudentDetail.jsx';
 import CMS from './pages/CMS.jsx';
-import FreeSchools from './pages/FreeSchools.jsx';
+import SchoolManagement from './pages/SchoolManagement.jsx';
 
 class Main extends React.Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class Main extends React.Component {
             <Route path='/admin/students' render={(props) => <Students {...props} user={this.props.user}/>}/>
             <Route path='/admin/student/:id' render={(props) => <StudentDetail {...props} user={this.props.user}/>}/>
             <Route path='/admin/cms' component={CMS}/>
-            <Route path='/admin/free_schools' component={FreeSchools}/>
+            <Route path='/admin/school_management' component={SchoolManagement}/>
         </Switch>
       </main>
     );
