@@ -98,7 +98,7 @@ class PerformanceForm extends React.Component {
     getProgresses(id) {
         const _this = this;
         $.ajax({
-            url: '/admin/controllers/progress.php?action=getProgresses',
+            url: api.getProgresses(),
             data: {id: id},
             success(res) {
                 _this.setState({

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
     <head>
         <title>La Promesse Admin</title>
         <meta charset="utf-8">
