@@ -152,7 +152,7 @@ class BusinessForm extends React.Component {
                     <TextInput title={'申请费'} name={'application_fee'} value={business.application_fee} handleChange={this.handleChange} />
                     }
                     <TextInput title={'服务费'} name={'service_fee'} value={business.service_fee} handleChange={this.handleChange} />
-                    {['10', '11'].indexOf(business.service_id) == -1 ?
+                    {['4', '10', '11'].indexOf(business.service_id) == -1 ?
                     <TextInput title={'邮寄费'} name={'post_fee'} value={business.post_fee} handleChange={this.handleChange} />
                     :null}
                 </div>

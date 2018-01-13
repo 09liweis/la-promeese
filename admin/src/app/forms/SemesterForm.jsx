@@ -16,15 +16,15 @@ class SemesterForm extends Component {
             performanceId: props.performanceId,
             semester: null,
             semesterOptions: [
-                'ESL 1',
-                'ESL 2',
-                'ESL 3',
-                'ESL 4',
-                'ESL 5',
-                'ESL 6',
-                '1st semester',
-                '2nd semester',
-                '3rd semester'
+                {value: 'ESL 1', service_id: '3'},
+                {value: 'ESL 2', service_id: '3'},
+                {value: 'ESL 3', service_id: '3'},
+                {value: 'ESL 4', service_id: '3'},
+                {value: 'ESL 5', service_id: '3'},
+                {value: 'ESL 6', service_id: '3'},
+                {value: '1st semester', service_id: '1'},
+                {value: '2nd semester', service_id: '1'},
+                {value: '3rd semester', service_id: '1'},
             ],
             semesters: [],
             commissionProgresses: [],
@@ -139,9 +139,11 @@ class SemesterForm extends Component {
         const _this = this;
         const {semester, semesterOptions, semesters, serviceId} = this.state;
         const {progresses} = this.props;
-        const options = semesterOptions.map((s) => 
-            <option key={s} value={s}>{s}</option>
-        );
+        const options = semesterOptions.map((s) => {
+            if (serviceId == s.service_id) {
+                return (<option key={s.value} value={s.value}>{s.value}</option>);   
+            }
+        });
         const show = (semester.progress_id == '46' || semester.progress_id == '48') ? 'column' : 'column hidden';
         const commissionProgresses = this.state.commissionProgresses.map((c) =>
             <option key={c.id} value={c.id}>{c.name}</option>
@@ -150,7 +152,7 @@ class SemesterForm extends Component {
             <div key={s.id} className="columns">
                 <div className="column">
                     <p>学期: {s.semester}</p>
-                    <p>开学日期: {s.school_start_date}</p>
+                    <p>缴费日期: {s.school_start_date}</p>
                 </div>
                 <div className="column">
                     学费: {s.fee}<br/>

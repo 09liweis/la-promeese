@@ -116,7 +116,9 @@ class Businesses extends React.Component {
                         <p>申请费: ${b.application_fee}</p>
                         }
                         <p>服务费: ${b.service_fee}</p>
+                        {['4', '10', '11'].indexOf(b.service_id) == -1 ?
                         <p>邮寄费: ${b.post_fee}</p>
+                        :null}
                     </div>
                     { b.extra_progress_id != '0' ?
                     <div className="column">
