@@ -180,8 +180,8 @@ class Student {
         $new_date = $student['new_date'];
         
         if ($service_id == '7' && in_array($sub_service_id, array('53', '54', '55'))) {
-            $progress_id = $student['extra_progress_id'];
-            $new_date = $student['extra_new_date'];
+            $progress_id = $student['extra_progress_id'] ? $student['extra_progress_id'] : $student['progress_id'];
+            $new_date = $student['extra_new_date'] ? $student['extra_new_date'] : $student['new_date'];
         }
         $willUpdateVisaDate = $service_id == '7' && in_array($sub_service_id, array('48', '49', '50', '51', '52', '83', '84', '85')) && $progress_id == '11';
         
