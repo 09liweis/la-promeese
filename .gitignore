@@ -1,1 +1,3 @@
 /admin/models/Database.php
+/admin/node_modules
+.idea/

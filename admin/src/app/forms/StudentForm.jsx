@@ -1,6 +1,6 @@
 import React from 'react';
+import InputMask from 'react-input-mask';
 import $ from 'jquery';
-
 import Datepicker from '../elements/Datepicker.jsx';
 import Dropdown from '../elements/Dropdown.jsx';
 import TextInput from '../elements/TextInput.jsx';
@@ -217,7 +217,7 @@ class StudentForm extends React.Component {
                                 <Datepicker name={"dob"} value={student.dob} handleChange={this.handleChange}/>
                             </div>
                         </div>
-                        <TextInput title={'电话'} name={'phone'} value={student.phone} handleChange={this.handleChange} />
+                        <InputMask title={'电话'} name={'phone'} mask="999-999-9999" placeholder="123-456-7890" maskChar=" "  onChange={this.handleChange}  />
                         <TextInput title={'邮箱'} name={'email'} value={student.email} handleChange={this.handleChange} />
 
                     </div>
