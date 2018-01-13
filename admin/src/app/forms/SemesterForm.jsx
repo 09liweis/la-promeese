@@ -152,7 +152,7 @@ class SemesterForm extends Component {
             <div key={s.id} className="columns">
                 <div className="column">
                     <p>学期: {s.semester}</p>
-                    <p>开学日期: {s.school_start_date}</p>
+                    <p>缴费日期: {s.school_start_date}</p>
                 </div>
                 <div className="column">
                     学费: {s.fee}<br/>
