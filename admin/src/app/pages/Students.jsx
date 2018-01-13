@@ -237,7 +237,7 @@ class Home extends React.Component {
                 {(this.state.totalStudents > studentsPerPage) ?
                 <Pagination totalStudents={this.state.totalStudents} studentsPerPage={studentsPerPage} currentPage={currentPage} searchQuery={searchQuery} />
                 :null}
-                <table id="students" className="table is-fullwidth is-striped is-narrow">
+                <table style={{fontSize: '14px'}} id="students" className="table is-fullwidth is-striped is-narrow">
                     <thead>
                         <tr>
                             <th className="col-name">姓名</th>
