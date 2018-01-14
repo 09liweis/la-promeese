@@ -209,13 +209,16 @@ class Student {
         if ($schools) {
             $sql .= 'schools = :schools,';
         }
-        $sql .= 'service_id = :service_id WHERE id = :id';
+        $sql .= 'service_id = :service_id,
+                sub_service_id = :sub_service_id
+                WHERE id = :id';
         $pdostmt = $this->db->prepare($sql);
 
         // $pdostmt->bindValue(':employee_id', $employee_id, PDO::PARAM_INT);
         // $pdostmt->bindValue(':employee_material_id', $employee_material_id, PDO::PARAM_INT);
         
         $pdostmt->bindValue(':service_id', $service_id, PDO::PARAM_INT);
+        $pdostmt->bindValue(':sub_service_id', $sub_service_id, PDO::PARAM_INT);
         if (in_array($service_id, array('1', '2', '3', '7', '8', '9'))) {
             $pdostmt->bindValue(':progress_id', $progress_id, PDO::PARAM_INT);
         }
