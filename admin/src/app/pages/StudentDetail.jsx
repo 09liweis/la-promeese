@@ -115,7 +115,7 @@ class StudentDetail extends React.Component {
                         <p>备注: {s.remark}</p>
                     </div>
                     </div>
-                    {this.props.user.admin_level != '4' ?
+                    {(this.props.user.admin_level == '1' || this.props.user.id == this.state.student.employee_id) ?
                     <a className="button is-danger" onClick={this.edit}>编辑客户</a>
                     :null}
                 </div>;
