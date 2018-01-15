@@ -24,10 +24,29 @@ if ($_GET['action'] == 'upsertPerformance') {
     $_POST['progress_id'] = $semester['progress_id'];
     
     $allPerformances = $sRepo->allPerformances($_POST['student_id']);
-    if (count($allPerformances)) {
-        $schools = implode(', ', $allPerformances);   
-        $_POST['schools'] = $schools;
+    //need to write function to get school name base on student_id and service_id
+    // echo test;
+    //check if service_id is 1 or 3, get the latest school
+    //if service_id is 2, get all the school which service_id is 2, then implode the array to string and 
+    //after getting to do what?
+    $schools = $pRepo->getschool($_POST['student_id'],$_POST['service_id']);
+    $schoolString = implode(", ", $schools);
+    $schoolArray = explode(", ", $schoolString);
+    if($_POST['service_id'] === 1 || $_POST['service_id'] === 3 ){
+        $schoolsToShow = $schoolArray[0];
+        // echo "test1";
     }
+    else{
+        // echo "test2";
+        $schoolsToShow = $schoolString; 
+    }
+    echo $schoolsToShow;
+    var_dump($schoolArray);
+    if (count($allPerformances)) {
+        // $schools = implode(', ', $allPerformances);   
+        $_POST['schools'] = $schoolsToShow;
+    }
+
     
     $sRepo->updateStudent($_POST);
     echo json_encode('ok');

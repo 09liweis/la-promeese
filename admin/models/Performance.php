@@ -177,4 +177,18 @@ class Performance {
         $p = $pdostmt->fetch(PDO::FETCH_ASSOC);
         return $p;
     }
+    public function getschool($id,$service_id){
+        $sql = 'SELECT s.schools AS schools 
+                FROM students s LEFT JOIN performances p ON s.id = p.student_id
+                WHERE s.service_id = :service_id AND s.id = :id';
+        $pdostmt = $this->db->prepare($sql);
+        $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $pdostmt->bindValue(':service_id', $service_id, PDO::PARAM_INT);
+        $pdostmt->execute();
+        $schools = $pdostmt->fetch(PDO::FETCH_ASSOC);
+        return $schools;
+
+        
+    }
+   
 }
