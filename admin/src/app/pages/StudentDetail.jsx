@@ -68,9 +68,9 @@ class StudentDetail extends React.Component {
         if (typeof s.name != 'undefined') {
             student = 
                 <div className="card">
+                    <h1 className="is-size-2">{s.name}</h1>
                     <div className="columns">
                     <div className="column">
-                        <h1>{s.name}</h1>
                         <p>
                             <span className="icon has-text-success">
                                 <i className="fa fa-genderless"></i>
@@ -98,9 +98,9 @@ class StudentDetail extends React.Component {
                     </div>
                     <div className="column">
                         <p>护照号码: {s.passport_number}</p>
-                        <p>护照到期日: <span class={getDateColor(s.passport_date, 'passport', '')}>{s.passport_date}</span></p>
+                        <p>护照到期日: <span className={getDateColor(s.passport_date, 'passport', '')}>{s.passport_date}</span></p>
                         <p>签证信息: {s.visa_info}</p>
-                        <p>签证到期日: <span class={getDateColor(s.visa_date, 'visa', '')}>{s.visa_date}</span></p>
+                        <p>签证到期日: <span className={getDateColor(s.visa_date, 'visa', '')}>{s.visa_date}</span></p>
                     </div>
                     <div className="column">
                         <p>地区: {s.region_name}</p>
