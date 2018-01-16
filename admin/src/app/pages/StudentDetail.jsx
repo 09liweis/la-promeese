@@ -8,6 +8,8 @@ import Performances from '../components/Performances.jsx';
 import Businesses from '../components/Businesses.jsx';
 import SchoolApplicatoins from '../components/SchoolApplicatoins.jsx';
 
+import {getDateColor} from '../services/functions.js';
+
 class StudentDetail extends React.Component {
     constructor(props) {
         super(props);
@@ -15,7 +17,6 @@ class StudentDetail extends React.Component {
             student: {
                 id: props.match.params.id
             },
-            returnURL: '',
             modal: false
         };
         this.closeModal = this.closeModal.bind(this);
@@ -62,7 +63,6 @@ class StudentDetail extends React.Component {
         this.getStudent();
     }
     render() {
-        console.log(this.state.returnURL);
         const s = this.state.student;
         let student = '';
         if (typeof s.name != 'undefined') {
@@ -98,9 +98,9 @@ class StudentDetail extends React.Component {
                     </div>
                     <div className="column">
                         <p>护照号码: {s.passport_number}</p>
-                        <p>护照到期日: {s.passport_date}</p>
+                        <p>护照到期日: <span class={getDateColor(s.passport_date, 'passport', '')}>{s.passport_date}</span></p>
                         <p>签证信息: {s.visa_info}</p>
-                        <p>签证到期日: {s.visa_date}</p>
+                        <p>签证到期日: <span class={getDateColor(s.visa_date, 'visa', '')}>{s.visa_date}</span></p>
                     </div>
                     <div className="column">
                         <p>地区: {s.region_name}</p>
