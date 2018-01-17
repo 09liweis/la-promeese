@@ -157,6 +157,11 @@ class StudentForm extends React.Component {
     }
     handleSubmit(e) {
         e.preventDefault();
+        const employee_id = this.state.student.employee_id;
+        if (employee_id == '' || employee_id == '0') {
+            alert('必须填写责任客服');
+            return false;
+        }
         const _this = this;
         $.ajax({
             url: '/admin/controllers/student.php?action=upsertStudent',
