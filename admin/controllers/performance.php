@@ -23,25 +23,9 @@ if ($_GET['action'] == 'upsertPerformance') {
     $semester = $pRepo->getLatestSemester($_POST['id']);
     $_POST['progress_id'] = $semester['progress_id'];
     
-    $allPerformances = $sRepo->allPerformances($_POST['student_id']);
-    $schools = $pRepo->getschool($_POST['student_id'],$_POST['service_id']);
-    $schoolString = implode(", ", $schools);
-    $schoolArray = explode(", ", $schoolString);
-    if($_POST['service_id'] === 1 || $_POST['service_id'] === 3 ){
-        $schoolsToShow = $schoolArray[0];
-        
-    }
-    else if ($_POST['service_id'] === 2){
-        
-        $schoolsToShow = $schoolString; 
-    }
-   
-    if (count($allPerformances)) {
-        // $schools = implode(', ', $allPerformances);   
-        $_POST['schools'] = $schoolsToShow;
-    }
-
-    
+    $schools = $pRepo->getschools($_POST['student_id'],$_POST['service_id']);
+    $schoolString = implode('<br/>', $schools);
+    $_POST['schools'] = $schoolString;
     $sRepo->updateStudent($_POST);
     echo json_encode('ok');
 }

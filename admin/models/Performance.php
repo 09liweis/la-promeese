@@ -177,15 +177,24 @@ class Performance {
         $p = $pdostmt->fetch(PDO::FETCH_ASSOC);
         return $p;
     }
-    public function getschool($id,$service_id){
-        $sql = 'SELECT s.schools AS schools 
-                FROM students s LEFT JOIN performances p ON s.id = p.student_id
-                WHERE s.service_id = :service_id AND s.id = :id';
+    public function getschools($id,$service_id){
+        if ($service_id == '2') {
+            $limit = 3;
+        } else if ($service_id == '1' || $service_id == '3') {
+            $limit = 1;
+        }
+        $sql = 'SELECT ss.name
+                FROM performances p
+                LEFT JOIN sub_services ss ON p.sub_service_id = ss.id
+                WHERE p.student_id = :id AND p.service_id = :service_id
+                ORDER BY p.updated_at DESC
+                LIMIT :limit';;
         $pdostmt = $this->db->prepare($sql);
         $pdostmt->bindValue(':id', $id, PDO::PARAM_INT);
         $pdostmt->bindValue(':service_id', $service_id, PDO::PARAM_INT);
+        $pdostmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $pdostmt->execute();
-        $schools = $pdostmt->fetch(PDO::FETCH_ASSOC);
+        $schools = $pdostmt->fetchAll(PDO::FETCH_COLUMN);
         return $schools;
 
         
