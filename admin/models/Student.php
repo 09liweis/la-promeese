@@ -50,6 +50,9 @@ class Student {
         if ($search['name'] != '') {
             $sql .= ' AND (s.name LIKE :name OR s.schools LIKE :name)';
         }
+        if ($search['service_id'] != '') {
+            $sql .= ' AND (s.service_id = :service_id)';
+        }
         // if ($search['employee_id'] != '') {
         //     $sql .= ' AND s.employee_id = :employee_id';
         // }
@@ -82,6 +85,10 @@ class Student {
         if ($search['name'] != '') {
             $name = '%'.$search['name'].'%';
             $pdostmt->bindValue(':name', $name, PDO::PARAM_STR);
+        }
+        
+        if ($search['service_id'] != '') {
+            $pdostmt->bindValue(':service_id', $search['service_id'], PDO::PARAM_INT);
         }
 
         if ($schoolProgressId != '') {
