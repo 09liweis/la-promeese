@@ -12,5 +12,14 @@
     <body>
         <div id="app"></div>
         <script type="text/javascript" src="/admin/src/public/bundle.js?v=5.9.6.2"></script>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-43431540-3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'UA-43431540-3');
+        </script>
     </body>
 </html>
